@@ -10,10 +10,12 @@
 3. **Project Settings → API**: copy the Project URL, the `anon` key and the `service_role` key into `.env.local`. See `.env.example` for the variable names.
    > The service-role key bypasses security. Keep it server-side only. Never paste it into client code or anything prefixed `NEXT_PUBLIC_`.
 
-## 2. Load the sample content (optional)
+## 2. Load the starter content
+Paste `supabase/seed.sql` into the **SQL Editor** and press **Run** (safe to re-run). Or, from a computer with Node installed:
 ```bash
-npm run seed           # fills empty tables with the placeholder events, team, etc.
+npm run seed           # same content, via the API
 ```
+After editing `src/content/`, regenerate the SQL with `npx tsx scripts/make-seed-sql.mts`.
 Skip this if you would rather start empty and add everything from the dashboard.
 
 ## 3. Create organiser accounts

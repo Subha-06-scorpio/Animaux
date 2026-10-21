@@ -38,6 +38,9 @@ Without Supabase the app runs in **local development mode**: data goes to `.data
 
 ## Go live
 
+**Quickest path (browser only):** [docs/GO-LIVE-FOR-TESTING.md](docs/GO-LIVE-FOR-TESTING.md)
+
+
 Follow **[docs/SETUP.md](docs/SETUP.md)**, which covers Supabase, the first admin user, email and Vercel deployment.
 
 ## Organisers
