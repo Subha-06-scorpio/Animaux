@@ -1,26 +1,164 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  --color-forest: #102820;
+  --color-forest-2: #16352a;
+  --color-midnight: #101816;
+  --color-night: #0b110f;
+  --color-olive: #64734a;
+  --color-moss: #8b9a6b;
+  --color-ivory: #f5f0e6;
+  --color-parchment: #ebe3d2;
+  --color-gold: #c4a46a;
+  --color-gold-soft: #dcc394;
+  --color-ember: #c76a37;
+  --color-ember-bright: #dd7c45;
+  --color-mist: #a9b2a4;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --font-display: var(--font-fraunces), Georgia, serif;
+  --font-sans: var(--font-manrope), system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  --animate-sway: sway 9s ease-in-out infinite;
+  --animate-drift: drift 14s linear infinite;
+  --animate-blink: blink 7s ease-in-out infinite;
+  --animate-scan: scan 3.2s ease-in-out infinite;
+  --animate-marquee: marquee 40s linear infinite;
+
+  @keyframes sway {
+    0%, 100% { transform: rotate(-1.6deg); }
+    50% { transform: rotate(1.6deg); }
+  }
+  @keyframes drift {
+    0% { transform: translate3d(0, 0, 0); opacity: 0; }
+    10% { opacity: var(--o, 0.8); }
+    90% { opacity: var(--o, 0.8); }
+    100% { transform: translate3d(var(--dx, 30px), -140px, 0); opacity: 0; }
+  }
+  @keyframes blink {
+    0%, 40%, 100% { opacity: 0; }
+    44%, 54% { opacity: 1; }
+    48% { opacity: 0.1; }
+  }
+  @keyframes scan {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(100%); }
+  }
+  @keyframes marquee {
+    to { transform: translateX(-50%); }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+:root {
+  color-scheme: dark;
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
 }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  background: var(--color-midnight);
+  color: var(--color-ivory);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Film grain over everything — very faint, no pointer events. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: var(--grain);
+  opacity: 0.06;
+  mix-blend-mode: overlay;
+  z-index: 60;
+}
+
+::selection {
+  background: var(--color-gold);
+  color: var(--color-midnight);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@layer components {
+  .eyebrow {
+    @apply font-mono text-[0.7rem] tracking-[0.32em] uppercase text-gold;
+  }
+  .display {
+    @apply font-display font-light tracking-[-0.02em] leading-[0.95];
+    font-variation-settings: "SOFT" 100, "WONK" 1;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold tracking-wide transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-primary {
+    @apply bg-ember text-midnight hover:bg-ember-bright shadow-[0_10px_40px_-12px_rgba(199,106,55,0.8)];
+  }
+  .btn-ghost {
+    @apply border border-ivory/25 text-ivory hover:border-gold hover:text-gold backdrop-blur-sm;
+  }
+  .btn-gold {
+    @apply bg-gold text-midnight hover:bg-gold-soft;
+  }
+  .card {
+    @apply rounded-2xl border border-ivory/10 bg-gradient-to-b from-forest-2/70 to-midnight/80;
+  }
+  .field {
+    @apply w-full rounded-xl border border-ivory/15 bg-night/60 px-4 py-3 text-ivory placeholder:text-mist/60 outline-none transition focus:border-gold focus:ring-2 focus:ring-gold/30 aria-[invalid=true]:border-ember;
+  }
+  .label {
+    @apply mb-1.5 block text-sm font-medium text-ivory/90;
+  }
+  .field-error {
+    @apply mt-1.5 text-xs text-ember-bright;
+  }
+  .tag {
+    @apply inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 font-mono text-[0.65rem] uppercase tracking-[0.18em];
+  }
+  /* Paper sections ("field journal") */
+  .paper {
+    background-color: var(--color-ivory);
+    color: var(--color-midnight);
+    background-image:
+      radial-gradient(ellipse at 20% 0%, rgba(196, 164, 106, 0.18), transparent 60%),
+      var(--grain);
+    background-blend-mode: normal, multiply;
+  }
+  .topo {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600' viewBox='0 0 600 600'%3E%3Cg fill='none' stroke='%23C4A46A' stroke-opacity='.09' stroke-width='1'%3E%3Cpath d='M-50 120c90-60 180 40 280-10s170-90 260-30 120 60 160 20'/%3E%3Cpath d='M-50 170c90-60 180 40 280-10s170-90 260-30 120 60 160 20'/%3E%3Cpath d='M-50 220c100-50 170 50 270 0s180-80 270-20 110 50 160 10'/%3E%3Cpath d='M-50 300c80-40 190 60 290 10s160-100 250-40 130 70 160 30'/%3E%3Cpath d='M-50 360c80-40 190 60 290 10s160-100 250-40 130 70 160 30'/%3E%3Cpath d='M-50 440c100-60 170 30 280-20s170-70 260-10 120 40 160 0'/%3E%3Cpath d='M-50 500c100-60 170 30 280-20s170-70 260-10 120 40 160 0'/%3E%3Cellipse cx='420' cy='280' rx='60' ry='34'/%3E%3Cellipse cx='420' cy='280' rx='32' ry='16'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  .text-gradient-gold {
+    background: linear-gradient(100deg, #f5f0e6 0%, #dcc394 35%, #c4a46a 60%, #8b6d3c 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .text-outline {
+    -webkit-text-stroke: 1.5px rgba(220, 195, 148, 0.8);
+    color: transparent;
+  }
+}
+
+/* Respect reduced motion everywhere. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Masonry gallery */
+.masonry { column-gap: 1rem; }
+.masonry > * { break-inside: avoid; margin-bottom: 1rem; }

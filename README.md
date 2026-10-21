@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ANIMAUX 2026 — Echoes of the Wild
 
-## Getting Started
+The festival website for the Department of Zoology: an immersive public site, a registration system that needs no participant accounts, and an organiser dashboard.
 
-First, run the development server:
+**Stack:** Next.js 16 (App Router, TypeScript), Tailwind CSS 4, Motion, Supabase (Postgres, Auth, Storage), React Hook Form and Zod, with optional Resend for confirmation emails.
+
+## What's inside
+
+| Area | Path |
+|---|---|
+| Home (camera-trap hero, countdown, forensics exhibit, species spotlight) | `/` |
+| About · Events (search/filter) · Event detail · Register | `/about`, `/events`, `/events/[slug]`, `/register` |
+| Team · Gallery (masonry + lightbox + video) · Schedule & info · Contact/FAQ | `/team`, `/gallery`, `/schedule`, `/contact` |
+| Organiser dashboard | `/admin` |
+
+Registration behaviour:
+- Validates on both client and server.
+- Supports individual and team events, plus custom questions per event.
+- Blocks duplicates: one active registration per event per email and per phone, enforced by database unique indexes.
+- Issues registration IDs like `ANX26-FOR-7K2QD`.
+- Shows when an event is closed, past its deadline or full, and has a master pause switch.
+- Rate-limits requests and includes a honeypot field for bots.
+- Sends a confirmation email when Resend is configured.
+
+## Run locally (5 minutes, no accounts needed)
 
 ```bash
+npm install
+cp .env.example .env.local
+# In .env.local, leave the Supabase values EMPTY and set:
+#   LOCAL_ADMIN_PASSWORD=pick-a-password
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000. The dashboard is at http://localhost:3000/admin, using the password above.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Without Supabase the app runs in **local development mode**: data goes to `.data/db.json`, seeded from `src/content/`. This mode is for building and testing only, and it refuses to run on Vercel.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Go live
 
-## Learn More
+Follow **[docs/SETUP.md](docs/SETUP.md)**, which covers Supabase, the first admin user, email and Vercel deployment.
 
-To learn more about Next.js, take a look at the following resources:
+## Organisers
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The **[docs/ORGANISER-GUIDE.md](docs/ORGANISER-GUIDE.md)** explains how to update events, team, gallery and registrations without touching code.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project map
 
-## Deploy on Vercel
+```
+src/
+  app/(site)/        public pages
+  app/admin/         dashboard (login + role-protected pages)
+  app/actions/       server actions (public forms, admin mutations)
+  app/api/admin/     CSV export, local uploads
+  components/        UI (art/, home/, events/, gallery/, admin/…)
+  content/           SEED + editable placeholder content, species facts
+  lib/               types, zod schemas, auth, data adapters, security
+  proxy.ts           session refresh + /admin gate
+supabase/migrations  database schema + RLS
+scripts/             seed script for Supabase
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Placeholders still to replace
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Everything marked *placeholder* or *Sample*:
+- college name and address
+- festival dates (the countdown currently uses a provisional 11 Dec 2026)
+- all events, coordinators and fees (fees show "TBA")
+- team members, gallery media, WhatsApp, Instagram, map and brochure
+
+The dashboard's **Go-live checklist** tracks these. Check the species conservation statuses in `src/content/species.ts` against iucnredlist.org before launch.
