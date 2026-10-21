@@ -9,14 +9,14 @@ const initials = (n: string) => n.split(/\s+/).filter(Boolean).slice(0, 2).map((
 export function MemberCard({ m, size = "md" }: { m: TeamMember; size?: "lg" | "md" | "sm" }) {
   return (
     <article className={cn("group relative overflow-hidden rounded-2xl border border-ivory/10 bg-night/50 transition duration-500 hover:-translate-y-1 hover:border-gold/50 hover:shadow-[0_20px_60px_-25px_rgba(196,164,106,0.45)]")}>
-      <div className={cn("relative overflow-hidden", size === "sm" ? "aspect-square" : "aspect-[4/5]")}>
+      <div className="relative aspect-[4/5] overflow-hidden">
         {m.photoUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img src={m.photoUrl} alt={`Portrait of ${m.name}`} loading="lazy" decoding="async" className="h-full w-full object-cover grayscale-[35%] transition duration-700 group-hover:scale-105 group-hover:grayscale-0" />
         ) : (
           <>
             <PlaceholderArt seed={m.id} compact label={`Photo placeholder for ${m.name}`} />
-            <span aria-hidden className={cn("absolute inset-0 grid place-items-center font-display text-ivory/80", size === "sm" ? "text-4xl" : "text-6xl")}>{initials(m.name)}</span>
+            <span aria-hidden className={cn("absolute inset-x-0 top-0 grid h-3/5 place-items-center font-display text-ivory/70", size === "sm" ? "text-3xl" : "text-6xl")}>{initials(m.name)}</span>
           </>
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-night via-night/10 to-transparent" />
@@ -27,7 +27,7 @@ export function MemberCard({ m, size = "md" }: { m: TeamMember; size?: "lg" | "m
         )}
         <div className="absolute inset-x-0 bottom-0 p-4">
           <h3 className={cn("font-display leading-tight", size === "lg" ? "text-2xl" : size === "md" ? "text-xl" : "text-base")}>{m.name}</h3>
-          <p className={cn("mt-0.5 font-mono uppercase tracking-[0.18em] text-gold", size === "sm" ? "text-[0.55rem]" : "text-[0.65rem]")}>{m.role}</p>
+          <p className={cn("mt-0.5 font-mono uppercase tracking-[0.18em] text-gold", size === "sm" ? "text-[0.55rem]" : "text-[0.65rem]")}>{size === "sm" ? m.role.replace(` · ${m.section}`, "") : m.role}</p>
         </div>
       </div>
       {(m.bio || m.socialUrl) && size !== "sm" && (

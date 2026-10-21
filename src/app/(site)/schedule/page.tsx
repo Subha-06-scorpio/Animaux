@@ -6,7 +6,7 @@ import { InstagramIcon } from "@/components/ui/icons";
 import { Reveal } from "@/components/ui/reveal";
 import { PageHero, SectionHeading } from "@/components/ui/section-heading";
 import { getPublicEvents, getSettings, getVisible } from "@/lib/queries";
-import { formatDate, formatDateTime } from "@/lib/utils";
+import { festivalDateLabel, formatDate, formatDateTime } from "@/lib/utils";
 
 export const metadata: Metadata = { title: "Schedule & Festival Info", description: "ANIMAUX 2026 dates, schedule, venue, directions, deadlines and participant guidelines." };
 
@@ -14,7 +14,7 @@ export default async function SchedulePage() {
   const [s, schedule, events, announcements] = await Promise.all([getSettings(), getVisible("schedule"), getPublicEvents(), getVisible("announcements")]);
   const start = new Date(s.startDate);
   const dayLabels = Object.fromEntries(
-    [...new Set(schedule.map((i) => i.day))].map((d) => [d, s.datesConfirmed ? formatDate(new Date(start.getTime() + (d - 1) * 86400000).toISOString(), { day: "numeric", month: "short" }) : ""]),
+    [...new Set(schedule.map((i) => i.day))].map((d) => [d, s.datesConfirmed ? formatDate(new Date(start.getTime() + (d - 1) * 86400000).toISOString(), { weekday: "short", day: "numeric", month: "short" }) : ""]),
   );
   const deadlines = [...events].sort((a, b) => a.deadline.localeCompare(b.deadline));
 
@@ -25,7 +25,7 @@ export default async function SchedulePage() {
           <div className="rounded-2xl border border-ivory/10 bg-night/40 p-5">
             <CalendarDays className="text-gold" size={20} />
             <p className="mt-3 text-sm text-mist">Festival dates</p>
-            <p className="font-display text-xl">{s.datesConfirmed ? `${formatDate(s.startDate, { day: "numeric", month: "short" })} – ${formatDate(s.endDate)}` : "To be announced"}</p>
+            <p className="font-display text-xl">{festivalDateLabel(s)}</p>
           </div>
           <div className="rounded-2xl border border-ivory/10 bg-night/40 p-5">
             <MapPin className="text-gold" size={20} />

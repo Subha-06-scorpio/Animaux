@@ -50,7 +50,7 @@ export function EventsExplorer({ events }: { events: PublicEvent[] }) {
             <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search events, venues…" className="field rounded-full py-2.5 pl-11" type="search" />
           </label>
           <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 lg:pb-0" role="group" aria-label="Filter by category">
-            {(["all", ...EVENT_CATEGORIES] as const).map((c) => (
+            {(["all", ...EVENT_CATEGORIES.filter((c) => counts[c] > 0)] as const).map((c) => (
               <button
                 key={c}
                 type="button"

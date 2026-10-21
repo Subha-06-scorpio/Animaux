@@ -37,7 +37,7 @@ const SECTIONS: { title: string; fields: Field[] }[] = [
       { name: "department", label: "Department", type: "text" },
       { name: "college", label: "College / institution", type: "text" },
       { name: "address", label: "Address", type: "textarea", span: 2 },
-      { name: "mapEmbedUrl", label: "Google Maps embed URL", type: "url", span: 2, help: "Google Maps → Share → Embed a map → copy only the src=\"…\" link." },
+      { name: "mapEmbedUrl", label: "Google Maps embed URL", type: "url", span: 2, help: "Google Maps → Share → Embed a map → copy only the src=\"…\" link (or a …&output=embed link)." },
       { name: "mapLink", label: "Google Maps link (directions)", type: "url", span: 2 },
       { name: "email", label: "Festival email", type: "email" },
       { name: "phone", label: "General coordinator phone", type: "text" },

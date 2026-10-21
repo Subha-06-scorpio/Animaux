@@ -2,7 +2,7 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { BroadLeaf, Frond, Paw, rng } from "@/components/art/motifs";
 import type { FestivalSettings } from "@/lib/types";
-import { formatDate } from "@/lib/utils";
+import { festivalDateLabel } from "@/lib/utils";
 import { Countdown } from "./countdown";
 import { HeroTitle, HudClock } from "./hero-client";
 
@@ -28,9 +28,7 @@ function Corner({ className }: { className: string }) {
 }
 
 export function Hero({ s }: { s: FestivalSettings }) {
-  const dateLine = s.datesConfirmed
-    ? `${formatDate(s.startDate, { day: "numeric", month: "long" })} – ${formatDate(s.endDate, { day: "numeric", month: "long", year: "numeric" })}`
-    : "Dates to be announced";
+  const dateLine = festivalDateLabel(s);
 
   return (
     <section className="relative isolate flex min-h-[100svh] items-center overflow-hidden bg-night" aria-labelledby="hero-title">

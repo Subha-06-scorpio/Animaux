@@ -19,7 +19,12 @@ export function Intro({ manifesto }: { manifesto: string }) {
             <br />
             <em className="text-ember">The wild is talking.</em>
           </h2>
-          <Feather className="mt-10 h-16 w-16 text-olive" />
+          <div className="mt-10 flex items-center gap-8">
+            <Feather className="h-16 w-16 text-olive" />
+            <span aria-hidden className="-rotate-12 rounded-md border-[3px] border-ember/80 px-3 py-1 font-mono text-sm font-bold uppercase tracking-[0.2em] text-ember/80 mix-blend-multiply">
+              Case open · 02.12.26
+            </span>
+          </div>
         </Reveal>
         <div className="space-y-6 text-lg leading-relaxed text-forest/85 lg:col-span-7">
           <Reveal>
@@ -31,7 +36,7 @@ export function Intro({ manifesto }: { manifesto: string }) {
           </Reveal>
           <Reveal delay={0.1}>
             <p>
-              It is the annual festival of the Department of Zoology — two days of wildlife, science and wild ideas. Solve a mock
+              It is the annual festival of the Department of Zoology, SVKM’s Mithibai College — one day of wildlife, science and wild ideas on 2 December 2026. Solve a mock
               wildlife-crime case. Defend your research. Out-quiz your friends. Sketch an endangered species. Find out why every
               species — the charismatic and the overlooked — deserves a future.
             </p>

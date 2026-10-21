@@ -3,6 +3,7 @@ import Link from "next/link";
 import { FootprintTrail, Paw } from "@/components/art/motifs";
 import { PlaceholderArt } from "@/components/art/placeholder";
 import { EventGrid } from "@/components/events/event-grid";
+import { CaseFile } from "@/components/home/case-file";
 import { Endangered } from "@/components/home/endangered";
 import { Forensics } from "@/components/home/forensics";
 import { Hero } from "@/components/home/hero";
@@ -24,6 +25,7 @@ export default async function Home() {
       <Ticker items={announcements} />
       <Intro manifesto={s.manifesto} />
       <Forensics />
+      <CaseFile />
       <FootprintTrail className="bg-midnight" />
       <Endangered />
 

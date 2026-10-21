@@ -23,20 +23,26 @@ export function Timeline({ items, dayLabels }: { items: ScheduleItem[]; dayLabel
 
   return (
     <div>
-      <div role="tablist" aria-label="Festival days" className="inline-flex rounded-full border border-ivory/15 bg-night/60 p-1">
-        {days.map((d) => (
-          <button key={d} role="tab" aria-selected={day === d} type="button" onClick={() => setDay(d)} className={cn("relative rounded-full px-5 py-2.5 text-sm font-semibold transition", day === d ? "text-midnight" : "text-ivory/75 hover:text-gold")}>
-            {day === d && <motion.span layoutId="day-pill" className="absolute inset-0 rounded-full bg-gold" transition={{ type: "spring", damping: 26, stiffness: 300 }} />}
-            <span className="relative">
-              Day {d}
-              {dayLabels[d] && <span className="ml-2 font-normal opacity-75">{dayLabels[d]}</span>}
-            </span>
-          </button>
-        ))}
-      </div>
+      {days.length > 1 ? (
+        <div role="tablist" aria-label="Festival days" className="inline-flex rounded-full border border-ivory/15 bg-night/60 p-1">
+          {days.map((d) => (
+            <button key={d} role="tab" aria-selected={day === d} type="button" onClick={() => setDay(d)} className={cn("relative rounded-full px-5 py-2.5 text-sm font-semibold transition", day === d ? "text-midnight" : "text-ivory/75 hover:text-gold")}>
+              {day === d && <motion.span layoutId="day-pill" className="absolute inset-0 rounded-full bg-gold" transition={{ type: "spring", damping: 26, stiffness: 300 }} />}
+              <span className="relative">
+                Day {d}
+                {dayLabels[d] && <span className="ml-2 font-normal opacity-75">{dayLabels[d]}</span>}
+              </span>
+            </button>
+          ))}
+        </div>
+      ) : (
+        <p className="inline-flex items-center gap-3 rounded-full border border-gold/40 px-5 py-2.5 font-mono text-xs uppercase tracking-[0.25em] text-gold">
+          <span className="h-1.5 w-1.5 rounded-full bg-gold" /> {dayLabels[day] || "Festival day"}
+        </p>
+      )}
 
       <AnimatePresence mode="wait">
-        <motion.ol key={day} role="tabpanel" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.3 }} className="relative mt-10 space-y-4 before:absolute before:left-[5.25rem] before:top-2 before:bottom-2 before:w-px before:bg-gradient-to-b before:from-gold/60 before:via-ivory/15 before:to-transparent sm:before:left-[7.5rem]">
+        <motion.ol key={day} role={days.length > 1 ? "tabpanel" : undefined} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.3 }} className="relative mt-10 space-y-4 before:absolute before:left-[5.25rem] before:top-2 before:bottom-2 before:w-px before:bg-gradient-to-b before:from-gold/60 before:via-ivory/15 before:to-transparent sm:before:left-[7.5rem]">
           {list.map((it) => (
             <li key={it.id} className="relative flex gap-6 sm:gap-10">
               <div className="w-[4.5rem] shrink-0 pt-4 text-right sm:w-24">

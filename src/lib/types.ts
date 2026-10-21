@@ -54,18 +54,9 @@ export const TEAM_GROUPS = ["faculty", "leadership", "organizing"] as const;
 export type TeamGroup = (typeof TEAM_GROUPS)[number];
 
 export const TEAM_SECTIONS: Record<TeamGroup, string[]> = {
-  faculty: ["Head of Department", "Faculty Coordinators", "Supporting Teachers"],
-  leadership: ["Festival Chairperson", "General Secretary", "Core Committee", "Event Heads"],
-  organizing: [
-    "Creative and Design Team",
-    "Social Media and Publicity Team",
-    "Technical Team",
-    "Registration Team",
-    "Hospitality Team",
-    "Logistics Team",
-    "Photography and Media Team",
-    "Volunteers",
-  ],
+  faculty: ["Teacher in Charge", "Faculty Mentors"],
+  leadership: ["Advisory", "Festival Coordinators"],
+  organizing: ["Events", "Logistics", "Productions", "Creatives", "Social Media", "Marketing", "PR", "Hospitality", "Volunteers"],
 };
 
 export type TeamMember = {

@@ -192,7 +192,7 @@ export const settingsSchema = z.object({
   department: text(150),
   college: text(200),
   address: text(400),
-  mapEmbedUrl: z.union([z.literal(""), z.string().url().startsWith("https://www.google.com/maps/embed", "Paste the Google Maps ‘Embed a map’ src URL")]),
+  mapEmbedUrl: z.union([z.literal(""), z.string().url().startsWith("https://www.google.com/maps", "Use a Google Maps embed link (https://www.google.com/maps/embed?… or …&output=embed)")]),
   mapLink: url,
   email: z.union([z.literal(""), z.string().email()]),
   phone: text(30),

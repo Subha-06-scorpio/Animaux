@@ -323,7 +323,8 @@ function Success({ result, event, onClose, onAgain }: { result: Extract<Register
       <motion.div initial={{ scale: 0.6, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ type: "spring", damping: 12 }} className="mx-auto grid h-20 w-20 place-items-center rounded-full border border-gold/60 bg-forest">
         <Paw className="h-9 w-9 text-gold" />
       </motion.div>
-      <h3 className="display mt-6 text-4xl">You&apos;re in the wild.</h3>
+      <p className="eyebrow mt-6">Investigator badge issued</p>
+      <h3 className="display mt-2 text-4xl">You&apos;re on the case.</h3>
       <p className="mt-3 text-ivory/75">Your spot for <strong>{result.eventName}</strong> is confirmed. Keep this registration ID — you&apos;ll need it at the venue.</p>
 
       <div className="mx-auto mt-6 flex max-w-sm items-center justify-between gap-3 rounded-2xl border border-dashed border-gold/60 bg-night/60 px-5 py-4">

@@ -57,3 +57,11 @@ export function toLocalInput(iso: string) {
   return Number.isNaN(t) ? "" : new Date(t + offsetMinutes() * 60000).toISOString().slice(0, 16);
 }
 export const fromLocalInput = (v: string) => (v ? `${v}:00${FEST_OFFSET}` : "");
+
+/** "Wednesday, 2 December 2026" for one-day fests, otherwise a range. */
+export function festivalDateLabel(s: Pick<FestivalSettings, "startDate" | "endDate" | "datesConfirmed">) {
+  if (!s.datesConfirmed) return "Dates to be announced";
+  const day = (iso: string) => formatDate(iso, { day: "numeric", month: "long", year: "numeric" });
+  if (day(s.startDate) === day(s.endDate)) return formatDate(s.startDate, { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+  return `${formatDate(s.startDate, { day: "numeric", month: "long" })} – ${day(s.endDate)}`;
+}
