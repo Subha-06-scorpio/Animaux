@@ -27,6 +27,7 @@ export type FestEvent = {
   category: EventCategory;
   tier: "main" | "mini"; // mini events are on-the-spot: no online registration
   tagline: string;
+  prize: string; // e.g. "Winners get goodies" — shown as a badge
   shortDescription: string;
   description: string;
   posterUrl: string;
@@ -157,7 +158,18 @@ export type FestivalSettings = {
   guidelines: string[];
 };
 
+export type Sponsor = {
+  id: string;
+  name: string;
+  tier: string; // e.g. "Title sponsor", "Partner"
+  logoUrl: string;
+  website: string;
+  visible: boolean;
+  sortOrder: number;
+};
+
 export type Collections = {
+  sponsors: Sponsor;
   events: FestEvent;
   team: TeamMember;
   gallery: GalleryItem;

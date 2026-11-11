@@ -10,13 +10,14 @@ import { Forensics } from "@/components/home/forensics";
 import { Hero } from "@/components/home/hero";
 import { Intro } from "@/components/home/intro";
 import { Ticker } from "@/components/home/ticker";
+import { SponsorsSection } from "@/components/sponsors/sponsors-section";
 import { Reveal } from "@/components/ui/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { getPublicEvents, getSettings, getVisible } from "@/lib/queries";
+import { getPublicEvents, getSettings, getSponsors, getVisible } from "@/lib/queries";
 import { formatDate } from "@/lib/utils";
 
 export default async function Home() {
-  const [s, events, announcements, gallery] = await Promise.all([getSettings(), getPublicEvents(), getVisible("announcements"), getVisible("gallery")]);
+  const [s, events, announcements, gallery, sponsors] = await Promise.all([getSettings(), getPublicEvents(), getVisible("announcements"), getVisible("gallery"), getSponsors()]);
   const main = events.filter((e) => e.tier === "main");
   const mini = events.filter((e) => e.tier === "mini");
   const pinned = announcements.filter((a) => a.pinned).concat(announcements.filter((a) => !a.pinned)).slice(0, 3);
@@ -109,6 +110,8 @@ export default async function Home() {
           </div>
         </div>
       </section>
+
+      <SponsorsSection sponsors={sponsors} s={s} />
 
       {/* CTA */}
       <section className="relative overflow-hidden bg-forest py-24 text-center sm:py-32">

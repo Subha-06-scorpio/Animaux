@@ -18,6 +18,7 @@ export const TABLES: Record<CollectionName, string> = {
   announcements: "announcements",
   schedule: "schedule_items",
   faqs: "faqs",
+  sponsors: "sponsors",
 };
 
 let client: SupabaseClient | null = null;

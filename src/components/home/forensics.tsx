@@ -39,7 +39,7 @@ export function Forensics() {
             <div className="absolute inset-x-0 top-0 h-full">
               <div className="h-1/2 w-full animate-scan border-b-2 border-ember/80 bg-gradient-to-b from-transparent to-ember/15" />
             </div>
-            <div className="absolute left-4 top-4 font-mono text-[0.6rem] tracking-[0.3em] text-ivory/60">SAMPLE #0417 · LATENT PRINT</div>
+            <div className="absolute left-4 top-4 font-mono text-[0.6rem] tracking-[0.3em] text-ivory/60">EXHIBIT #0417 · LATENT PRINT</div>
             <div className="absolute bottom-4 left-4 right-4 flex justify-between font-mono text-[0.6rem] tracking-[0.25em] text-gold/80">
               <span>ANALYSING…</span>
               <span>MATCH: ?</span>

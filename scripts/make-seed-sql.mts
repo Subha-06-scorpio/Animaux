@@ -41,6 +41,7 @@ const sql = [
   upsert("events", eventsSeed),
   prune("team_members", "7e000000-", teamSeed),
   upsert("team_members", teamSeed),
+  prune("gallery_items", "9a000000-", gallerySeed),
   upsert("gallery_items", gallerySeed),
   upsert("announcements", announcementsSeed),
   prune("schedule_items", "5c000000-", scheduleSeed),

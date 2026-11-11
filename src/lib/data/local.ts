@@ -27,6 +27,7 @@ const seed = (): Db => ({
   announcements: announcementsSeed,
   schedule: scheduleSeed,
   faqs: faqsSeed,
+  sponsors: [],
   settings: festivalSeed,
   registrations: [],
   enquiries: [],

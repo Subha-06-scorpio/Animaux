@@ -26,11 +26,7 @@ export default async function ContactPage() {
     <>
       <PageHero eyebrow="Help desk" title={<>Lost in the <em className="text-gold">woods</em>?</>} intro="Questions about events, registrations, schedules, rules or a technical hiccup — send a signal and we’ll find you.">
         <div className="mt-8 flex flex-wrap gap-3">
-          {wa ? (
-            <a href={wa} target="_blank" rel="noopener noreferrer" className="btn btn-primary"><WhatsAppIcon className="h-4 w-4" /> WhatsApp enquiry</a>
-          ) : (
-            <span className="btn cursor-default border border-ivory/15 text-mist"><WhatsAppIcon className="h-4 w-4" /> WhatsApp number coming soon</span>
-          )}
+          {wa && <a href={wa} target="_blank" rel="noopener noreferrer" className="btn btn-primary"><WhatsAppIcon className="h-4 w-4" /> WhatsApp enquiry</a>}
           {s.instagram && <a href={s.instagram} target="_blank" rel="noopener noreferrer" className="btn btn-ghost"><InstagramIcon className="h-4 w-4" /> Instagram</a>}
         </div>
       </PageHero>

@@ -23,6 +23,8 @@ The **Overview** page lists what still shows placeholder content. Work down it.
 - **Deadline**: registration closes automatically after this time.
 - **Registration open**: untick to close registration immediately.
 - **Visible on website**: untick to hide a draft. New events start hidden.
+- **Prize badge**: e.g. "Winners get goodies", shown as a 🏆 badge on the card and event page. Leave empty for no badge.
+- **Poster / image**: each event ships with an illustrated artwork (`/events/<slug>.jpg`). Upload a real poster or photo to replace it.
 - **Event type**: *Main* events take online registrations. *Mini* events show "On the spot · walk in", with no form.
 - **Capacity**: for team events, this is the number of **teams** (e.g. The Last Trace = 5). Registration closes automatically when it's full.
 - **Extra registration questions**: add event-specific questions. Choose **Photo upload** to collect a photo with the registration (as for Shutter Safari). Photos appear as thumbnails in Registrations and as links in the CSV.
@@ -51,6 +53,9 @@ The **Overview** page lists what still shows placeholder content. Work down it.
 - **Photo**: upload a JPG, PNG or WebP. Large photos are compressed before upload.
 - **Video**: upload an MP4, WebM or MOV file (up to 100 MB), or paste a YouTube link. Instagram links open on Instagram.
 - Choose a category, caption, optional event label and date, and a shape (landscape, portrait or square).
+
+## Sponsors
+**Sponsors → Add sponsor**: name, type (e.g. Title sponsor, Food partner), logo upload and an optional link. Logos appear in the "Our sponsors" section on the homepage, above the "Partner with ANIMAUX’26" invitation. A PNG with a transparent background looks best.
 
 ## Schedule, announcements, FAQs
 - **Schedule**: one entry per slot (day, time, venue). Add an event slug to link the slot to its event page.

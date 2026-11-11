@@ -20,6 +20,7 @@ export default async function DashLayout({ children }: LayoutProps<"/admin">) {
     { href: "/admin/schedule", label: "Schedule", icon: "CalendarRange", show: can(user, "content.write") },
     { href: "/admin/announcements", label: "Announcements", icon: "Megaphone", show: can(user, "content.write") },
     { href: "/admin/faqs", label: "FAQs", icon: "HelpCircle", show: can(user, "content.write") },
+    { href: "/admin/sponsors", label: "Sponsors", icon: "Handshake", show: can(user, "content.write") },
     { href: "/admin/settings", label: "Festival settings", icon: "Settings", show: can(user, "settings.write") },
   ];
 

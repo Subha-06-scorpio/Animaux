@@ -23,7 +23,17 @@ export async function getPublicEvent(slug: string) {
   return (await getPublicEvents()).find((e) => e.slug === slug) ?? null;
 }
 
-export async function getVisible<C extends "team" | "gallery" | "announcements" | "schedule" | "faqs">(c: C) {
+export async function getVisible<C extends "team" | "gallery" | "announcements" | "schedule" | "faqs" | "sponsors">(c: C) {
   const items = await repo().list(c);
   return items.filter((i) => i.visible);
+}
+
+/** Sponsors are optional: if the sponsors table isn't migrated yet, show none rather than failing the page. */
+export async function getSponsors() {
+  try {
+    return await getVisible("sponsors");
+  } catch (e) {
+    console.error("Sponsors unavailable (run supabase/migrations/20261112000000_prizes_sponsors.sql)", e);
+    return [];
+  }
 }

@@ -1,13 +1,13 @@
 "use client";
 
-import { CalendarRange, ExternalLink, Images, LayoutDashboard, LogOut, Megaphone, Menu, MessageSquare, Settings, Ticket, Users, HelpCircle, PawPrint, X } from "lucide-react";
+import { CalendarRange, ExternalLink, Images, LayoutDashboard, LogOut, Megaphone, Menu, MessageSquare, Settings, Ticket, Users, HelpCircle, PawPrint, Handshake, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { logoutAction } from "@/app/actions/admin";
 import { cn } from "@/lib/utils";
 
-const ICONS = { LayoutDashboard, Ticket, PawPrint, Users, Images, CalendarRange, Megaphone, HelpCircle, MessageSquare, Settings };
+const ICONS = { LayoutDashboard, Ticket, PawPrint, Users, Images, CalendarRange, Megaphone, HelpCircle, MessageSquare, Settings, Handshake };
 export type NavItem = { href: string; label: string; icon: keyof typeof ICONS; badge?: number };
 
 export function Sidebar({ items, user, mode }: { items: NavItem[]; user: { email: string; role: string }; mode: string }) {

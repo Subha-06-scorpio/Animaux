@@ -1,53 +1,28 @@
 import type { GalleryItem } from "@/lib/types";
+import { eventsSeed } from "./events";
 
 /**
- * SEED CONTENT — PLACEHOLDER GALLERY.
- * Items with an empty `url` render as illustrated placeholder frames.
- * Upload real photos/videos from Admin → Gallery.
+ * SEED CONTENT — the official poster and the illustrated artwork of each main
+ * event. Upload real photos and reels from Admin → Gallery as the fest happens.
  */
-const G: Array<[string, GalleryItem["aspect"], string, GalleryItem["type"]?]> = [
-  ["Behind the Scenes", "portrait", "Late-night poster session (placeholder)"],
-  ["Preparations", "landscape", "Setting up the evidence stations (placeholder)"],
-  ["Team Meetings", "square", "First core-committee meeting (placeholder)"],
-  ["Posters and Artwork", "portrait", "Theme poster draft (placeholder)"],
-  ["Event Highlights", "landscape", "Event highlight (placeholder)"],
-  ["Photography", "portrait", "Field photography (placeholder)"],
-  ["Videos and Reels", "portrait", "Teaser reel (placeholder)", "video"],
-  ["Memories from Previous Editions", "landscape", "A previous edition (placeholder)"],
-  ["Photography", "landscape", "Birding walk (placeholder)"],
-  ["Behind the Scenes", "square", "Volunteers briefing (placeholder)"],
-  ["Posters and Artwork", "square", "Mascot sketch (placeholder)"],
-  ["Preparations", "portrait", "Specimen labels (placeholder)"],
-  ["Videos and Reels", "landscape", "Behind-the-scenes reel (placeholder)", "video"],
-  ["Memories from Previous Editions", "portrait", "Prize distribution (placeholder)"],
-];
-
-const POSTER: GalleryItem = {
-  id: "9a000000-0000-4000-8000-000000000100",
+const item = (n: number, url: string, caption: string, eventLabel: string, aspect: GalleryItem["aspect"]): GalleryItem => ({
+  id: `9a000000-0000-4000-8000-${String(n).padStart(12, "0")}`,
   type: "image",
-  url: "/animaux26-flyer.jpg",
-  thumbnailUrl: "",
-  caption: "Official poster — Echoes of the Wild: The Survival Files",
-  category: "Posters and Artwork",
-  takenOn: "",
-  eventLabel: "ANIMAUX’26",
-  aspect: "portrait",
-  visible: true,
-  sortOrder: -1,
-  isSample: false,
-};
-
-export const gallerySeed: GalleryItem[] = [POSTER, ...G.map(([category, aspect, caption, type], i) => ({
-  id: `9a000000-0000-4000-8000-${String(i + 1).padStart(12, "0")}`,
-  type: type ?? "image",
-  url: "",
+  url,
   thumbnailUrl: "",
   caption,
-  category,
+  category: "Posters and Artwork",
   takenOn: "",
-  eventLabel: "",
+  eventLabel,
   aspect,
   visible: true,
-  sortOrder: i,
-  isSample: true,
-}))];
+  sortOrder: n,
+  isSample: false,
+});
+
+export const gallerySeed: GalleryItem[] = [
+  item(100, "/animaux26-flyer.jpg", "Official poster — Echoes of the Wild: The Survival Files", "ANIMAUX’26", "portrait"),
+  ...eventsSeed
+    .filter((e) => e.tier === "main")
+    .map((e, i) => item(101 + i, e.posterUrl, `${e.name} — event artwork`, `Main event ${i + 1}`, "landscape")),
+];

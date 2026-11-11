@@ -36,7 +36,7 @@ export const festivalSeed: FestivalSettings = {
     "Team events are registered once, by the team leader, with every member's name.",
     "Mini events are on the spot — no online registration needed.",
     "Crime-scene props and evidence are for investigation only — look, note, and don’t touch unless told.",
-    "The decision of the judges and organising committee is final.",
+    "Winners of competition events take home goodies — the decision of the judges and organising committee is final.",
   ],
 };
 
@@ -89,7 +89,7 @@ export const faqsSeed: Faq[] = [
   { id: f(1), question: "How do I register?", answer: "Open the Events page, pick one of the 8 main events and press “Register Now”. Fill in your name, college, year and contact number (plus your team, for team events). You instantly get a unique registration ID on screen — no account needed.", visible: true, sortOrder: 0 },
   { id: f(2), question: "Can I take part in more than one event?", answer: "Yes. Register separately for each event — the form remembers your details on your phone, so the next one takes seconds. Event timings will be announced; we’ll try to avoid clashes.", visible: true, sortOrder: 1 },
   { id: f(3), question: "Can students from other colleges participate?", answer: "ANIMAUX welcomes investigators from across campuses. Check each event page for any eligibility notes, or call the coordinators to confirm.", visible: true, sortOrder: 2 },
-  { id: f(4), question: "Are there registration fees?", answer: "Fees, if any, are shown on each event card. “Fee: TBA” means it hasn’t been announced yet.", visible: true, sortOrder: 3 },
+  { id: f(4), question: "Is there a registration fee?", answer: "No — every ANIMAUX’26 event is free to enter. Just register for the main events online; mini events are walk-in.", visible: true, sortOrder: 3 },
   { id: f(5), question: "How do team registrations work?", answer: "The team leader registers once for the whole team: a team name, plus each member’s name. Team sizes and team limits (for example, 5 teams for The Last Trace) are shown on each event.", visible: true, sortOrder: 4 },
   { id: f(6), question: "What are mini events?", answer: "Six quick, on-the-spot games — Wildlife Pictionary, Wild Aim, Wild Eye, Fingerprint Paintings, Who Am I? and the Memory Game. Just walk in on 2 December; no online registration needed.", visible: true, sortOrder: 5 },
   { id: f(7), question: "How do I submit my photo for Shutter Safari?", answer: "Upload it in the registration form for Shutter Safari (JPG, PNG or WebP, up to 10 MB). Large photos are resized automatically before upload.", visible: true, sortOrder: 6 },

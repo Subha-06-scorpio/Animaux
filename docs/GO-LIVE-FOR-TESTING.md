@@ -32,7 +32,8 @@ You will create four free accounts:
 2. Wait about 2 minutes. Then, in the left menu, **SQL Editor → New query**, paste each file below and press **Run**, in this order:
    1. `supabase/migrations/20261021000000_init.sql`
    2. `supabase/migrations/20261111000000_survival_files.sql`
-   3. `supabase/seed.sql` (loads all 14 events, the team, schedule, FAQs and contacts)
+   3. `supabase/migrations/20261112000000_prizes_sponsors.sql`
+   4. `supabase/seed.sql` (loads all 14 events, the team, schedule, FAQs and contacts)
 3. **Authentication → Users → Add user → Create new user**:
    - Email: animaux.zoology@gmail.com
    - Password: a strong one. This becomes the dashboard login.

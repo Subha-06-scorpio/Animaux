@@ -1,9 +1,8 @@
-import { ArrowLeft, CalendarDays, Clock, Hourglass, IndianRupee, Mail, MapPin, Phone, Users } from "lucide-react";
+import { ArrowLeft, Trophy, CalendarDays, Clock, Hourglass, IndianRupee, Mail, MapPin, Phone, Users } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Paw } from "@/components/art/motifs";
-import { PlaceholderArt } from "@/components/art/placeholder";
 import { StatusPill } from "@/components/events/event-card";
 import { RegisterButton } from "@/components/events/event-grid";
 import { WhatsAppIcon } from "@/components/ui/icons";
@@ -34,31 +33,35 @@ export default async function EventPage({ params }: PageProps<"/events/[slug]">)
   return (
     <article>
       <header className="relative overflow-hidden bg-forest pt-28 pb-14 sm:pt-36">
-        <div className="absolute inset-0 opacity-40">
-          {ev.posterUrl ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={ev.posterUrl} alt="" className="h-full w-full object-cover blur-sm" />
-          ) : (
-            <PlaceholderArt seed={ev.slug} compact />
+        <div className="topo absolute inset-0 opacity-60" aria-hidden />
+        <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-12">
+          <div className="lg:col-span-7">
+            <Link href="/events" className="inline-flex items-center gap-2 text-sm text-ivory/70 hover:text-gold">
+              <ArrowLeft size={16} /> All events
+            </Link>
+            <div className="mt-6 flex flex-wrap gap-2">
+              <span className="tag border-ivory/25 text-ivory">{ev.tier === "mini" ? "Mini event" : CATEGORY_LABELS[ev.category].replace(/s$/, "").replace("Quizze", "Quiz")}</span>
+              <StatusPill status={ev.status} />
+            </div>
+            <h1 className="display mt-5 text-5xl sm:text-6xl">{ev.name}</h1>
+            {ev.tagline && <p className="mt-3 font-display text-xl italic text-gold">{ev.tagline}</p>}
+            {ev.prize && (
+              <p className="mt-4 inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-4 py-1.5 text-sm font-semibold text-gold-soft">
+                <Trophy size={15} className="text-gold" /> {ev.prize}
+              </p>
+            )}
+            <p className="mt-5 max-w-2xl text-lg text-ivory/80">{ev.shortDescription}</p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              {ev.tier === "mini" ? <span className="btn cursor-default border border-moss/50 text-moss">On the spot · walk in on 2 Dec</span> : <RegisterButton event={ev} />}
+              <a href="#coordinator" className="btn btn-ghost">Contact coordinator</a>
+            </div>
+          </div>
+          {ev.posterUrl && (
+            <div className="lg:col-span-5">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={ev.posterUrl} alt={`Artwork for ${ev.name}`} width={1600} height={900} className="aspect-video w-full rounded-2xl border border-gold/25 object-cover shadow-2xl" />
+            </div>
           )}
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-t from-midnight via-midnight/70 to-midnight/30" />
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
-          <Link href="/events" className="inline-flex items-center gap-2 text-sm text-ivory/70 hover:text-gold">
-            <ArrowLeft size={16} /> All events
-          </Link>
-          <div className="mt-6 flex flex-wrap gap-2">
-            <span className="tag border-ivory/25 text-ivory">{CATEGORY_LABELS[ev.category]}</span>
-            {ev.isSample && <span className="tag border-ember/60 text-ember-bright">Sample event — details to be confirmed</span>}
-            <StatusPill status={ev.status} />
-          </div>
-          <h1 className="display mt-5 max-w-4xl text-5xl sm:text-6xl lg:text-7xl">{ev.name}</h1>
-          {ev.tagline && <p className="mt-3 font-display text-xl italic text-gold">{ev.tagline}</p>}
-          <p className="mt-5 max-w-2xl text-lg text-ivory/80">{ev.shortDescription}</p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            {ev.tier === "mini" ? <span className="btn cursor-default border border-moss/50 text-moss">On the spot · walk in on 2 Dec</span> : <RegisterButton event={ev} />}
-            <a href="#coordinator" className="btn btn-ghost">Contact coordinator</a>
-          </div>
         </div>
       </header>
 

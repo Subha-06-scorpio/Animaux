@@ -9,15 +9,14 @@ const BASE = {
   eventDate: "2026-12-02",
   startTime: "",
   endTime: "",
-  venue: "Mithibai College · room TBA",
-  fee: null,
+  venue: "SVKM's Mithibai College",
+  fee: 0, // all ANIMAUX'26 events are free
   deadline: "2026-11-30T23:59:00+05:30",
   coordinatorName: "Aditya Dubey / Subha Nandula",
   coordinatorPhone: "+91 91372 84809",
   coordinatorEmail: "animaux.zoology@gmail.com",
   registrationOpen: true,
   visible: true,
-  posterUrl: "",
   isSample: false,
 } satisfies Partial<FestEvent>;
 
@@ -31,6 +30,7 @@ const ev = (e: Input): FestEvent => {
     ...BASE,
     id: `e1000000-0000-4000-8000-${String(n).padStart(12, "0")}`,
     tagline: "",
+    prize: "",
     participation: "individual",
     teamMin: 1,
     teamMax: 1,
@@ -40,6 +40,7 @@ const ev = (e: Input): FestEvent => {
     extraQuestions: [],
     sortOrder: n,
     ...e,
+    posterUrl: e.posterUrl ?? `/events/${e.slug}.jpg`, // illustrated artwork, see scripts/event-art.mjs
   };
 };
 
@@ -47,6 +48,7 @@ export const eventsSeed: FestEvent[] = [
   // ───────────── MAIN EVENTS (as numbered on the flyer) ─────────────
   ev({
     slug: "the-last-trace",
+    prize: "Winners get goodies",
     name: "The Last Trace",
     tagline: "The flagship investigation of ANIMAUX'26.",
     category: "competition",
@@ -69,6 +71,7 @@ export const eventsSeed: FestEvent[] = [
   }),
   ev({
     slug: "trace-evidence-relay",
+    prize: "Winners get goodies",
     name: "Trace Evidence Relay",
     tagline: "Follow the Clues. Beat the Clock.",
     category: "competition",
@@ -88,6 +91,7 @@ export const eventsSeed: FestEvent[] = [
   }),
   ev({
     slug: "wild-shark-tank",
+    prize: "Winners get goodies",
     name: "Wild Shark Tank: Eco-Startup Pitch",
     tagline: "Pitch for the Planet. Negotiate for the Wild.",
     category: "competition",
@@ -158,6 +162,7 @@ export const eventsSeed: FestEvent[] = [
   }),
   ev({
     slug: "shutter-safari",
+    prize: "Winners get goodies",
     name: "Shutter Safari: Photography Competition",
     tagline: "Every picture has a story — what will yours reveal?",
     category: "creative",

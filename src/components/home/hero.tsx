@@ -89,7 +89,7 @@ export function Hero({ s }: { s: FestivalSettings }) {
       <div aria-hidden className="absolute inset-0 bg-gradient-to-r from-night/75 via-night/25 to-transparent lg:from-night/50 lg:via-transparent" />
 
       {/* Camera-trap HUD */}
-      <div aria-hidden className="pointer-events-none absolute inset-4 hidden sm:block sm:inset-6 lg:inset-y-24 lg:inset-x-10">
+      <div aria-hidden className="pointer-events-none absolute inset-x-6 top-20 bottom-6 hidden sm:block lg:inset-x-10 lg:top-24">
         <Corner className="left-0 top-0 border-l border-t" />
         <Corner className="right-0 top-0 border-r border-t" />
         <Corner className="bottom-0 left-0 border-b border-l" />
@@ -99,10 +99,10 @@ export function Hero({ s }: { s: FestivalSettings }) {
         </div>
         <div className="absolute right-12 top-2 font-mono text-[0.65rem] tracking-[0.3em] text-ivory/50">IR · NIGHT VISION</div>
         <HudClock className="absolute bottom-2 right-12 font-mono text-[0.65rem] tracking-[0.3em] text-ivory/50" />
-        <div className="absolute bottom-2 left-12 font-mono text-[0.65rem] tracking-[0.3em] text-ivory/50">SUBJECT: UNIDENTIFIED · MOTION DETECTED</div>
+        <div className="absolute bottom-2 left-12 hidden font-mono text-[0.65rem] tracking-[0.3em] text-ivory/50 lg:block">SUBJECT: UNIDENTIFIED · MOTION DETECTED</div>
       </div>
 
-      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 pt-28 pb-24 sm:px-6">
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 pt-32 pb-36 sm:px-6 sm:pb-40 lg:pt-36">
         <p className="eyebrow">{s.department} presents</p>
         <HeroTitle name={s.name} edition={s.edition} theme={s.theme} />
         <p className="mt-6 max-w-xl text-lg leading-relaxed text-ivory/80 sm:text-xl">{s.tagline}</p>

@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 import { createElement } from "react";
 import {
   ArrowUpRight, Brain, Camera, CalendarDays, Clock, Eye, Fingerprint, Flame, Footprints, IndianRupee, Lightbulb,
-  MapPin, Palette, PencilLine, Search, Target, Users, Waves, type LucideIcon,
+  MapPin, Palette, PencilLine, Search, Target, Trophy, Users, Waves, type LucideIcon,
 } from "lucide-react";
 import Link from "next/link";
 import type { PublicEvent } from "@/lib/queries";
@@ -64,7 +64,13 @@ export function EventCard({ event, onRegister, index = 0, number }: { event: Pub
       <Link href={`/events/${event.slug}`} className={cn("relative block overflow-hidden border-b border-ivory/10", mini ? "aspect-[16/6]" : "aspect-[16/8]")} tabIndex={-1} aria-hidden>
         {event.posterUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={event.posterUrl} alt="" loading="lazy" decoding="async" className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+          <>
+            <img src={event.posterUrl} alt="" loading="lazy" decoding="async" className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+            <div className="absolute inset-0 bg-gradient-to-t from-midnight/80 via-transparent to-transparent" />
+            {number !== undefined && (
+              <span className="absolute bottom-2 left-5 font-title text-5xl leading-none text-gold-soft drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)] sm:text-6xl">{number}.</span>
+            )}
+          </>
         ) : (
           <div className="relative h-full w-full bg-[radial-gradient(120%_120%_at_85%_20%,#3a2a1b,#17110c_70%)]">
             <div className="topo absolute inset-0 opacity-80" />
@@ -88,6 +94,11 @@ export function EventCard({ event, onRegister, index = 0, number }: { event: Pub
           </Link>
         </h3>
         {event.tagline && <p className="mt-1 font-display text-sm italic text-gold/90">{event.tagline}</p>}
+        {event.prize && (
+          <p className="mt-3 inline-flex items-center gap-2 self-start rounded-full border border-gold/40 bg-gold/10 px-3 py-1 text-xs font-semibold text-gold-soft">
+            <Trophy size={13} className="text-gold" /> {event.prize}
+          </p>
+        )}
         <p className="mt-2 line-clamp-3 text-sm text-ivory/70">{event.shortDescription}</p>
         <dl className="mt-5 grid grid-cols-2 gap-x-4 gap-y-2.5 text-xs text-ivory/75">
           <div className="flex items-center gap-2"><Users size={14} className="shrink-0 text-gold" /><dt className="sr-only">Participation</dt><dd>{participationLabel(event)}</dd></div>

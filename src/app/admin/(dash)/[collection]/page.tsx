@@ -5,7 +5,7 @@ import { requirePage } from "@/lib/auth";
 import { repo } from "@/lib/data";
 import type { CollectionName } from "@/lib/types";
 
-const COLLECTIONS: CollectionName[] = ["events", "team", "gallery", "schedule", "announcements", "faqs"];
+const COLLECTIONS: CollectionName[] = ["events", "team", "gallery", "schedule", "announcements", "faqs", "sponsors"];
 const isCollection = (c: string): c is CollectionName => (COLLECTIONS as string[]).includes(c);
 
 export async function generateMetadata({ params }: PageProps<"/admin/[collection]">): Promise<Metadata> {
