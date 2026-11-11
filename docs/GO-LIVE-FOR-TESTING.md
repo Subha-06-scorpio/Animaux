@@ -5,7 +5,7 @@ Every registration ends up in three places:
 2. a **Google Sheet** in the animaux Gmail's Drive
 3. an **email** to animaux.zoology@gmail.com
 
-**Golden rule:** sign up for every service below with **animaux.zoology@gmail.com**. The festival then owns the website, the registration data and the emails, rather than one student.
+**Accounts:** GitHub, Supabase and Vercel can use your own Gmail. Only the **Google Sheet** (Step 3b) must be created while signed in as **animaux.zoology@gmail.com**, so the festival account owns the registration list. Resend (Step 3) is optional: its free plan can only email the address you sign up with, so skip it unless you want registration emails in that inbox.
 
 You will create four free accounts:
 
@@ -44,7 +44,7 @@ You will create four free accounts:
    - `anon` / publishable key
    - `service_role` / secret key (**never share this one**)
 
-## Step 3 — Resend: registration emails (5 min)
+## Step 3 — Resend: registration emails (optional, 5 min)
 1. Go to https://resend.com/signup and sign up with **animaux.zoology@gmail.com**. This must be the same Gmail.
 2. **API Keys → Create API key**. Give it "Sending access" and copy the key (it starts with `re_`).
 3. That's all. Every registration and help-desk message is now emailed to animaux.zoology@gmail.com.
