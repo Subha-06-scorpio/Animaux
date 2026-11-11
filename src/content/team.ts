@@ -23,7 +23,6 @@ const ROWS: Row[] = [
   ["Anisha Sagare", "Sub-Head · Marketing", "organizing", "Marketing", "Builds the network of sponsors and stalls, bringing vital backing to the Animaux operation."],
   ["Mihika Mishra", "Head · Public Relations", "organizing", "Public Relations", "Takes the case across campuses, turning college visits and conversations into invitations to investigate."],
   ["Prachi Gupta", "Head · Hospitality", "organizing", "Hospitality", "Makes investigation headquarters a welcoming space, keeping guests, teachers and participants well cared for."],
-  ["Richa", "Sub-Head · Hospitality", "organizing", "Hospitality", ""],
 ];
 
 /** Two-line department mottos from the theme doc, shown on the Team page. */

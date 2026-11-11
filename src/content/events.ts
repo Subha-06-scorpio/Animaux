@@ -159,12 +159,13 @@ export const eventsSeed: FestEvent[] = [
   ev({
     slug: "shutter-safari",
     name: "Shutter Safari: Photography Competition",
-    tagline: "Caught on camera. Submitted as evidence.",
+    tagline: "Every picture has a story — what will yours reveal?",
     category: "creative",
     tier: "main",
-    shortDescription: "Wildlife and nature photography competition. Upload your photograph when you register.",
+    shortDescription:
+      "Capture the beauty, mystery and unexpected details of the natural world — and upload your photograph when you register.",
     description:
-      "Point, focus, capture the wild. Shutter Safari is the photography competition of ANIMAUX'26 — upload your photograph with your registration. The full brief, theme and judging criteria will be announced soon.",
+      "Every picture has a story — what will yours reveal? Capture the beauty, mystery, and unexpected details of the natural world through your lens. From a bird in motion to the tiny life hidden beneath a leaf, turn an ordinary moment into an extraordinary frame.\n\nPlay with light, perspective, and composition to create a photograph that makes people pause and look closer. Whether you focus on wildlife, plants, or nature’s fascinating patterns, let your creativity shine and show us the wild through your eyes!",
     extraQuestions: [
       { id: "photo", label: "Upload your photograph (JPG, PNG or WebP · up to 10 MB)", type: "file", required: true },
       { id: "caption", label: "Title or caption for your photo", type: "text", required: false },
@@ -173,12 +174,14 @@ export const eventsSeed: FestEvent[] = [
   }),
   ev({
     slug: "strokes-of-wild",
-    name: "Strokes of Wild: Coaster-Making",
-    tagline: "Handmade. Wild. Yours to keep.",
+    name: "Strokes of Wild: Coaster for Conservation",
+    tagline: "Small canvas, wild possibilities!",
     category: "creative",
     tier: "main",
-    shortDescription: "Paint and craft wildlife-inspired coasters. Full brief coming soon.",
-    description: "A hands-on creative event where you design your own wildlife-inspired coaster. The full brief and materials list will be announced soon.",
+    shortDescription:
+      "Turn a simple coaster into a colourful celebration of nature — animal designs, leafy patterns, marine scenes or a conservation message.",
+    description:
+      "Small canvas, wild possibilities! Turn a simple coaster into a colourful celebration of nature with animal-inspired designs, leafy patterns, marine scenes, or a conservation message close to your heart. Experiment with colours and details to create something that’s both useful and uniquely yours.\n\nWhether your style is bold, playful, or beautifully minimal, this is your chance to bring the natural world to the table. Let your imagination run wild, one coaster at a time!",
     eligibility: "Details to be announced.",
   }),
 
