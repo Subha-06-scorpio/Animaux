@@ -11,7 +11,7 @@ export const env = {
   organiserEmail: process.env.ORGANISER_EMAIL ?? "",
   sheetWebhookUrl: process.env.GOOGLE_SHEET_WEBHOOK_URL ?? "",
   sheetSecret: process.env.GOOGLE_SHEET_SECRET ?? "",
-  siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+  siteUrl: (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").trim().replace(/\/+$/, ""),
   localAdminPassword: process.env.LOCAL_ADMIN_PASSWORD ?? "",
   sessionSecret: process.env.LOCAL_SESSION_SECRET ?? "",
   ipSalt: process.env.IP_HASH_SALT ?? "animaux-default-salt",
