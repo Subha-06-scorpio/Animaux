@@ -5,7 +5,7 @@ import { dataMode, env } from "@/lib/config";
 import { repo, DuplicateRegistrationError } from "@/lib/data";
 import { admin as serviceClient } from "@/lib/data/supabase";
 import { SUBMISSION_MAX_BYTES, SUBMISSION_TYPES } from "@/lib/uploads";
-import { sendRegistrationEmail } from "@/lib/email";
+import { notifyOrganisersOfEnquiry, notifyOrganisersOfRegistration, sendRegistrationEmail } from "@/lib/email";
 import { enquirySchema, registrationSchema } from "@/lib/schemas";
 import { clientIp, hashIp, makeRegCode, rateLimit } from "@/lib/security";
 import type { Registration } from "@/lib/types";
@@ -89,7 +89,7 @@ export async function registerAction(input: unknown): Promise<RegisterResult> {
     }
     if (!reg) throw new Error("Could not allocate a registration ID");
 
-    const emailSent = await sendRegistrationEmail(reg, ev, settings);
+    const [emailSent] = await Promise.all([sendRegistrationEmail(reg, ev, settings), notifyOrganisersOfRegistration(reg, ev, settings)]);
     if (emailSent) await r.updateRegistration(reg.id, { emailSent: true });
 
     return { ok: true, regCode: reg.regCode, eventName: ev.name, emailSent, email: reg.email };
@@ -112,7 +112,9 @@ export async function enquiryAction(input: unknown): Promise<EnquiryResult> {
     const { website, ...d } = parsed.data;
     if (website) return { ok: true };
 
-    await repo().createEnquiry({ id: randomUUID(), ...d, status: "new", createdAt: new Date().toISOString() });
+    const enquiry = { id: randomUUID(), ...d, status: "new" as const, createdAt: new Date().toISOString() };
+    await repo().createEnquiry(enquiry);
+    await notifyOrganisersOfEnquiry(enquiry, await repo().getSettings());
     return { ok: true };
   } catch (e) {
     console.error("enquiryAction failed", e);

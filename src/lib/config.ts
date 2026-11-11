@@ -8,6 +8,7 @@ export const env = {
   storageBucket: process.env.SUPABASE_STORAGE_BUCKET ?? "media",
   resendKey: process.env.RESEND_API_KEY ?? "",
   emailFrom: process.env.EMAIL_FROM ?? "",
+  organiserEmail: process.env.ORGANISER_EMAIL ?? "",
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   localAdminPassword: process.env.LOCAL_ADMIN_PASSWORD ?? "",
   sessionSecret: process.env.LOCAL_SESSION_SECRET ?? "",
@@ -15,7 +16,14 @@ export const env = {
 };
 
 export const supabaseConfigured = Boolean(env.supabaseUrl && env.supabaseAnonKey && env.supabaseServiceKey);
+/** Participant confirmations need a verified sending domain (EMAIL_FROM). */
 export const emailConfigured = Boolean(env.resendKey && env.emailFrom);
+/**
+ * Organiser copies only need a Resend key: Resend's shared test sender
+ * (onboarding@resend.dev) may email the address the Resend account was created
+ * with — so create it with the festival inbox.
+ */
+export const notifyConfigured = Boolean(env.resendKey);
 
 /**
  * "local" mode stores data in a JSON file (.data/db.json). It exists so the

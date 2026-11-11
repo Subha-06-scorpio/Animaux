@@ -27,7 +27,7 @@ export const festivalSeed: FestivalSettings = {
   phone: "+91 91372 84809",
   contacts: ["Aditya Dubey | +91 91372 84809", "Subha Nandula | +91 84540 26143"],
   whatsapp: "",
-  instagram: "",
+  instagram: "https://www.instagram.com/animaux.mithibai/",
   brochureUrl: "https://canva.link/nziclf8o20e187l",
   registrationsOpen: true,
   guidelines: [
@@ -78,7 +78,7 @@ export const scheduleSeed: ScheduleItem[] = [
   slot(7, "Flood Zone: Survive the Wild", "event", "flood-zone"),
   slot(8, "7 Steps", "event", "7-steps"),
   slot(9, "Shutter Safari: Photography Competition", "event", "shutter-safari"),
-  slot(10, "Strokes of Wild: Coaster for Conservation", "event", "strokes-of-wild"),
+  slot(10, "Strokes of Wild", "event", "strokes-of-wild"),
   slot(11, "Mini events — Pictionary, Wild Aim, Wild Eye, Fingerprint Paintings, Who Am I?, Memory Game", "other"),
   slot(12, "Verdicts, prize distribution & closing", "ceremony"),
 ];

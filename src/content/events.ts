@@ -174,7 +174,7 @@ export const eventsSeed: FestEvent[] = [
   }),
   ev({
     slug: "strokes-of-wild",
-    name: "Strokes of Wild: Coaster for Conservation",
+    name: "Strokes of Wild",
     tagline: "Small canvas, wild possibilities!",
     category: "creative",
     tier: "main",
