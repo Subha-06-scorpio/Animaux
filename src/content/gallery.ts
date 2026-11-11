@@ -22,7 +22,22 @@ const G: Array<[string, GalleryItem["aspect"], string, GalleryItem["type"]?]> = 
   ["Memories from Previous Editions", "portrait", "Prize distribution (placeholder)"],
 ];
 
-export const gallerySeed: GalleryItem[] = G.map(([category, aspect, caption, type], i) => ({
+const POSTER: GalleryItem = {
+  id: "9a000000-0000-4000-8000-000000000100",
+  type: "image",
+  url: "/animaux26-flyer.jpg",
+  thumbnailUrl: "",
+  caption: "Official poster — Echoes of the Wild: The Survival Files",
+  category: "Posters and Artwork",
+  takenOn: "",
+  eventLabel: "ANIMAUX’26",
+  aspect: "portrait",
+  visible: true,
+  sortOrder: -1,
+  isSample: false,
+};
+
+export const gallerySeed: GalleryItem[] = [POSTER, ...G.map(([category, aspect, caption, type], i) => ({
   id: `9a000000-0000-4000-8000-${String(i + 1).padStart(12, "0")}`,
   type: type ?? "image",
   url: "",
@@ -35,4 +50,4 @@ export const gallerySeed: GalleryItem[] = G.map(([category, aspect, caption, typ
   visible: true,
   sortOrder: i,
   isSample: true,
-}));
+}))];

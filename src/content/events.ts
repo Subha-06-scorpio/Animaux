@@ -1,200 +1,248 @@
 import type { FestEvent } from "@/lib/types";
 
 /**
- * SEED CONTENT — SIX SAMPLE EVENTS (ANIMAUX has 6 main events; names TBC).
- *
- * These are editable examples so the site can be designed and tested.
- * They are flagged `isSample: true` and display a "Sample" badge.
- * Replace them from Admin → Events with the real event list (names, rules,
- * fees, dates, coordinators). Fees are `null` (shown as "TBA") on purpose.
+ * SEED CONTENT — ANIMAUX'26 events, from the organisers' event overview,
+ * the theme doc and the official flyer. Times, venues and fees were not
+ * provided yet, so they show as "TBA" until filled in from Admin → Events.
  */
-const COORD = {
-  coordinatorName: "Coordinator name (placeholder)",
-  coordinatorPhone: "+91 00000 00000",
-  coordinatorEmail: "events@example.com",
+const BASE = {
+  eventDate: "2026-12-02",
+  startTime: "",
+  endTime: "",
+  venue: "Mithibai College · room TBA",
+  fee: null,
+  deadline: "2026-11-30T23:59:00+05:30",
+  coordinatorName: "Aditya Dubey / Subha Nandula",
+  coordinatorPhone: "+91 91372 84809",
+  coordinatorEmail: "animaux.zoology@gmail.com",
+  registrationOpen: true,
+  visible: true,
+  posterUrl: "",
+  isSample: false,
+} satisfies Partial<FestEvent>;
+
+type Input = Pick<FestEvent, "slug" | "name" | "category" | "tier" | "shortDescription" | "description"> &
+  Partial<Omit<FestEvent, "id" | "sortOrder">>;
+
+let n = 0;
+const ev = (e: Input): FestEvent => {
+  n += 1;
+  return {
+    ...BASE,
+    id: `e1000000-0000-4000-8000-${String(n).padStart(12, "0")}`,
+    tagline: "",
+    participation: "individual",
+    teamMin: 1,
+    teamMax: 1,
+    capacity: null,
+    rules: [],
+    eligibility: "",
+    extraQuestions: [],
+    sortOrder: n,
+    ...e,
+  };
 };
 
-const id = (n: number) => `e0000000-0000-4000-8000-0000000000${String(n).padStart(2, "0")}`;
-
 export const eventsSeed: FestEvent[] = [
-  {
-    id: id(1),
-    slug: "forensic-case-challenge",
-    name: "Forensic Case Challenge",
+  // ───────────── MAIN EVENTS (as numbered on the flyer) ─────────────
+  ev({
+    slug: "the-last-trace",
+    name: "The Last Trace",
+    tagline: "The flagship investigation of ANIMAUX'26.",
     category: "competition",
-    shortDescription: "A staged wildlife-crime scene. Read the evidence, reconstruct the story, name the culprit.",
+    tier: "main",
+    shortDescription:
+      "An endangered animal found dead under suspicious circumstances. 45 minutes to hunt clues, decode forensic reports and crack the case.",
     description:
-      "Teams step into a mock wildlife crime scene and work through evidence stations — hair, feathers, pugmark casts and lab reports — to reconstruct what happened. Judged on reasoning, accuracy and presentation. (Sample description — replace with the real brief.)",
-    posterUrl: "",
-    eventDate: "2026-12-02",
-    startTime: "11:00",
-    endTime: "13:00",
-    venue: "Zoology Lab 1 (placeholder)",
+      "The forest holds a secret — and your team has just 45 minutes to uncover it. An endangered animal has been found dead under suspicious circumstances, leaving behind scattered clues, conflicting accounts, and a trail that demands a closer look. Enter The Last Trace, the flagship event of Animaux 2026, where the chase of a treasure hunt meets the suspense of an escape room in a wildlife-forensics investigation.\n\nFollow the trail, hunt for hidden evidence, and solve interconnected puzzles to piece together what happened. Examine mock forensic reports, reconstruct the timeline, question the suspects’ stories, and establish the motive. But finding a clue is only half the challenge: collect and label it correctly, or risk having crucial evidence declared compromised. Can your team connect the final dots and escape with the truth — or will the wild keep its secret?",
     participation: "team",
-    teamMin: 2,
-    teamMax: 3,
-    fee: null,
-    deadline: "2026-11-30T23:59:00+05:30",
+    teamMin: 4,
+    teamMax: 5,
+    capacity: 5,
     rules: [
-      "Teams of 2–3 members (sample rule).",
-      "No phones or internet during the challenge.",
-      "Evidence must not be removed from stations.",
+      "Format: team-based treasure hunt and escape-room investigation.",
+      "Participation: 4–5 teams of 4–5 members each.",
+      "Duration: approximately 45 minutes per session.",
+      "One continuous investigation combining clue-hunting, puzzles and case-solving.",
+      "Evidence must be collected and labelled correctly — mishandled clues may be declared compromised.",
     ],
-    eligibility: "Undergraduate and postgraduate students (placeholder).",
-    ...COORD,
-    registrationOpen: true,
-    visible: true,
-    capacity: 20,
-    extraQuestions: [
-      { id: "experience", label: "Has anyone on the team done a forensics course before?", type: "select", options: ["Yes", "No"], required: true },
-    ],
-    sortOrder: 0,
-    isSample: true,
-  },
-  {
-    id: id(2),
-    slug: "wildlife-quiz",
-    name: "Wildlife Quiz",
-    category: "quiz",
-    shortDescription: "From animal behaviour to conservation history — a fast-paced quiz for the curious.",
-    description:
-      "A written preliminary round followed by an on-stage final with audio, visual and rapid-fire rounds. (Sample description.)",
-    posterUrl: "",
-    eventDate: "2026-12-02",
-    startTime: "14:00",
-    endTime: "15:30",
-    venue: "Seminar Hall (placeholder)",
-    participation: "team",
-    teamMin: 2,
-    teamMax: 2,
-    fee: null,
-    deadline: "2026-11-30T23:59:00+05:30",
-    rules: ["Teams of exactly 2 (sample rule).", "Quizmaster's decision is final."],
-    eligibility: "Open to all students (placeholder).",
-    ...COORD,
-    registrationOpen: true,
-    visible: true,
-    capacity: null,
-    extraQuestions: [],
-    sortOrder: 1,
-    isSample: true,
-  },
-  {
-    id: id(3),
-    slug: "wildlife-photography",
-    name: "Through the Lens — Wildlife Photography",
-    category: "creative",
-    shortDescription: "Submit your best frames of wild life — from backyard insects to birds in flight.",
-    description:
-      "An online-submission photography contest. Ethical wildlife photography only: no baiting, no disturbing nests. (Sample description.)",
-    posterUrl: "",
-    eventDate: "2026-12-02",
-    startTime: "10:00",
-    endTime: "17:00",
-    venue: "Online submission + exhibition (placeholder)",
-    participation: "individual",
-    teamMin: 1,
-    teamMax: 1,
-    fee: null,
-    deadline: "2026-11-30T23:59:00+05:30",
-    rules: ["Maximum 3 entries per person (sample).", "Minimal editing only; no composites.", "Photos must be your own."],
-    eligibility: "Open to all students (placeholder).",
-    ...COORD,
-    registrationOpen: true,
-    visible: true,
-    capacity: null,
-    extraQuestions: [
-      { id: "camera", label: "What will you shoot with?", type: "select", options: ["Phone", "DSLR / Mirrorless", "Other"], required: false },
-    ],
-    sortOrder: 2,
-    isSample: true,
-  },
-  {
-    id: id(4),
-    slug: "poster-presentation",
-    name: "Scientific Poster Presentation",
+  }),
+  ev({
+    slug: "trace-evidence-relay",
+    name: "Trace Evidence Relay",
+    tagline: "Follow the Clues. Beat the Clock.",
     category: "competition",
-    shortDescription: "Present research or a review on biodiversity, conservation or animal science.",
+    tier: "main",
+    shortDescription:
+      "A fast-paced race through hands-on forensic checkpoints: soil pH matching, fingerprint lifting, mock fur comparison and chemical colour tests.",
     description:
-      "Display a scientific poster and defend it before a panel of judges. Topics around the festival themes are encouraged. (Sample description.)",
-    posterUrl: "",
-    eventDate: "2026-12-02",
-    startTime: "11:00",
-    endTime: "13:00",
-    venue: "Exhibition Corridor (placeholder)",
+      "A little soil, a stray strand of fur, an almost invisible fingerprint — could you spot the clues that others overlook? Trace Evidence Relay sends your team through a series of hands-on forensic checkpoints, each testing a different investigative skill. Match soil samples using pH tests, lift fingerprints, compare mock fur samples, and interpret colour changes in a simulated chemical test.\n\nWhether your team tackles the stations together or sends members forward in relay turns, clear communication and careful observation will be your strongest tools. Every checkpoint demands both speed and precision: rushing ahead won’t help if the evidence points elsewhere! Bring your sharpest eyes and steadiest hands — this race belongs to the team that can think like investigators.",
     participation: "team",
-    teamMin: 1,
-    teamMax: 2,
-    fee: null,
-    deadline: "2026-11-30T23:59:00+05:30",
-    rules: ["Poster size: [placeholder].", "Abstract to be submitted before the deadline.", "Max 2 presenters."],
-    eligibility: "UG / PG students (placeholder).",
-    ...COORD,
-    registrationOpen: true,
-    visible: true,
-    capacity: null,
-    extraQuestions: [
-      { id: "title", label: "Working title of your poster", type: "text", required: true },
+    teamMin: 4,
+    teamMax: 8,
+    rules: [
+      "Format: team-based forensic station relay.",
+      "Participation: 4–8 members per team.",
+      "Station-based progression featuring four task types.",
     ],
-    sortOrder: 3,
-    isSample: true,
-  },
-  {
-    id: id(6),
-    slug: "biodiversity-trail-hunt",
-    name: "Biodiversity Trail Hunt",
-    category: "game",
-    shortDescription: "A campus-wide trail of clues, tracks and riddles. Fastest pack wins.",
+  }),
+  ev({
+    slug: "wild-shark-tank",
+    name: "Wild Shark Tank: Eco-Startup Pitch",
+    tagline: "Pitch for the Planet. Negotiate for the Wild.",
+    category: "competition",
+    tier: "main",
+    shortDescription:
+      "Pitch a business, product or technology that tackles a wildlife or environmental challenge — and survive the Sharks’ questions.",
     description:
-      "Follow footprints, decode clues and spot hidden species across the campus. (Sample description.)",
-    posterUrl: "",
-    eventDate: "2026-12-02",
-    startTime: "14:00",
-    endTime: "16:00",
-    venue: "Campus grounds (placeholder)",
+      "The wild has problems. Your team might have the next big solution. Step into Wild Shark Tank, where conservation meets entrepreneurship and bold ideas face some sharp questions. Develop a business, product, or technology that addresses a wildlife or environmental challenge, then convince a panel of “Sharks” that your solution deserves their backing.\n\nA compelling pitch is just the beginning. Explain how your idea works, defend your business model, demonstrate its conservation impact, and navigate simulated investment negotiations. Reach the top three, and a surprise challenge will test your ability to adapt when the conditions change. Will your idea stand up to scrutiny — or get eaten alive in the tank?",
     participation: "team",
     teamMin: 3,
-    teamMax: 4,
-    fee: null,
-    deadline: "2026-11-30T23:59:00+05:30",
-    rules: ["Teams of 3–4 (sample).", "Stay within campus boundaries.", "Do not disturb plants or animals."],
-    eligibility: "Open to all students (placeholder).",
-    ...COORD,
-    registrationOpen: true,
-    visible: true,
-    capacity: null,
-    extraQuestions: [],
-    sortOrder: 4,
-    isSample: true,
-  },
-  {
-    id: id(7),
-    slug: "wild-canvas",
-    name: "Wild Canvas — Sketch & Paint",
-    category: "creative",
-    shortDescription: "Bring endangered species to life on paper. Theme revealed on the spot.",
-    description:
-      "An on-the-spot art event. Participants bring their own materials; paper will be provided. (Sample description.)",
-    posterUrl: "",
-    eventDate: "2026-12-02",
-    startTime: "14:00",
-    endTime: "16:00",
-    venue: "Studio Room (placeholder)",
-    participation: "individual",
-    teamMin: 1,
-    teamMax: 1,
-    fee: null,
-    deadline: "2026-11-30T23:59:00+05:30",
-    rules: ["Bring your own colours (sample).", "Theme announced at the start."],
-    eligibility: "Open to all students (placeholder).",
-    ...COORD,
-    registrationOpen: true,
-    visible: true,
-    capacity: null,
-    extraQuestions: [
-      { id: "medium", label: "Preferred medium", type: "select", options: ["Pencil / Charcoal", "Watercolour", "Acrylic", "Mixed media"], required: false },
+    teamMax: 5,
+    rules: [
+      "Format: team-based eco-startup pitch competition.",
+      "Participation: 3–5 members per team; 8–10 teams are shortlisted for the live round.",
+      "Rounds: shortlisting → live pitches with questions and simulated negotiations → surprise challenge for the top three teams.",
     ],
-    sortOrder: 5,
-    isSample: true,
-  },
+    extraQuestions: [
+      { id: "idea", label: "Your startup idea in one or two lines", type: "textarea", required: true },
+    ],
+  }),
+  ev({
+    slug: "the-poachers-tale",
+    name: "The Poacher’s Tale",
+    tagline: "Protect the Sanctuary. Suspect Everyone.",
+    category: "game",
+    tier: "main",
+    shortDescription:
+      "Rangers build the Sanctuary Fund while secret Poachers work against them. Tell true or tall wildlife tales, cross-examine, and vote at the Campfire Council.",
+    description:
+      "Welcome to the sanctuary, where everyone claims to be a protector — but not everyone is telling the truth. In The Poacher’s Tale, Rangers work together to complete missions and build a shared Sanctuary Fund while secret Poachers hide among them, waiting for their chance to strike. Every conversation could reveal a clue, conceal a lie, or turn an ally into your prime suspect.\n\nDuring Wild Truth or Tall Tale, teams present true or invented wildlife stories while their opponents cross-examine, debate, and deliver a verdict. Those decisions influence suspicion, clues, and protection before the Campfire Council votes to banish a suspected Poacher. Then night falls, and the hidden threat makes its move. Can the Rangers expose every Poacher before the enemy matches their numbers or the Sanctuary Fund collapses?",
+    rules: [
+      "Format: group-based social-deduction game with secret Ranger and Poacher roles.",
+      "Rangers win by banishing every Poacher; Poachers win by matching the Rangers’ numbers or collapsing the Fund.",
+    ],
+    eligibility: "Register individually. Group sizes and limits to be announced.",
+  }),
+  ev({
+    slug: "flood-zone",
+    name: "Flood Zone: Survive the Wild",
+    tagline: "Limited Ground. Changing Rules. One Team to Save.",
+    category: "game",
+    tier: "main",
+    shortDescription:
+      "Safe ground is shrinking. Cross a simulated danger zone on limited platforms while animal-call signals change the rules — leave no one behind.",
+    description:
+      "The route ahead is dangerous, safe ground is limited, and your team must find a way across. Flood Zone: Survive the Wild places participants in a simulated flood, fire, or trap zone where a handful of safe platforms is all that stands between a clever crossing and a failed plan. Choose your moves carefully, shift your platforms forward, and keep every teammate in the picture.\n\nJust when you find your rhythm, animal-call signals change the rules and force you to rethink your strategy. Later rounds add another layer of investigation: follow the evidence to identify a safer route rather than relying on guesswork. Finalists face an extra responsibility — a toy baby animal that must be carried to safety. In this survival challenge, the strongest team isn’t simply the fastest; it’s the one that can adapt without leaving anyone behind.",
+    participation: "team",
+    teamMin: 4,
+    teamMax: 5,
+    capacity: 8,
+    rules: [
+      "Format: team-based migration and survival challenge.",
+      "Participation: 6–8 teams of 4–5 members each.",
+      "Animal-call signals change the rules mid-round; finalists carry a toy baby animal to safety.",
+    ],
+  }),
+  ev({
+    slug: "7-steps",
+    name: "7 Steps",
+    tagline: "Trust Your Knowledge. Earn Your Next Move.",
+    category: "quiz",
+    tier: "main",
+    shortDescription:
+      "The counter has turned away. Answer right to step forward, wrong to step back — how far can you get before they turn around?",
+    description:
+      "The counter has turned away, the countdown has begun, and every answer could change your position. In 7 Steps, participants line up behind a volunteer facing backwards while other volunteers put their knowledge to the test. A correct answer earns you one step forward; a wrong answer sends you one step back. There’s no team to carry you through this one — your progress rests on your own answers.\n\nAs the counting continues, every question becomes a chance to gain ground or lose it. Keep your thoughts clear, resist the pressure, and make each response count. How far can you advance before the counter finishes and turns around?",
+    rules: ["Format: individual question-and-step game.", "Countdown-based gameplay."],
+  }),
+  ev({
+    slug: "shutter-safari",
+    name: "Shutter Safari: Photography Competition",
+    tagline: "Caught on camera. Submitted as evidence.",
+    category: "creative",
+    tier: "main",
+    shortDescription: "Wildlife and nature photography competition. Upload your photograph when you register.",
+    description:
+      "Point, focus, capture the wild. Shutter Safari is the photography competition of ANIMAUX'26 — upload your photograph with your registration. The full brief, theme and judging criteria will be announced soon.",
+    extraQuestions: [
+      { id: "photo", label: "Upload your photograph (JPG, PNG or WebP · up to 10 MB)", type: "file", required: true },
+      { id: "caption", label: "Title or caption for your photo", type: "text", required: false },
+    ],
+    eligibility: "Details to be announced.",
+  }),
+  ev({
+    slug: "strokes-of-wild",
+    name: "Strokes of Wild: Coaster-Making",
+    tagline: "Handmade. Wild. Yours to keep.",
+    category: "creative",
+    tier: "main",
+    shortDescription: "Paint and craft wildlife-inspired coasters. Full brief coming soon.",
+    description: "A hands-on creative event where you design your own wildlife-inspired coaster. The full brief and materials list will be announced soon.",
+    eligibility: "Details to be announced.",
+  }),
+
+  // ───────────── MINI EVENTS (on the spot, no online registration) ─────────────
+  ev({
+    slug: "wildlife-pictionary",
+    name: "Wildlife Pictionary",
+    category: "game",
+    tier: "mini",
+    shortDescription: "Draw it, act it, guess it — animal names, behaviours and wildlife terms, with animal-call rounds.",
+    description:
+      "A timed drawing-and-acting game in which participants communicate animal names, behaviours, and wildlife terms without directly naming them. Team members rotate as the artist or performer while their teammates guess, with animal calls and soundscapes providing prompts in special rounds.",
+    participation: "team",
+    teamMin: 2,
+    teamMax: 4,
+    rules: ["2–4 members per team."],
+  }),
+  ev({
+    slug: "wild-aim",
+    name: "Wild Aim: Tranq & Snap Shooting Range",
+    category: "game",
+    tier: "mini",
+    shortDescription: "Carnival-style ranger and wildlife-vet tasks with foam darts, soft-ball targets and phone photography.",
+    description:
+      "Identify animal calls, aim at designated targets, or photograph hidden and moving cutouts, depending on the station. The entire activity uses props rather than real animals or wildlife equipment. The dart station has 3–4 lanes.",
+    rules: ["Props only — no real animals or wildlife equipment.", "Dart station: 3–4 players at a time."],
+  }),
+  ev({
+    slug: "wild-eye",
+    name: "Wild Eye",
+    category: "quiz",
+    tier: "mini",
+    shortDescription: "See it once, hear it once — then answer. A rapid observation and memory challenge.",
+    description:
+      "Participants briefly view an animal-related image, video or object — or hear a sound — before answering questions without a repeat. Questions test species identity, markings, orientation, visible features and background details.",
+    participation: "team",
+    teamMin: 1,
+    teamMax: 3,
+    rules: ["Solo or teams of 2–3."],
+  }),
+  ev({
+    slug: "fingerprint-paintings",
+    name: "Fingerprint Paintings",
+    category: "creative",
+    tier: "mini",
+    shortDescription: "Turn your fingerprints into animal illustrations — a keepsake, or part of a shared wildlife mural.",
+    description:
+      "A relaxed creative activity in which participants use their fingerprints to form animal illustrations, adding details with pens or markers. Reference cards guide simple designs, with an optional forensic-themed introduction to fingerprint identification.",
+  }),
+  ev({
+    slug: "who-am-i",
+    name: "Who Am I?",
+    category: "quiz",
+    tier: "mini",
+    shortDescription: "A zoomed-in picture. One animal. Can you name it?",
+    description: "Participants are shown a zoomed-in picture of an animal and must identify it from that detail alone.",
+  }),
+  ev({
+    slug: "memory-game",
+    name: "Memory Game",
+    category: "game",
+    tier: "mini",
+    shortDescription: "20 cards, 10 animal pairs, 30 seconds. Match at least 5.",
+    description:
+      "Twenty cards are laid out — two of each animal, placed randomly. Match the pairs within 30 seconds; you need at least five matches to clear the round.",
+  }),
 ];

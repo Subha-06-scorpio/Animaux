@@ -13,7 +13,7 @@ export function Forensics() {
   const [open, setOpen] = useState<string>("01");
   return (
     <section id="forensics" className="relative overflow-hidden bg-midnight py-24 sm:py-32" aria-labelledby="forensics-title">
-      <div aria-hidden className="absolute inset-0 bg-[radial-gradient(60%_50%_at_85%_20%,rgba(199,106,55,0.12),transparent_70%)]" />
+      <div aria-hidden className="absolute inset-0 bg-[radial-gradient(60%_50%_at_85%_20%,rgba(185,101,47,0.12),transparent_70%)]" />
       <Helix className="absolute -left-10 top-10 hidden h-[36rem] text-olive/25 lg:block" turns={4} />
 
       <div className="relative mx-auto grid max-w-7xl gap-14 px-4 sm:px-6 lg:grid-cols-2 lg:gap-20">
@@ -67,7 +67,7 @@ export function Forensics() {
                         <span className="relative grid h-12 w-12 shrink-0 place-items-center">
                           {/* Evidence tent marker */}
                           <svg viewBox="0 0 48 48" className="absolute inset-0" aria-hidden>
-                            <path d="M6 42 L24 6 L42 42 Z" fill={isOpen ? "#C4A46A" : "transparent"} stroke="#C4A46A" strokeWidth="2" strokeLinejoin="round" />
+                            <path d="M6 42 L24 6 L42 42 Z" fill={isOpen ? "#cfa96b" : "transparent"} stroke="#cfa96b" strokeWidth="2" strokeLinejoin="round" />
                           </svg>
                           <span className={cn("relative mt-3 font-mono text-xs font-semibold", isOpen ? "text-midnight" : "text-gold")}>{e.tag}</span>
                         </span>

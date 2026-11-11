@@ -25,14 +25,14 @@ export async function GET(req: NextRequest) {
   const maxMembers = Math.max(0, ...regs.map((x) => x.teamMembers.length));
 
   const header = [
-    "Registration ID", "Event", "Status", "Registered at", "Full name", "Institution", "Department", "Year", "Email", "Phone", "Team name",
-    ...Array.from({ length: maxMembers }, (_, i) => [`Member ${i + 2} name`, `Member ${i + 2} email`, `Member ${i + 2} phone`]).flat(),
+    "Registration ID", "Event", "Status", "Registered at", "Full name", "College", "Year", "Contact number", "Email", "Team name",
+    ...Array.from({ length: maxMembers }, (_, i) => [`Member ${i + 2} name`, `Member ${i + 2} phone`]).flat(),
     ...questionIds.map(qLabel),
     "Email sent",
   ];
   const rows = regs.map((x) => [
-    x.regCode, x.eventName, x.status, x.createdAt, x.fullName, x.institution, x.department, x.year, x.email, x.phone, x.teamName,
-    ...Array.from({ length: maxMembers }, (_, i) => [x.teamMembers[i]?.name, x.teamMembers[i]?.email, x.teamMembers[i]?.phone]).flat(),
+    x.regCode, x.eventName, x.status, x.createdAt, x.fullName, x.institution, x.year, x.phone, x.email, x.teamName,
+    ...Array.from({ length: maxMembers }, (_, i) => [x.teamMembers[i]?.name, x.teamMembers[i]?.phone]).flat(),
     ...questionIds.map((q) => x.answers[q]),
     x.emailSent ? "yes" : "no",
   ]);

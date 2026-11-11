@@ -2,9 +2,9 @@ import { Feather, FootprintTrail, Paw } from "@/components/art/motifs";
 import { Reveal } from "@/components/ui/reveal";
 
 const PILLARS = [
-  { n: "01", t: "Investigate", d: "Step into wildlife forensics — where a feather, a footprint or a fragment of DNA can crack a case." },
-  { n: "02", t: "Protect", d: "Meet the species on the edge and the people, science and ideas fighting to keep them here." },
-  { n: "03", t: "Celebrate", d: "Quizzes, art, photography, games and workshops — a whole festival of curiosity, built by students." },
+  { n: "01", t: "Investigate", d: "Trace tracks, unravel clues and see how science helps investigate wildlife crime." },
+  { n: "02", t: "Survive", d: "Decode animal adaptations and the links between predators, prey and their changing habitats — nature’s survival stories." },
+  { n: "03", t: "Celebrate", d: "Pitches, photography, art and games — a whole day of curiosity and the excitement of asking “why?”." },
 ];
 
 export function Intro({ manifesto }: { manifesto: string }) {
@@ -13,11 +13,11 @@ export function Intro({ manifesto }: { manifesto: string }) {
       <Paw aria-hidden className="absolute -right-10 top-10 h-64 w-64 rotate-12 text-forest/[0.05]" />
       <div className="relative mx-auto grid max-w-7xl gap-16 px-4 sm:px-6 lg:grid-cols-12">
         <Reveal className="lg:col-span-5">
-          <p className="eyebrow text-olive">Field journal · Entry 01</p>
+          <p className="eyebrow text-olive">Case briefing · File 01</p>
           <h2 className="display mt-4 text-5xl text-forest sm:text-6xl">
-            Listen closely.
+            The wilderness is a casebook.
             <br />
-            <em className="text-ember">The wild is talking.</em>
+            <em className="text-ember">Science is the toolkit.</em>
           </h2>
           <div className="mt-10 flex items-center gap-8">
             <Feather className="h-16 w-16 text-olive" />
@@ -28,17 +28,18 @@ export function Intro({ manifesto }: { manifesto: string }) {
         </Reveal>
         <div className="space-y-6 text-lg leading-relaxed text-forest/85 lg:col-span-7">
           <Reveal>
-            <p className="first-letter:float-left first-letter:mr-3 first-letter:font-display first-letter:text-7xl first-letter:leading-[0.8] first-letter:text-ember">
-              Somewhere out there, a pangolin is curling into an armoured ball, a hornbill is quietly planting a forest one seed at a
-              time, and a forensic scientist is reading a single strand of hair like a page from a diary. <strong>ANIMAUX</strong> is where
-              we go looking for those stories.
+            <p className="first-letter:float-left first-letter:mr-3 first-letter:font-title first-letter:text-7xl first-letter:leading-[0.8] first-letter:text-ember">
+              Every footprint becomes a clue, every feather a piece of evidence, every echo a hint of a story waiting to be uncovered.
+              <strong> ANIMAUX 2026 — Echoes of the Wild: The Survival Files</strong> turns the Zoology Department’s celebration into a
+              lively hunt for life in the wild.
             </p>
           </Reveal>
           <Reveal delay={0.1}>
             <p>
-              It is the annual festival of the Department of Zoology, SVKM’s Mithibai College — one day of wildlife, science and wild ideas on 2 December 2026. Solve a mock
-              wildlife-crime case. Defend your research. Out-quiz your friends. Sketch an endangered species. Find out why every
-              species — the charismatic and the overlooked — deserves a future.
+              Step into the role of a wildlife investigator. Explore the mysteries of survival, decode the secrets behind animal
+              adaptations, and examine the connections between predators, prey and their changing habitats. From tracing tracks and
+              unravelling clues to exploring how science helps investigate wildlife crime, ANIMAUX invites you to look beyond what
+              meets the eye — on 2 December 2026 at SVKM’s Mithibai College.
             </p>
           </Reveal>
           <Reveal delay={0.15}>

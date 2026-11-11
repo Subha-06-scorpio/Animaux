@@ -41,8 +41,8 @@ export function CaseFile() {
         </div>
 
         {/* Case folder */}
-        <div className="relative mt-14 rounded-3xl border border-gold/25 bg-[linear-gradient(160deg,#2a2618,#16201b_45%,#101816)] p-5 shadow-2xl sm:p-10">
-          <span aria-hidden className="absolute -top-4 left-10 rounded-t-xl border border-b-0 border-gold/25 bg-[#2a2618] px-5 py-1.5 font-mono text-[0.65rem] tracking-[0.3em] text-gold">CASE № ANX-26-014</span>
+        <div className="relative mt-14 rounded-3xl border border-gold/25 bg-[linear-gradient(160deg,#2a2016,#1c150e_45%,#17110c)] p-5 shadow-2xl sm:p-10">
+          <span aria-hidden className="absolute -top-4 left-10 rounded-t-xl border border-b-0 border-gold/25 bg-[#2a2016] px-5 py-1.5 font-mono text-[0.65rem] tracking-[0.3em] text-gold">CASE № ANX-26-014</span>
           <motion.span
             aria-hidden
             initial={false}
@@ -61,7 +61,7 @@ export function CaseFile() {
                   <li key={c.tag} className={cn("flex gap-4 rounded-2xl border p-4 transition", shown ? "border-ivory/15 bg-midnight/70" : "border-dashed border-ivory/10")}>
                     <span className="relative grid h-11 w-11 shrink-0 place-items-center">
                       <svg viewBox="0 0 48 48" className="absolute inset-0" aria-hidden>
-                        <path d="M6 42 L24 6 L42 42 Z" fill={shown ? "#C4A46A" : "none"} stroke="#C4A46A" strokeWidth="2" strokeLinejoin="round" />
+                        <path d="M6 42 L24 6 L42 42 Z" fill={shown ? "#cfa96b" : "none"} stroke="#cfa96b" strokeWidth="2" strokeLinejoin="round" />
                       </svg>
                       <span className={cn("relative mt-3 font-mono text-xs font-bold", shown ? "text-night" : "text-gold")}>{c.tag}</span>
                     </span>

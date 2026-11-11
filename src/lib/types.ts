@@ -15,7 +15,7 @@ export const CATEGORY_LABELS: Record<EventCategory, string> = {
 export type ExtraQuestion = {
   id: string;
   label: string;
-  type: "text" | "textarea" | "select";
+  type: "text" | "textarea" | "select" | "file"; // file = participant photo upload
   options?: string[];
   required?: boolean;
 };
@@ -25,6 +25,8 @@ export type FestEvent = {
   slug: string;
   name: string;
   category: EventCategory;
+  tier: "main" | "mini"; // mini events are on-the-spot: no online registration
+  tagline: string;
   shortDescription: string;
   description: string;
   posterUrl: string;
@@ -55,8 +57,8 @@ export type TeamGroup = (typeof TEAM_GROUPS)[number];
 
 export const TEAM_SECTIONS: Record<TeamGroup, string[]> = {
   faculty: ["Teacher in Charge", "Faculty Mentors"],
-  leadership: ["Advisory", "Festival Coordinators"],
-  organizing: ["Events", "Logistics", "Productions", "Creatives", "Social Media", "Marketing", "PR", "Hospitality", "Volunteers"],
+  leadership: ["Coordinators", "Advisory"],
+  organizing: ["Events", "Creatives", "Social Media and Photography", "Logistics", "Productions", "Marketing", "Public Relations", "Hospitality", "Volunteers"],
 };
 
 export type TeamMember = {
@@ -147,6 +149,7 @@ export type FestivalSettings = {
   mapLink: string;
   email: string;
   phone: string;
+  contacts: string[]; // "Name | +91 phone" — shown on contact page & footer
   whatsapp: string; // digits only, with country code
   instagram: string;
   brochureUrl: string;
@@ -198,4 +201,4 @@ export type Enquiry = {
 
 export type EventStatus =
   | { open: true; label: string }
-  | { open: false; label: string; reason: "closed" | "deadline" | "full" | "paused" };
+  | { open: false; label: string; reason: "closed" | "deadline" | "full" | "paused" | "walkin" };

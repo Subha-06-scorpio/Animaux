@@ -8,6 +8,7 @@ The **Overview** page lists what still shows placeholder content. Work down it.
 ## Festival settings  *(admin role)*
 **Festival settings** controls site-wide details:
 - dates: these drive the countdown. Tick "Dates are confirmed" once final.
+- contact people (one per line, `Name | phone`), shown on the Contact page and in the footer
 - college, address and Google Maps embed
 - email, phone, WhatsApp and Instagram
 - brochure PDF upload
@@ -20,10 +21,11 @@ The **Overview** page lists what still shows placeholder content. Work down it.
 - **Participation**: Individual or Team. For teams, set the min and max size *including the leader*.
 - **Fee**: tick "TBA" until the fee is decided. Enter 0 for a free event.
 - **Deadline**: registration closes automatically after this time.
-- **Capacity**: optional. The event shows "Event full" once it is reached.
 - **Registration open**: untick to close registration immediately.
 - **Visible on website**: untick to hide a draft. New events start hidden.
-- **Extra registration questions**: add event-specific questions, such as a poster title or a T-shirt size.
+- **Event type**: *Main* events take online registrations. *Mini* events show "On the spot · walk in", with no form.
+- **Capacity**: for team events, this is the number of **teams** (e.g. The Last Trace = 5). Registration closes automatically when it's full.
+- **Extra registration questions**: add event-specific questions. Choose **Photo upload** to collect a photo with the registration (as for Shutter Safari). Photos appear as thumbnails in Registrations and as links in the CSV.
 - Untick **Mark as sample** on real events to remove the "Sample" badge.
 - Use the arrows to reorder events. The eye icon hides or shows an event.
 - An event that already has registrations can't be deleted. Hide it instead.

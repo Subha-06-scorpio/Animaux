@@ -3,6 +3,7 @@ import Link from "next/link";
 import { FootprintTrail, Paw } from "@/components/art/motifs";
 import { PlaceholderArt } from "@/components/art/placeholder";
 import { EventGrid } from "@/components/events/event-grid";
+import { mainEventNumbers } from "@/components/events/numbering";
 import { CaseFile } from "@/components/home/case-file";
 import { Endangered } from "@/components/home/endangered";
 import { Forensics } from "@/components/home/forensics";
@@ -16,7 +17,8 @@ import { formatDate } from "@/lib/utils";
 
 export default async function Home() {
   const [s, events, announcements, gallery] = await Promise.all([getSettings(), getPublicEvents(), getVisible("announcements"), getVisible("gallery")]);
-  const featured = [...events].sort((a, b) => Number(b.status.open) - Number(a.status.open)).slice(0, 3);
+  const main = events.filter((e) => e.tier === "main");
+  const mini = events.filter((e) => e.tier === "mini");
   const pinned = announcements.filter((a) => a.pinned).concat(announcements.filter((a) => !a.pinned)).slice(0, 3);
 
   return (
@@ -24,25 +26,45 @@ export default async function Home() {
       <Hero s={s} />
       <Ticker items={announcements} />
       <Intro manifesto={s.manifesto} />
+      {/* Main events — numbered like the flyer */}
+      <section id="events" className="relative bg-midnight py-24 sm:py-32" aria-labelledby="events-heading">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+            <SectionHeading
+              eyebrow={`${main.length} main events · 2 December 2026`}
+              title={<span id="events-heading">Open the <em className="text-gold">Survival Files</em></span>}
+              intro="Forensic escape rooms, evidence relays, startup pitches, social deduction and survival challenges. Register in two clicks — solo or as a team."
+            />
+            <Link href="/events" className="btn btn-ghost shrink-0 self-start md:self-auto">
+              All events <ArrowRight size={16} />
+            </Link>
+          </div>
+          <div className="mt-12">
+            <EventGrid events={main} numbers={mainEventNumbers(events)} className="grid gap-6 sm:grid-cols-2 xl:grid-cols-4" />
+          </div>
+          {mini.length > 0 && (
+            <Reveal className="mt-14 rounded-3xl border border-ivory/10 bg-night/60 p-6 sm:p-8">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <p className="eyebrow">Plus {mini.length} mini events · on the spot</p>
+                  <p className="mt-2 text-ivory/75">No registration needed — just walk in on the day.</p>
+                </div>
+                <Link href="/events?tier=mini" className="btn btn-ghost shrink-0">See mini events <ArrowRight size={16} /></Link>
+              </div>
+              <ul className="mt-6 flex flex-wrap gap-2">
+                {mini.map((m) => (
+                  <li key={m.id}><Link href={`/events/${m.slug}`} className="tag border-ivory/20 py-2 text-ivory/85 hover:border-gold hover:text-gold">{m.name}</Link></li>
+                ))}
+              </ul>
+            </Reveal>
+          )}
+        </div>
+      </section>
+
       <Forensics />
       <CaseFile />
       <FootprintTrail className="bg-midnight" />
       <Endangered />
-
-      {/* Events */}
-      <section className="relative bg-midnight py-24 sm:py-32" aria-labelledby="events-heading">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6">
-          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-            <SectionHeading eyebrow="Choose your expedition" title={<span id="events-heading">Events worth <em className="text-gold">chasing</em></span>} intro="Competitions, workshops, quizzes, creative challenges and games — register in two clicks." />
-            <Link href="/events" className="btn btn-ghost shrink-0 self-start md:self-auto">
-              All {events.length} events <ArrowRight size={16} />
-            </Link>
-          </div>
-          <div className="mt-12">
-            <EventGrid events={featured} />
-          </div>
-        </div>
-      </section>
 
       {/* Announcements + gallery teaser */}
       <section className="paper py-24 sm:py-28">

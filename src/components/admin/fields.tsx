@@ -4,6 +4,7 @@ import { ImageUp, Loader2, Plus, Trash2 } from "lucide-react";
 import { useId, useState } from "react";
 import { createUploadAction } from "@/app/actions/admin";
 import type { ExtraQuestion } from "@/lib/types";
+import { compressImage } from "@/lib/image";
 import { cn, fromLocalInput, toLocalInput } from "@/lib/utils";
 
 export type Field = {
@@ -39,7 +40,7 @@ export function FieldControl({ field: f, value, onChange, error }: Props) {
           <input id={id} type="number" className="field" value={value === null || value === undefined ? "" : String(value)} disabled={f.nullable && value === null} onChange={(e) => onChange(e.target.value === "" ? (f.nullable ? null : 0) : Number(e.target.value))} {...inv} />
           {f.nullable && (
             <label className="flex shrink-0 items-center gap-2 text-xs text-ivory/75">
-              <input type="checkbox" checked={value === null} onChange={(e) => onChange(e.target.checked ? null : 0)} className="accent-[#C4A46A]" /> {f.nullLabel ?? "None"}
+              <input type="checkbox" checked={value === null} onChange={(e) => onChange(e.target.checked ? null : 0)} className="accent-[#cfa96b]" /> {f.nullLabel ?? "None"}
             </label>
           )}
         </div>
@@ -58,7 +59,7 @@ export function FieldControl({ field: f, value, onChange, error }: Props) {
     case "boolean":
       return (
         <label className={cn("flex items-start gap-3 rounded-xl border border-ivory/10 p-3", f.span === 2 && "sm:col-span-2")}>
-          <input type="checkbox" checked={Boolean(value)} onChange={(e) => onChange(e.target.checked)} className="mt-1 h-4 w-4 accent-[#C4A46A]" />
+          <input type="checkbox" checked={Boolean(value)} onChange={(e) => onChange(e.target.checked)} className="mt-1 h-4 w-4 accent-[#cfa96b]" />
           <span>
             <span className="text-sm font-medium">{f.label}</span>
             {f.help && <span className="block text-xs text-mist">{f.help}</span>}
@@ -98,23 +99,6 @@ export function FieldControl({ field: f, value, onChange, error }: Props) {
       {error && <p className="field-error">{error}</p>}
     </div>
   );
-}
-
-/** Resize large photos in the browser before upload (max 2000px, WebP). */
-async function compressImage(file: File): Promise<File> {
-  if (!/^image\/(jpeg|png|webp)$/.test(file.type) || file.size < 400_000) return file;
-  try {
-    const bmp = await createImageBitmap(file);
-    const scale = Math.min(1, 2000 / Math.max(bmp.width, bmp.height));
-    const canvas = document.createElement("canvas");
-    canvas.width = Math.round(bmp.width * scale);
-    canvas.height = Math.round(bmp.height * scale);
-    canvas.getContext("2d")!.drawImage(bmp, 0, 0, canvas.width, canvas.height);
-    const blob = await new Promise<Blob | null>((r) => canvas.toBlob(r, "image/webp", 0.82));
-    return blob && blob.size < file.size ? new File([blob], file.name.replace(/\.\w+$/, ".webp"), { type: "image/webp" }) : file;
-  } catch {
-    return file;
-  }
 }
 
 export async function uploadFile(raw: File, folder: string): Promise<string> {
@@ -189,13 +173,14 @@ function QuestionsEditor({ value, onChange }: { value: ExtraQuestion[]; onChange
             <option value="text">Short answer</option>
             <option value="textarea">Long answer</option>
             <option value="select">Choose from options</option>
+            <option value="file">Photo upload</option>
           </select>
           <button type="button" onClick={() => onChange(value.filter((_, j) => j !== i))} className="btn btn-ghost px-3" aria-label="Remove question"><Trash2 size={14} /></button>
           {q.type === "select" && (
             <input className="field sm:col-span-4" value={(q.options ?? []).join(", ")} placeholder="Options, separated by commas" onChange={(e) => set(i, { options: e.target.value.split(",").map((s) => s.trimStart()) })} onBlur={(e) => set(i, { options: e.target.value.split(",").map((s) => s.trim()).filter(Boolean) })} aria-label="Options" />
           )}
           <label className="flex items-center gap-2 text-xs sm:col-span-2">
-            <input type="checkbox" checked={!!q.required} onChange={(e) => set(i, { required: e.target.checked })} className="accent-[#C4A46A]" /> Required
+            <input type="checkbox" checked={!!q.required} onChange={(e) => set(i, { required: e.target.checked })} className="accent-[#cfa96b]" /> Required
           </label>
         </div>
       ))}

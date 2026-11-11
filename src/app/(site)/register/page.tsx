@@ -16,7 +16,7 @@ export default async function RegisterPage() {
   const events = await getPublicEvents();
   return (
     <>
-      <PageHero eyebrow="Registration desk" title={<>Leave your <em className="text-gold">mark</em>.</>} intro="No account, no hassle. Register for as many events as you like — the form remembers your details on this device.">
+      <PageHero eyebrow="Registration desk" title={<>Open your <em className="text-gold">case file</em>.</>} intro="Name, college, year, contact number — that’s it. No account needed. Register for as many main events as you like; the form remembers your details on this device.">
         <ol className="mt-10 grid gap-3 sm:grid-cols-3">
           {STEPS.map(([n, t, d]) => (
             <li key={n} className="rounded-2xl border border-ivory/10 bg-night/40 p-5">

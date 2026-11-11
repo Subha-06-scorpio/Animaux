@@ -11,7 +11,7 @@ const MIME: Record<string, string> = {
 export async function GET(_: Request, ctx: RouteContext<"/media/[...path]">) {
   const { path: parts } = await ctx.params;
   const name = parts.join("/");
-  if (!/^[\w-]+\.(jpg|png|webp|avif|gif|mp4|webm|mov|pdf)$/.test(name)) return new Response("Not found", { status: 404 });
+  if (!/^(submissions\/)?[\w-]+\.(jpg|png|webp|avif|gif|mp4|webm|mov|pdf)$/.test(name)) return new Response("Not found", { status: 404 });
   try {
     const buf = await fs.readFile(path.join(UPLOAD_DIR, name));
     return new Response(new Uint8Array(buf), {

@@ -9,6 +9,7 @@ import type { PublicEvent } from "@/lib/queries";
 import { CATEGORY_LABELS, EVENT_CATEGORIES, type EventCategory } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { EventCard } from "./event-card";
+import { mainEventNumbers } from "./numbering";
 import { RegistrationDialog } from "./registration-dialog";
 
 export function EventsExplorer({ events }: { events: PublicEvent[] }) {
@@ -19,6 +20,8 @@ export function EventsExplorer({ events }: { events: PublicEvent[] }) {
   const [q, setQ] = useState("");
   const [onlyOpen, setOnlyOpen] = useState(false);
   const [participation, setParticipation] = useState<"all" | "individual" | "team">("all");
+  const [tier, setTier] = useState<"main" | "mini" | "all">(params.get("tier") === "mini" ? "mini" : "main");
+  const numbers = useMemo(() => mainEventNumbers(events), [events]);
 
   // ?register=<slug> deep-links straight into the registration form.
   const registerSlug = params.get("register");
@@ -31,17 +34,29 @@ export function EventsExplorer({ events }: { events: PublicEvent[] }) {
     const s = q.trim().toLowerCase();
     return events.filter(
       (e) =>
+        (tier === "all" || e.tier === tier) &&
         (category === "all" || e.category === category) &&
         (participation === "all" || e.participation === participation) &&
         (!onlyOpen || e.status.open) &&
         (!s || `${e.name} ${e.shortDescription} ${e.venue}`.toLowerCase().includes(s)),
     );
-  }, [events, q, category, onlyOpen, participation]);
+  }, [events, q, category, onlyOpen, participation, tier]);
 
-  const counts = useMemo(() => Object.fromEntries(EVENT_CATEGORIES.map((c) => [c, events.filter((e) => e.category === c).length])), [events]);
+  const inTier = useMemo(() => events.filter((e) => tier === "all" || e.tier === tier), [events, tier]);
+  const counts = useMemo(() => Object.fromEntries(EVENT_CATEGORIES.map((c) => [c, inTier.filter((e) => e.category === c).length])), [inTier]);
+  const tierCount = (t: "main" | "mini") => events.filter((e) => e.tier === t).length;
 
   return (
     <>
+      <div role="tablist" aria-label="Event type" className="mb-6 inline-flex rounded-full border border-ivory/15 bg-night/60 p-1">
+        {([["main", `Main events · ${tierCount("main")}`], ["mini", `Mini events · ${tierCount("mini")}`], ["all", "All"]] as const).map(([t, label]) => (
+          <button key={t} role="tab" aria-selected={tier === t} type="button" onClick={() => { setTier(t); setCategory("all"); }} className={cn("rounded-full px-4 py-2 text-sm font-semibold transition sm:px-5", tier === t ? "bg-gold text-midnight" : "text-ivory/75 hover:text-gold")}>
+            {label}
+          </button>
+        ))}
+      </div>
+      {tier === "mini" && <p className="-mt-2 mb-6 text-sm text-ivory/70">Mini events are quick, on-the-spot games — no online registration. Just walk in on 2 December.</p>}
+
       <div className="sticky top-16 z-30 -mx-4 border-y border-ivory/10 bg-night/85 px-4 py-4 backdrop-blur-xl sm:mx-0 sm:rounded-2xl sm:border lg:top-20">
         <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
           <label className="relative flex-1">
@@ -61,14 +76,14 @@ export function EventsExplorer({ events }: { events: PublicEvent[] }) {
                   category === c ? "border-gold bg-gold text-midnight" : "border-ivory/15 text-ivory/80 hover:border-gold/60",
                 )}
               >
-                {c === "all" ? `All · ${events.length}` : `${CATEGORY_LABELS[c]} · ${counts[c]}`}
+                {c === "all" ? `All · ${inTier.length}` : `${CATEGORY_LABELS[c]} · ${counts[c]}`}
               </button>
             ))}
           </div>
         </div>
         <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-ivory/75">
           <label className="flex items-center gap-2">
-            <input type="checkbox" checked={onlyOpen} onChange={(e) => setOnlyOpen(e.target.checked)} className="accent-[#C4A46A]" /> Open for registration only
+            <input type="checkbox" checked={onlyOpen} onChange={(e) => setOnlyOpen(e.target.checked)} className="accent-[#cfa96b]" /> Open for registration only
           </label>
           <label className="flex items-center gap-2">
             Format
@@ -86,7 +101,7 @@ export function EventsExplorer({ events }: { events: PublicEvent[] }) {
         <div className="mt-10 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
           <AnimatePresence mode="popLayout">
             {filtered.map((e, i) => (
-              <EventCard key={e.id} event={e} index={i} onRegister={openReg} />
+              <EventCard key={e.id} event={e} index={i} number={numbers[e.id]} onRegister={openReg} />
             ))}
           </AnimatePresence>
         </div>

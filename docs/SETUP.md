@@ -10,6 +10,9 @@
 3. **Project Settings → API**: copy the Project URL, the `anon` key and the `service_role` key into `.env.local`. See `.env.example` for the variable names.
    > The service-role key bypasses security. Keep it server-side only. Never paste it into client code or anything prefixed `NEXT_PUBLIC_`.
 
+### Updating an existing project
+Run every file in `supabase/migrations/` in date order. Each one is safe to re-run. `20261111000000_survival_files.sql` adds main/mini events and taglines, and makes email optional.
+
 ## 2. Load the starter content
 Paste `supabase/seed.sql` into the **SQL Editor** and press **Run** (safe to re-run). Or, from a computer with Node installed:
 ```bash

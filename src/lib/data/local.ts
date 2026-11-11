@@ -106,7 +106,7 @@ export const localRepo: Repo = {
   createRegistration(r, ipHash) {
     return mutate((db) => {
       const active = db.registrations.filter((x) => x.eventId === r.eventId && x.status !== "cancelled");
-      if (active.some((x) => x.email === r.email)) throw new DuplicateRegistrationError("email");
+      if (r.email && active.some((x) => x.email === r.email)) throw new DuplicateRegistrationError("email");
       if (active.some((x) => normalizePhone(x.phone) === normalizePhone(r.phone))) throw new DuplicateRegistrationError("phone");
       db.registrations.push({ ...r, ipHash });
     });

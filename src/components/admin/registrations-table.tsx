@@ -71,13 +71,13 @@ export function RegistrationsTable({ regs, events, filters, canDelete, canWrite 
                   <td className="px-4 py-3 font-mono text-xs text-gold">{r.regCode}</td>
                   <td className="px-4 py-3">
                     <p className="font-medium">{r.fullName}</p>
-                    <p className="text-xs text-mist">{r.institution} · {r.department} · {r.year}</p>
+                    <p className="text-xs text-mist">{[r.institution, r.department, r.year].filter(Boolean).join(" · ")}</p>
                     {r.teamName && <p className="text-xs text-gold/80">Team “{r.teamName}” · {r.teamMembers.length + 1} members</p>}
                   </td>
                   <td className="px-4 py-3">{r.eventName}</td>
                   <td className="px-4 py-3 text-xs">
-                    <a href={`mailto:${r.email}`} className="block hover:text-gold">{r.email}</a>
-                    <a href={`tel:${r.phone}`} className="block text-mist hover:text-gold">{r.phone}</a>
+                    <a href={`tel:${r.phone}`} className="block hover:text-gold">{r.phone}</a>
+                    {r.email && <a href={`mailto:${r.email}`} className="block text-mist hover:text-gold">{r.email}</a>}
                   </td>
                   <td className="px-4 py-3 text-xs text-mist">{formatDateTime(r.createdAt)}</td>
                   <td className="px-4 py-3">
@@ -109,7 +109,16 @@ export function RegistrationsTable({ regs, events, filters, canDelete, canWrite 
                           </ol>
                         </div>
                       )}
-                      {Object.entries(r.answers).map(([k, v]) => <p key={k}><span className="text-mist">{qLabel(k)}:</span> {v}</p>)}
+                      {Object.entries(r.answers).map(([k, v]) =>
+                        /^(https:\/\/|\/media\/)/.test(v) ? (
+                          <a key={k} href={v} target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex items-center gap-3 hover:text-gold">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src={v} alt="" className="h-16 w-16 rounded-lg object-cover" /> {qLabel(k)} — open full size
+                          </a>
+                        ) : (
+                          <p key={k}><span className="text-mist">{qLabel(k)}:</span> {v}</p>
+                        ),
+                      )}
                     </td>
                   </tr>
                 )}

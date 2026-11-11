@@ -33,11 +33,11 @@ export function Hero({ s }: { s: FestivalSettings }) {
   return (
     <section className="relative isolate flex min-h-[100svh] items-center overflow-hidden bg-night" aria-labelledby="hero-title">
       {/* Sky + moonlight */}
-      <div aria-hidden className="absolute inset-0 bg-[radial-gradient(80%_60%_at_70%_10%,rgba(196,164,106,0.22),transparent_60%),radial-gradient(70%_70%_at_20%_100%,rgba(100,115,74,0.35),transparent_70%),linear-gradient(180deg,#0b110f_0%,#102820_55%,#0b110f_100%)]" />
+      <div aria-hidden className="absolute inset-0 bg-[radial-gradient(80%_60%_at_70%_10%,rgba(207,169,107,0.22),transparent_60%),radial-gradient(70%_70%_at_20%_100%,rgba(122,100,64,0.35),transparent_70%),linear-gradient(180deg,#0e0a07_0%,#2a1e14_55%,#0e0a07_100%)]" />
       <div aria-hidden className="topo absolute inset-0 opacity-50" />
 
       {/* Moon */}
-      <div aria-hidden className="absolute right-[-12rem] top-[6%] h-[34rem] w-[34rem] rounded-full bg-[radial-gradient(circle_at_40%_40%,rgba(245,240,230,0.20),rgba(196,164,106,0.10)_45%,transparent_70%)] sm:right-[-4rem] lg:right-[6%]" />
+      <div aria-hidden className="absolute right-[-12rem] top-[6%] h-[34rem] w-[34rem] rounded-full bg-[radial-gradient(circle_at_40%_40%,rgba(243,232,210,0.20),rgba(207,169,107,0.10)_45%,transparent_70%)] sm:right-[-4rem] lg:right-[6%]" />
       <div aria-hidden className="absolute right-[-6rem] top-[16%] h-[18rem] w-[18rem] rounded-full bg-[radial-gradient(circle_at_45%_40%,#efe6cf,#c9b282_60%,#8f7a4f)] opacity-[0.16] blur-[1px] sm:right-[2rem] lg:right-[14%]" />
       <Frond seed={14} length={420} className="pointer-events-none absolute right-[-8rem] top-[24%] w-[30rem] -scale-x-100 rotate-[14deg] animate-sway text-night/95 [animation-delay:-1s] sm:right-[-4rem] lg:w-[38rem]" />
 
@@ -60,7 +60,7 @@ export function Hero({ s }: { s: FestivalSettings }) {
               height: f.size,
               animationDelay: f.delay,
               animationDuration: f.dur,
-              boxShadow: "0 0 10px 2px rgba(220,195,148,0.55)",
+              boxShadow: "0 0 10px 2px rgba(230,204,152,0.55)",
               ["--dx" as string]: f.dx,
               ["--o" as string]: f.o,
             }}
@@ -73,7 +73,7 @@ export function Hero({ s }: { s: FestivalSettings }) {
         {EYES.map((e, i) => (
           <div key={i} className="absolute flex gap-3 animate-blink" style={{ left: e.left, top: e.top, animationDelay: e.delay, transform: `scale(${e.scale})` }}>
             {[0, 1].map((k) => (
-              <span key={k} className="h-2 w-3.5 rounded-[50%] bg-[radial-gradient(circle_at_50%_50%,#fff3c4,#dd7c45_45%,transparent_70%)] shadow-[0_0_18px_6px_rgba(221,124,69,0.45)]" />
+              <span key={k} className="h-2 w-3.5 rounded-[50%] bg-[radial-gradient(circle_at_50%_50%,#fff3c4,#cf7a3f_45%,transparent_70%)] shadow-[0_0_18px_6px_rgba(207,122,63,0.45)]" />
             ))}
           </div>
         ))}

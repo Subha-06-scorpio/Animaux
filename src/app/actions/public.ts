@@ -1,7 +1,10 @@
 "use server";
 
 import { randomUUID } from "node:crypto";
+import { dataMode, env } from "@/lib/config";
 import { repo, DuplicateRegistrationError } from "@/lib/data";
+import { admin as serviceClient } from "@/lib/data/supabase";
+import { SUBMISSION_MAX_BYTES, SUBMISSION_TYPES } from "@/lib/uploads";
 import { sendRegistrationEmail } from "@/lib/email";
 import { enquirySchema, registrationSchema } from "@/lib/schemas";
 import { clientIp, hashIp, makeRegCode, rateLimit } from "@/lib/security";
@@ -36,6 +39,15 @@ export async function registerAction(input: unknown): Promise<RegisterResult> {
     if (!parsed.success) return { ok: false, error: "Please fix the highlighted fields.", fieldErrors: flatten(parsed.error.issues) };
     const d = parsed.data;
     if (d.website) return { ok: true, regCode: "ANX26-OK", eventName: ev.name, emailSent: false, email: d.email }; // bot: pretend success
+
+    // Uploaded photos must live in our own submissions folder.
+    const submissionPrefix = dataMode === "local" ? "/media/submissions/" : `${env.supabaseUrl}/storage/v1/object/public/${env.storageBucket}/submissions/${ev.slug}/`;
+    for (const q of ev.extraQuestions) {
+      const a = d.answers[q.id];
+      if (q.type === "file" && a && !a.startsWith(submissionPrefix)) {
+        return { ok: false, error: "Please upload your photo again.", fieldErrors: { [`answers.${q.id}`]: "Please upload your photo again" } };
+      }
+    }
 
     // Only keep answers to questions this event actually asks.
     const answers = Object.fromEntries(ev.extraQuestions.map((q) => [q.id, d.answers[q.id] ?? ""]).filter(([, v]) => v));
@@ -105,5 +117,33 @@ export async function enquiryAction(input: unknown): Promise<EnquiryResult> {
   } catch (e) {
     console.error("enquiryAction failed", e);
     return { ok: false, error: "We couldn't send your message right now. Please email us instead." };
+  }
+}
+
+export type SubmissionTicket =
+  | { ok: true; mode: "local" }
+  | { ok: true; mode: "supabase"; url: string; anonKey: string; bucket: string; path: string; token: string; publicUrl: string }
+  | { ok: false; error: string };
+
+/** Signed upload URL for a participant photo (only for events that ask for one). */
+export async function createSubmissionUploadAction(eventId: string, contentType: string, size: number): Promise<SubmissionTicket> {
+  try {
+    const ip = await clientIp();
+    if (!rateLimit(`upload:${ip}`, 10, 10 * 60_000).ok) return { ok: false, error: "Too many uploads — try again in a few minutes." };
+    const ext = SUBMISSION_TYPES[contentType];
+    if (!ext) return { ok: false, error: "Please upload a JPG, PNG or WebP image." };
+    if (!(size > 0 && size <= SUBMISSION_MAX_BYTES)) return { ok: false, error: "Photo must be smaller than 10 MB." };
+    const ev = await repo().get("events", eventId);
+    if (!ev?.visible || !ev.extraQuestions.some((q) => q.type === "file")) return { ok: false, error: "This event does not accept uploads." };
+    if (dataMode === "local") return { ok: true, mode: "local" };
+
+    const path = `submissions/${ev.slug}/${randomUUID()}.${ext}`;
+    const storage = serviceClient().storage.from(env.storageBucket);
+    const { data, error } = await storage.createSignedUploadUrl(path);
+    if (error || !data) return { ok: false, error: "Upload is unavailable right now. Please try again." };
+    return { ok: true, mode: "supabase", url: env.supabaseUrl, anonKey: env.supabaseAnonKey, bucket: env.storageBucket, path, token: data.token, publicUrl: storage.getPublicUrl(path).data.publicUrl };
+  } catch (e) {
+    console.error("createSubmissionUploadAction failed", e);
+    return { ok: false, error: "Upload failed. Please try again." };
   }
 }

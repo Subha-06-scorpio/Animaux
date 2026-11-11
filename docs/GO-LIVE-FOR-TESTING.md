@@ -17,11 +17,13 @@ You need three free accounts: **GitHub** (holds the code), **Supabase** (databas
    - Name: `animaux-2026` · choose a strong database password (save it) · Region: **Mumbai (ap-south-1)**.
 2. Wait about 2 minutes for it to finish setting up.
 3. Left menu → **SQL Editor** → **New query** → paste the whole file `supabase/migrations/20261021000000_init.sql` → **Run**. You should see "Success. No rows returned".
-4. **New query** again → paste `supabase/seed.sql` → **Run**. This loads the events, team, schedule and FAQs.
-5. Left menu → **Authentication → Users → Add user → Create new user**. Enter your email and a password, and tick **Auto Confirm User**.
-6. **SQL Editor → New query** → paste `supabase/make-admin.sql`. Change `organiser@example.com` to the email from step 5 and **Run**.
-7. **Authentication → Sign In / Providers** → turn **off** "Allow new users to sign up". This stops strangers creating accounts.
-8. **Project Settings → API keys** (or **Data API**). Keep this tab open; you need three values:
+4. **New query** again → paste `supabase/migrations/20261111000000_survival_files.sql` → **Run**. This adds main/mini events and makes email optional.
+5. **New query** again → paste `supabase/seed.sql` → **Run**. This loads all 14 events, the team, schedule, FAQs and contacts.
+   *(Already ran an older version? Just run steps 4 and 5 now — old sample events are cleaned up automatically.)*
+6. Left menu → **Authentication → Users → Add user → Create new user**. Enter your email and a password, and tick **Auto Confirm User**.
+7. **SQL Editor → New query** → paste `supabase/make-admin.sql`. Change `organiser@example.com` to the email from step 6 and **Run**.
+8. **Authentication → Sign In / Providers** → turn **off** "Allow new users to sign up". This stops strangers creating accounts.
+9. **Project Settings → API keys** (or **Data API**). Keep this tab open; you need three values:
    - Project URL → `NEXT_PUBLIC_SUPABASE_URL`
    - `anon` / publishable key → `NEXT_PUBLIC_SUPABASE_ANON_KEY`
    - `service_role` / secret key → `SUPABASE_SERVICE_ROLE_KEY` (**secret, never share it**)
@@ -45,15 +47,16 @@ You need three free accounts: **GitHub** (holds the code), **Supabase** (databas
 6. In Supabase, open **Authentication → URL Configuration** and set **Site URL** to the same link.
 
 ## Step 4 — Test it (5 min)
-- Open the site on your phone and register for an event. You should get an ID like `ANX26-FOR-XXXXX`.
-- Try registering again with the same email. It should be refused.
+- Open the site on your phone and register for an event. You should get an ID like `ANX26-THE-XXXXX`.
+- Register for **Shutter Safari** and upload a photo. It should appear as a thumbnail in Admin → Registrations.
+- Try registering again for the same event with the same phone number. It should be refused.
 - Send a message from the Contact page.
-- Open `/admin` and log in with the Supabase user from Step 2.5. You should see the registration and the enquiry.
+- Open `/admin` and log in with the Supabase user from Step 2.6. You should see the registration and the enquiry.
 - Click **Export CSV** to download the registrations.
 - In **Admin → Events**, untick "Registration open" on any event. The website should show it as closed right away.
 - In **Admin → Team**, upload a photo for one person.
 
-Share the link with your team for feedback. Add teammates as dashboard users by repeating Steps 2.5–2.6. Use the role `editor` for content and `registrations` for the help desk.
+Share the link with your team for feedback. Add teammates as dashboard users by repeating Steps 2.6–2.7. Use the role `editor` for content and `registrations` for the help desk.
 
 ## Optional — confirmation emails
 Create a free account at https://resend.com, verify a domain, then add `RESEND_API_KEY` and `EMAIL_FROM` in Vercel and redeploy.

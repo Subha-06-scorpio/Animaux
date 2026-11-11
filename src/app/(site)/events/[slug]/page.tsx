@@ -29,7 +29,7 @@ export default async function EventPage({ params }: PageProps<"/events/[slug]">)
     { icon: Users, k: "Participation", v: participationLabel(ev) },
     { icon: IndianRupee, k: "Registration fee", v: formatFee(ev.fee) },
     { icon: Hourglass, k: "Register by", v: formatDateTime(ev.deadline) },
-  ];
+  ].filter((f) => ev.tier === "main" || !["Register by", "Registration fee"].includes(f.k));
 
   return (
     <article>
@@ -53,9 +53,10 @@ export default async function EventPage({ params }: PageProps<"/events/[slug]">)
             <StatusPill status={ev.status} />
           </div>
           <h1 className="display mt-5 max-w-4xl text-5xl sm:text-6xl lg:text-7xl">{ev.name}</h1>
+          {ev.tagline && <p className="mt-3 font-display text-xl italic text-gold">{ev.tagline}</p>}
           <p className="mt-5 max-w-2xl text-lg text-ivory/80">{ev.shortDescription}</p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <RegisterButton event={ev} />
+            {ev.tier === "mini" ? <span className="btn cursor-default border border-moss/50 text-moss">On the spot · walk in on 2 Dec</span> : <RegisterButton event={ev} />}
             <a href="#coordinator" className="btn btn-ghost">Contact coordinator</a>
           </div>
         </div>
@@ -82,7 +83,7 @@ export default async function EventPage({ params }: PageProps<"/events/[slug]">)
           )}
           <section>
             <h2 className="eyebrow">Eligibility</h2>
-            <p className="mt-4 text-ivory/85">{ev.eligibility || "Open to all students."}</p>
+            <p className="mt-4 text-ivory/85">{ev.eligibility || (ev.tier === "mini" ? "Open to everyone at ANIMAUX — no registration needed." : "Details to be announced.")}</p>
           </section>
         </div>
 
@@ -100,12 +101,16 @@ export default async function EventPage({ params }: PageProps<"/events/[slug]">)
               {ev.capacity && (
                 <div className="flex items-start gap-4 py-3.5">
                   <Paw className="mt-0.5 h-[18px] w-[18px] shrink-0 text-gold" />
-                  <dt className="w-32 shrink-0 text-sm text-mist">Capacity</dt>
-                  <dd className="text-sm text-ivory">{ev.capacity} {ev.participation === "team" ? "teams" : "participants"}</dd>
+                  <dt className="w-32 shrink-0 text-sm text-mist">Limit</dt>
+                  <dd className="text-sm font-semibold text-gold-soft">{ev.capacity} {ev.participation === "team" ? "teams" : "participants"} · first come, first served</dd>
                 </div>
               )}
             </dl>
-            <RegisterButton event={ev} className={ev.status.open ? "btn btn-primary mt-6 w-full" : "btn mt-6 w-full cursor-not-allowed border border-ivory/15 text-mist"} />
+            {ev.tier === "mini" ? (
+              <p className="mt-6 rounded-xl border border-moss/40 p-4 text-sm text-ivory/80">Mini event — no online registration. Just turn up on the day.</p>
+            ) : (
+              <RegisterButton event={ev} className={ev.status.open ? "btn btn-primary mt-6 w-full" : "btn mt-6 w-full cursor-not-allowed border border-ivory/15 text-mist"} />
+            )}
 
             <div id="coordinator" className="mt-8 scroll-mt-28 border-t border-ivory/10 pt-6">
               <p className="eyebrow">Event coordinator</p>

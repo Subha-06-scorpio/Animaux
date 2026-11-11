@@ -40,7 +40,8 @@ const SECTIONS: { title: string; fields: Field[] }[] = [
       { name: "mapEmbedUrl", label: "Google Maps embed URL", type: "url", span: 2, help: "Google Maps → Share → Embed a map → copy only the src=\"…\" link (or a …&output=embed link)." },
       { name: "mapLink", label: "Google Maps link (directions)", type: "url", span: 2 },
       { name: "email", label: "Festival email", type: "email" },
-      { name: "phone", label: "General coordinator phone", type: "text" },
+      { name: "phone", label: "General phone (fallback)", type: "text" },
+      { name: "contacts", label: "Contact people (one per line: Name | phone)", type: "lines", span: 2, help: "Shown on the Contact page and footer, e.g. Aditya Dubey | +91 91372 84809" },
       { name: "whatsapp", label: "WhatsApp number (digits with country code)", type: "text", placeholder: "9198xxxxxxxx" },
       { name: "instagram", label: "Instagram URL", type: "url" },
       { name: "brochureUrl", label: "Brochure (PDF)", type: "media", accept: "application/pdf", folder: "brochure", span: 2 },
@@ -59,7 +60,8 @@ export function SettingsForm({ initial }: { initial: FestivalSettings }) {
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);
-    const clean = { ...draft, guidelines: (draft.guidelines as string[]).map((s) => s.trim()).filter(Boolean) };
+    const tidy = (k: string) => ((draft[k] as string[]) ?? []).map((s) => s.trim()).filter(Boolean);
+    const clean = { ...draft, guidelines: tidy("guidelines"), contacts: tidy("contacts") };
     const res = await saveSettingsAction(clean);
     setSaving(false);
     if (res.ok) {

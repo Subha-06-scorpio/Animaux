@@ -2,11 +2,11 @@ import { cn } from "@/lib/utils";
 import { BroadLeaf, Frond, Paw, rng } from "./motifs";
 
 const PALETTES = [
-  ["#16352a", "#0b110f", "#c4a46a"],
-  ["#2a3320", "#101816", "#c76a37"],
-  ["#1b2b26", "#0b110f", "#8b9a6b"],
-  ["#30291c", "#101816", "#c4a46a"],
-  ["#14302a", "#0b110f", "#dcc394"],
+  ["#3a2a1b", "#0e0a07", "#cfa96b"],
+  ["#33281a", "#17110c", "#b9652f"],
+  ["#2a2017", "#0e0a07", "#a68d5f"],
+  ["#30291c", "#17110c", "#cfa96b"],
+  ["#2b2116", "#0e0a07", "#e6cc98"],
 ];
 
 const hash = (s: string) => [...s].reduce((h, c) => (h * 31 + c.charCodeAt(0)) | 0, 7);

@@ -36,7 +36,7 @@ export default async function SchedulePage() {
             <Download className="text-gold" size={20} />
             <p className="mt-3 text-sm text-mist">Festival brochure</p>
             {s.brochureUrl ? (
-              <a href={s.brochureUrl} target="_blank" rel="noopener noreferrer" className="font-display text-xl text-gold hover:text-ember-bright">Download PDF</a>
+              <a href={s.brochureUrl} target="_blank" rel="noopener noreferrer" className="font-display text-xl text-gold hover:text-ember-bright">View brochure</a>
             ) : (
               <p className="font-display text-xl text-ivory/60">Coming soon</p>
             )}
@@ -45,9 +45,27 @@ export default async function SchedulePage() {
       </PageHero>
 
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
-        <SectionHeading eyebrow="Timeline" title="The full schedule" intro={!s.datesConfirmed ? "Provisional — timings will be confirmed with the final dates." : undefined} />
+        <SectionHeading eyebrow="Timeline" title="The full schedule" intro={schedule.some((i) => !i.time) ? "Event timings will be announced soon — check back here or follow the announcements." : undefined} />
         <div className="mt-10">
           <Timeline items={schedule} dayLabels={dayLabels} />
+        </div>
+      </section>
+
+      <section className="border-y border-ivory/10 bg-night py-20">
+        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2">
+          <a href="/animaux26-flyer.jpg" target="_blank" className="group mx-auto block w-full max-w-md overflow-hidden rounded-2xl border border-gold/30 shadow-2xl">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/animaux26-flyer.jpg" alt="Official ANIMAUX’26 poster: Echoes of the Wild — The Survival Files, 2nd December 2026, with the 8 main events and contacts" width={902} height={1280} loading="lazy" className="h-auto w-full transition duration-700 group-hover:scale-[1.02]" />
+          </a>
+          <div>
+            <SectionHeading eyebrow="Official poster" title="The case at a glance" intro="Eight main events, one day, one investigation. Save it, share it, send it to your class group." />
+            <div className="mt-8 flex flex-wrap gap-3">
+              <a href="/animaux26-flyer.jpg" download="ANIMAUX26-poster.jpg" className="btn btn-gold"><Download size={16} /> Download poster</a>
+              {s.brochureUrl && (
+                <a href={s.brochureUrl} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">Open brochure <ExternalLink size={16} /></a>
+              )}
+            </div>
+          </div>
         </div>
       </section>
 

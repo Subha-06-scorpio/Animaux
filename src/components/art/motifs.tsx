@@ -146,7 +146,7 @@ export function BroadLeaf({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 200 380" aria-hidden className={className}>
       <path fill="currentColor" d="M97 380l2-82C42 288 2 222 8 150 14 82 62 34 100 0c38 34 86 82 92 150 6 72-34 138-91 148l2 82z" />
-      <g stroke="#0b110f" strokeOpacity=".5" strokeWidth="2" fill="none" strokeLinecap="round">
+      <g stroke="#0e0a07" strokeOpacity=".5" strokeWidth="2" fill="none" strokeLinecap="round">
         <path d="M100 296Q98 150 100 14" />
         {Array.from({ length: 9 }, (_, i) => {
           const y = 270 - i * 27;

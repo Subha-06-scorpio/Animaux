@@ -1,21 +1,22 @@
 @import "tailwindcss";
 
 @theme {
-  --color-forest: #102820;
-  --color-forest-2: #16352a;
-  --color-midnight: #101816;
-  --color-night: #0b110f;
-  --color-olive: #64734a;
-  --color-moss: #8b9a6b;
-  --color-ivory: #f5f0e6;
-  --color-parchment: #ebe3d2;
-  --color-gold: #c4a46a;
-  --color-gold-soft: #dcc394;
-  --color-ember: #c76a37;
-  --color-ember-bright: #dd7c45;
-  --color-mist: #a9b2a4;
+  --color-forest: #2a1e14;
+  --color-forest-2: #3a2a1b;
+  --color-midnight: #17110c;
+  --color-night: #0e0a07;
+  --color-olive: #7a6440;
+  --color-moss: #a68d5f;
+  --color-ivory: #f3e8d2;
+  --color-parchment: #e4d3b0;
+  --color-gold: #cfa96b;
+  --color-gold-soft: #e6cc98;
+  --color-ember: #b9652f;
+  --color-ember-bright: #cf7a3f;
+  --color-mist: #b5a68b;
 
   --font-display: var(--font-fraunces), Georgia, serif;
+  --font-title: var(--font-cinzel), Georgia, serif;
   --font-sans: var(--font-manrope), system-ui, sans-serif;
   --font-mono: var(--font-plex-mono), ui-monospace, monospace;
 
@@ -92,7 +93,7 @@ body::after {
 
 @layer components {
   .eyebrow {
-    @apply font-mono text-[0.7rem] tracking-[0.32em] uppercase text-gold;
+    @apply font-title text-[0.72rem] font-bold tracking-[0.3em] uppercase text-gold;
   }
   .display {
     @apply font-display font-light tracking-[-0.02em] leading-[0.95];
@@ -102,7 +103,7 @@ body::after {
     @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold tracking-wide transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed;
   }
   .btn-primary {
-    @apply bg-ember text-midnight hover:bg-ember-bright shadow-[0_10px_40px_-12px_rgba(199,106,55,0.8)];
+    @apply bg-ember text-midnight hover:bg-ember-bright shadow-[0_10px_40px_-12px_rgba(185,101,47,0.8)];
   }
   .btn-ghost {
     @apply border border-ivory/25 text-ivory hover:border-gold hover:text-gold backdrop-blur-sm;
@@ -130,21 +131,34 @@ body::after {
     background-color: var(--color-ivory);
     color: var(--color-midnight);
     background-image:
-      radial-gradient(ellipse at 20% 0%, rgba(196, 164, 106, 0.18), transparent 60%),
+      radial-gradient(ellipse at 20% 0%, rgba(207,169,107, 0.18), transparent 60%),
       var(--grain);
     background-blend-mode: normal, multiply;
   }
   .topo {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600' viewBox='0 0 600 600'%3E%3Cg fill='none' stroke='%23C4A46A' stroke-opacity='.09' stroke-width='1'%3E%3Cpath d='M-50 120c90-60 180 40 280-10s170-90 260-30 120 60 160 20'/%3E%3Cpath d='M-50 170c90-60 180 40 280-10s170-90 260-30 120 60 160 20'/%3E%3Cpath d='M-50 220c100-50 170 50 270 0s180-80 270-20 110 50 160 10'/%3E%3Cpath d='M-50 300c80-40 190 60 290 10s160-100 250-40 130 70 160 30'/%3E%3Cpath d='M-50 360c80-40 190 60 290 10s160-100 250-40 130 70 160 30'/%3E%3Cpath d='M-50 440c100-60 170 30 280-20s170-70 260-10 120 40 160 0'/%3E%3Cpath d='M-50 500c100-60 170 30 280-20s170-70 260-10 120 40 160 0'/%3E%3Cellipse cx='420' cy='280' rx='60' ry='34'/%3E%3Cellipse cx='420' cy='280' rx='32' ry='16'/%3E%3C/g%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600' viewBox='0 0 600 600'%3E%3Cg fill='none' stroke='%23CFA96B' stroke-opacity='.09' stroke-width='1'%3E%3Cpath d='M-50 120c90-60 180 40 280-10s170-90 260-30 120 60 160 20'/%3E%3Cpath d='M-50 170c90-60 180 40 280-10s170-90 260-30 120 60 160 20'/%3E%3Cpath d='M-50 220c100-50 170 50 270 0s180-80 270-20 110 50 160 10'/%3E%3Cpath d='M-50 300c80-40 190 60 290 10s160-100 250-40 130 70 160 30'/%3E%3Cpath d='M-50 360c80-40 190 60 290 10s160-100 250-40 130 70 160 30'/%3E%3Cpath d='M-50 440c100-60 170 30 280-20s170-70 260-10 120 40 160 0'/%3E%3Cpath d='M-50 500c100-60 170 30 280-20s170-70 260-10 120 40 160 0'/%3E%3Cellipse cx='420' cy='280' rx='60' ry='34'/%3E%3Cellipse cx='420' cy='280' rx='32' ry='16'/%3E%3C/g%3E%3C/svg%3E");
   }
   .text-gradient-gold {
-    background: linear-gradient(100deg, #f5f0e6 0%, #dcc394 35%, #c4a46a 60%, #8b6d3c 100%);
+    background: linear-gradient(100deg, #f3e8d2 0%, #e6cc98 35%, #cfa96b 60%, #8b6d3c 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
+  /* Flyer-style title: parchment-to-gold fill with a pine forest inside the letters. */
+  .text-wild {
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='80' viewBox='0 0 160 80'%3E%3Cg fill='%233a2a1b' fill-opacity='.88'%3E%3Cpath d='M14 80 L24 38 L19 40 L27 18 L22 20 L30 2 L38 20 L33 18 L41 40 L36 38 L46 80Z'/%3E%3Cpath d='M52 80 L59 52 L55 53 L61 36 L57 37 L63 24 L69 37 L65 36 L71 53 L67 52 L74 80Z'/%3E%3Cpath d='M84 80 L93 46 L88 48 L96 28 L91 30 L99 10 L107 30 L102 28 L110 48 L105 46 L114 80Z'/%3E%3Cpath d='M122 80 L128 58 L125 59 L130 44 L127 45 L132 34 L137 45 L134 44 L139 59 L136 58 L142 80Z'/%3E%3Crect y='74' width='160' height='6'/%3E%3C/g%3E%3C/svg%3E"),
+      linear-gradient(180deg, #fbf3e2 0%, #ecd6a8 38%, #cfa96b 66%, #8b6d3c 100%);
+    background-repeat: repeat-x, no-repeat;
+    background-size: auto 46%, 100% 100%;
+    background-position: left bottom, center;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 6px 24px rgba(0, 0, 0, 0.55));
+  }
   .text-outline {
-    -webkit-text-stroke: 1.5px rgba(220, 195, 148, 0.8);
+    -webkit-text-stroke: 1.5px rgba(230,204,152, 0.8);
     color: transparent;
   }
 }

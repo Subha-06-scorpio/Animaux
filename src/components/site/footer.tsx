@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Frond } from "@/components/art/motifs";
 import { InstagramIcon, WhatsAppIcon } from "@/components/ui/icons";
 import type { FestivalSettings } from "@/lib/types";
-import { telLink, whatsappLink } from "@/lib/utils";
+import { parseContacts, telLink, whatsappLink } from "@/lib/utils";
 import { Logo, NAV } from "./brand";
 
 export function Footer({ s }: { s: FestivalSettings }) {
@@ -54,7 +54,9 @@ export function Footer({ s }: { s: FestivalSettings }) {
           <ul className="space-y-3 text-sm text-ivory/80">
             <li className="flex gap-3"><MapPin size={16} className="mt-0.5 shrink-0 text-gold" />{s.address}</li>
             {s.email && <li className="flex gap-3"><Mail size={16} className="mt-0.5 shrink-0 text-gold" /><a href={`mailto:${s.email}`} className="hover:text-gold">{s.email}</a></li>}
-            {s.phone && <li className="flex gap-3"><Phone size={16} className="mt-0.5 shrink-0 text-gold" /><a href={telLink(s.phone)} className="hover:text-gold">{s.phone}</a></li>}
+            {(parseContacts(s.contacts).length ? parseContacts(s.contacts) : s.phone ? [{ name: "", phone: s.phone }] : []).map((c) => (
+              <li key={c.phone} className="flex gap-3"><Phone size={16} className="mt-0.5 shrink-0 text-gold" /><a href={telLink(c.phone)} className="hover:text-gold">{c.name && `${c.name.split(" ")[0]} · `}{c.phone}</a></li>
+            ))}
           </ul>
         </div>
       </div>

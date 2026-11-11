@@ -2,18 +2,19 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AnimatePresence, motion } from "motion/react";
-import { Check, Copy, Loader2, Mail, Minus, Phone, Plus, X } from "lucide-react";
+import { Check, Copy, ImageUp, Loader2, Mail, Minus, Phone, Plus, X } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useFieldArray, useForm, type FieldErrors } from "react-hook-form";
-import { registerAction, type RegisterResult } from "@/app/actions/public";
+import { createSubmissionUploadAction, registerAction, type RegisterResult } from "@/app/actions/public";
 import { Paw } from "@/components/art/motifs";
 import { WhatsAppIcon } from "@/components/ui/icons";
+import { compressImage } from "@/lib/image";
 import type { PublicEvent } from "@/lib/queries";
 import { registrationSchema, YEARS, type RegistrationInput } from "@/lib/schemas";
 import { cn, formatDate, formatFee, formatTime, isPlaceholder, telLink, whatsappLink } from "@/lib/utils";
 
 const STORE_KEY = "animaux-participant";
-type Saved = Pick<RegistrationInput, "fullName" | "institution" | "department" | "year" | "email" | "phone">;
+type Saved = Pick<RegistrationInput, "fullName" | "institution" | "year" | "email" | "phone">;
 
 function loadSaved(): Partial<Saved> {
   try {
@@ -113,6 +114,8 @@ function RegistrationForm({ event, onDone }: { event: PublicEvent; onDone: (r: E
     control,
     handleSubmit,
     setError,
+    setValue,
+    watch,
     reset,
     formState: { errors, isSubmitting },
   } = useForm<RegistrationInput>({
@@ -126,7 +129,7 @@ function RegistrationForm({ event, onDone }: { event: PublicEvent; onDone: (r: E
       email: "",
       phone: "",
       teamName: "",
-      teamMembers: Array.from({ length: minOthers }, () => ({ name: "", email: "", phone: "" })),
+      teamMembers: Array.from({ length: minOthers }, () => ({ name: "", phone: "" })),
       answers: {},
       website: "",
     },
@@ -136,7 +139,7 @@ function RegistrationForm({ event, onDone }: { event: PublicEvent; onDone: (r: E
   // Prefill personal details from a previous registration on this device.
   useEffect(() => {
     const saved = loadSaved();
-    if (saved.email) reset((v) => ({ ...v, ...saved }));
+    if (saved.fullName) reset((v) => ({ ...v, ...saved }));
   }, [reset]);
 
   const onSubmit = handleSubmit(async (values) => {
@@ -144,8 +147,8 @@ function RegistrationForm({ event, onDone }: { event: PublicEvent; onDone: (r: E
     const res = await registerAction(values);
     if (res.ok) {
       try {
-        const { fullName, institution, department, year, email, phone } = values;
-        localStorage.setItem(STORE_KEY, JSON.stringify({ fullName, institution, department, year, email, phone }));
+        const { fullName, institution, year, email, phone } = values;
+        localStorage.setItem(STORE_KEY, JSON.stringify({ fullName, institution, year, email, phone }));
       } catch {}
       onDone(res);
       return;
@@ -175,14 +178,9 @@ function RegistrationForm({ event, onDone }: { event: PublicEvent; onDone: (r: E
             <Err msg={e.fullName?.message} />
           </div>
           <div className="sm:col-span-2">
-            <label className="label" htmlFor="institution">College / institution *</label>
+            <label className="label" htmlFor="institution">College *</label>
             <input id="institution" className="field" autoComplete="organization" {...aria(e.institution)} {...register("institution")} />
             <Err msg={e.institution?.message} />
-          </div>
-          <div>
-            <label className="label" htmlFor="department">Department *</label>
-            <input id="department" className="field" placeholder="e.g. Zoology" {...aria(e.department)} {...register("department")} />
-            <Err msg={e.department?.message} />
           </div>
           <div>
             <label className="label" htmlFor="year">Year *</label>
@@ -193,14 +191,14 @@ function RegistrationForm({ event, onDone }: { event: PublicEvent; onDone: (r: E
             <Err msg={e.year?.message} />
           </div>
           <div>
-            <label className="label" htmlFor="email">Email *</label>
-            <input id="email" type="email" inputMode="email" autoComplete="email" className="field" {...aria(e.email)} {...register("email")} />
-            <Err msg={e.email?.message} />
-          </div>
-          <div>
-            <label className="label" htmlFor="phone">Phone / WhatsApp *</label>
+            <label className="label" htmlFor="phone">Contact number *</label>
             <input id="phone" type="tel" inputMode="tel" autoComplete="tel" placeholder="+91 98xxxxxxxx" className="field" {...aria(e.phone)} {...register("phone")} />
             <Err msg={e.phone?.message} />
+          </div>
+          <div className="sm:col-span-2">
+            <label className="label" htmlFor="email">Email <span className="font-normal text-mist">(optional — for a confirmation email)</span></label>
+            <input id="email" type="email" inputMode="email" autoComplete="email" className="field" {...aria(e.email)} {...register("email")} />
+            <Err msg={e.email?.message} />
           </div>
         </div>
       </fieldset>
@@ -214,7 +212,7 @@ function RegistrationForm({ event, onDone }: { event: PublicEvent; onDone: (r: E
             <Err msg={e.teamName?.message} />
           </div>
           <p className="text-sm text-mist">
-            You + {minOthers === maxOthers ? minOthers : `${minOthers}–${maxOthers}`} other member{maxOthers === 1 ? "" : "s"}. Email and phone are optional for members.
+            You + {minOthers === maxOthers ? minOthers : `${minOthers}–${maxOthers}`} other member{maxOthers === 1 ? "" : "s"}. A phone number for members is optional.
           </p>
           <ol className="space-y-3">
             {members.fields.map((f, i) => (
@@ -227,16 +225,11 @@ function RegistrationForm({ event, onDone }: { event: PublicEvent; onDone: (r: E
                     </button>
                   )}
                 </div>
-                <div className="grid gap-3 sm:grid-cols-3">
+                <div className="grid gap-3 sm:grid-cols-2">
                   <div>
                     <label className="sr-only" htmlFor={`m${i}n`}>Member {i + 2} name</label>
                     <input id={`m${i}n`} className="field" placeholder="Full name *" {...aria(e.teamMembers?.[i]?.name)} {...register(`teamMembers.${i}.name`)} />
                     <Err msg={e.teamMembers?.[i]?.name?.message} />
-                  </div>
-                  <div>
-                    <label className="sr-only" htmlFor={`m${i}e`}>Member {i + 2} email</label>
-                    <input id={`m${i}e`} type="email" className="field" placeholder="Email" {...aria(e.teamMembers?.[i]?.email)} {...register(`teamMembers.${i}.email`)} />
-                    <Err msg={e.teamMembers?.[i]?.email?.message} />
                   </div>
                   <div>
                     <label className="sr-only" htmlFor={`m${i}p`}>Member {i + 2} phone</label>
@@ -249,7 +242,7 @@ function RegistrationForm({ event, onDone }: { event: PublicEvent; onDone: (r: E
           </ol>
           <Err msg={e.teamMembers?.message ?? e.teamMembers?.root?.message} />
           {members.fields.length < maxOthers && (
-            <button type="button" onClick={() => members.append({ name: "", email: "", phone: "" })} className="btn btn-ghost py-2 text-xs">
+            <button type="button" onClick={() => members.append({ name: "", phone: "" })} className="btn btn-ghost py-2 text-xs">
               <Plus size={14} /> Add member
             </button>
           )}
@@ -265,7 +258,15 @@ function RegistrationForm({ event, onDone }: { event: PublicEvent; onDone: (r: E
             return (
               <div key={q.id}>
                 <label className="label" htmlFor={id}>{q.label}{q.required && " *"}</label>
-                {q.type === "select" ? (
+                {q.type === "file" ? (
+                  <PhotoUpload
+                    id={id}
+                    eventId={event.id}
+                    value={watch(`answers.${q.id}`) ?? ""}
+                    invalid={!!err}
+                    onChange={(url) => setValue(`answers.${q.id}`, url, { shouldValidate: true })}
+                  />
+                ) : q.type === "select" ? (
                   <select id={id} className="field" defaultValue="" {...aria(err)} {...register(`answers.${q.id}`)}>
                     <option value="">Select…</option>
                     {q.options?.map((o) => <option key={o}>{o}</option>)}
@@ -284,7 +285,7 @@ function RegistrationForm({ event, onDone }: { event: PublicEvent; onDone: (r: E
 
       <div className="space-y-4 border-t border-ivory/10 pt-6">
         <label className="flex items-start gap-3 text-sm text-ivory/80">
-          <input type="checkbox" className="mt-1 h-4 w-4 accent-[#C4A46A]" {...register("consent")} />
+          <input type="checkbox" className="mt-1 h-4 w-4 accent-[#cfa96b]" {...register("consent")} />
           <span>I confirm these details are correct and I have read the event rules and eligibility. My details will be used only to organise ANIMAUX.</span>
         </label>
         <Err msg={e.consent?.message} />
@@ -361,3 +362,64 @@ function Success({ result, event, onClose, onAgain }: { result: Extract<Register
 }
 
 export const registerButtonClass = (open: boolean) => cn("btn w-full sm:w-auto", open ? "btn-primary" : "cursor-not-allowed border border-ivory/15 text-mist");
+
+/** Participant photo upload: resized in the browser, then sent straight to storage. */
+function PhotoUpload({ id, eventId, value, invalid, onChange }: { id: string; eventId: string; value: string; invalid: boolean; onChange: (url: string) => void }) {
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState("");
+
+  const upload = async (raw: File) => {
+    setBusy(true);
+    setErr("");
+    try {
+      const file = await compressImage(raw, 2400, 0.88);
+      const ticket = await createSubmissionUploadAction(eventId, file.type, file.size);
+      if (!ticket.ok) throw new Error(ticket.error);
+      if (ticket.mode === "local") {
+        const body = new FormData();
+        body.append("file", file);
+        body.append("eventId", eventId);
+        const res = await fetch("/api/upload/submission", { method: "POST", body });
+        const json = await res.json();
+        if (!res.ok) throw new Error(json.error ?? "Upload failed");
+        onChange(json.url);
+      } else {
+        const { createClient } = await import("@supabase/supabase-js");
+        const sb = createClient(ticket.url, ticket.anonKey, { auth: { persistSession: false } });
+        const { error } = await sb.storage.from(ticket.bucket).uploadToSignedUrl(ticket.path, ticket.token, file, { contentType: file.type });
+        if (error) throw new Error("Upload failed. Please try again.");
+        onChange(ticket.publicUrl);
+      }
+    } catch (x) {
+      setErr(x instanceof Error ? x.message : "Upload failed");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <div className={cn("rounded-2xl border border-dashed p-4", invalid ? "border-ember" : "border-ivory/20")}>
+      {value ? (
+        <div className="flex items-center gap-4">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={value} alt="Your uploaded photograph" className="h-20 w-20 rounded-lg object-cover" />
+          <div className="text-sm">
+            <p className="flex items-center gap-1.5 text-gold"><Check size={14} /> Photo uploaded</p>
+            <label className="mt-1 inline-block cursor-pointer text-xs text-mist underline hover:text-gold">
+              Replace photo
+              <input type="file" accept="image/jpeg,image/png,image/webp" className="sr-only" onChange={(e) => e.target.files?.[0] && upload(e.target.files[0])} />
+            </label>
+          </div>
+        </div>
+      ) : (
+        <label htmlFor={id} className={cn("flex cursor-pointer flex-col items-center gap-2 py-4 text-center text-sm", busy && "pointer-events-none opacity-60")}>
+          {busy ? <Loader2 className="animate-spin text-gold" /> : <ImageUp className="text-gold" />}
+          <span>{busy ? "Uploading your photo…" : "Tap to choose a photo"}</span>
+          <span className="text-xs text-mist">JPG, PNG or WebP · up to 10 MB</span>
+          <input id={id} type="file" accept="image/jpeg,image/png,image/webp" className="sr-only" onChange={(e) => e.target.files?.[0] && upload(e.target.files[0])} />
+        </label>
+      )}
+      {err && <p className="field-error" role="alert">{err}</p>}
+    </div>
+  );
+}

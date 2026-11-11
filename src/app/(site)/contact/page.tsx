@@ -5,7 +5,7 @@ import { ContactForm } from "@/components/contact/contact-form";
 import { InstagramIcon, WhatsAppIcon } from "@/components/ui/icons";
 import { PageHero, SectionHeading } from "@/components/ui/section-heading";
 import { getPublicEvents, getSettings, getVisible } from "@/lib/queries";
-import { isPlaceholder, telLink, whatsappLink } from "@/lib/utils";
+import { isPlaceholder, parseContacts, telLink, whatsappLink } from "@/lib/utils";
 
 export const metadata: Metadata = { title: "Contact & Help Desk", description: "Questions about ANIMAUX 2026 events, registration, schedules or rules? Reach the help desk." };
 
@@ -17,7 +17,9 @@ export default async function ContactPage() {
     { icon: Building2, k: "Organised by", v: `${s.department}, ${s.college}` },
     { icon: MapPin, k: "Address", v: s.address },
     { icon: Mail, k: "Festival email", v: s.email, href: s.email && `mailto:${s.email}` },
-    { icon: Phone, k: "General coordinator", v: s.phone, href: !isPlaceholder(s.phone) ? telLink(s.phone) : undefined },
+    ...(parseContacts(s.contacts).length
+      ? parseContacts(s.contacts).map((c) => ({ icon: Phone, k: `Call ${c.name}`, v: c.phone, href: telLink(c.phone) }))
+      : [{ icon: Phone, k: "General coordinator", v: s.phone, href: !isPlaceholder(s.phone) ? telLink(s.phone) : undefined }]),
   ];
 
   return (

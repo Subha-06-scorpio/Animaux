@@ -8,7 +8,7 @@ const initials = (n: string) => n.split(/\s+/).filter(Boolean).slice(0, 2).map((
 
 export function MemberCard({ m, size = "md" }: { m: TeamMember; size?: "lg" | "md" | "sm" }) {
   return (
-    <article className={cn("group relative overflow-hidden rounded-2xl border border-ivory/10 bg-night/50 transition duration-500 hover:-translate-y-1 hover:border-gold/50 hover:shadow-[0_20px_60px_-25px_rgba(196,164,106,0.45)]")}>
+    <article className={cn("group relative overflow-hidden rounded-2xl border border-ivory/10 bg-night/50 transition duration-500 hover:-translate-y-1 hover:border-gold/50 hover:shadow-[0_20px_60px_-25px_rgba(207,169,107,0.45)]")}>
       <div className="relative aspect-[4/5] overflow-hidden">
         {m.photoUrl ? (
           // eslint-disable-next-line @next/next/no-img-element

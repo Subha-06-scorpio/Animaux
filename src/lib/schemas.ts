@@ -12,12 +12,14 @@ export const phoneField = z
   .trim()
   .regex(phoneRe, "Enter a valid phone number (10–15 digits, + allowed)");
 
-export const YEARS = ["1st year (UG)", "2nd year (UG)", "3rd year (UG)", "4th year (UG)", "1st year (PG)", "2nd year (PG)", "PhD / Research", "Other"] as const;
+export const YEARS = ["FY (First year)", "SY (Second year)", "TY (Third year)", "Fourth year (UG)", "MSc / MA / MCom Part 1", "MSc / MA / MCom Part 2", "PhD / Research", "Junior college (11th / 12th)", "Other"] as const;
+
+const optionalEmail = z.union([z.literal(""), z.string().trim().toLowerCase().email("Enter a valid email address").max(160)]);
 
 const memberSchema = z.object({
   name: required("Member name", 80),
-  email: z.union([z.literal(""), z.string().trim().toLowerCase().email("Invalid email")]),
-  phone: z.union([z.literal(""), phoneField]),
+  email: optionalEmail.optional().default(""),
+  phone: z.union([z.literal(""), phoneField]).optional().default(""),
 });
 
 type RegEvent = Pick<FestEvent, "participation" | "teamMin" | "teamMax" | "extraQuestions">;
@@ -31,10 +33,10 @@ export function registrationSchema(ev: RegEvent) {
     .object({
       eventId: z.string().uuid(),
       fullName: required("Full name", 80),
-      institution: required("College / institution", 150),
-      department: required("Department", 100),
+      institution: required("College", 150),
+      department: trimmed(100).optional().default(""),
       year: z.enum(YEARS, { message: "Select your year" }),
-      email: z.string().trim().toLowerCase().email("Enter a valid email address").max(160),
+      email: optionalEmail.optional().default(""),
       phone: phoneField,
       teamName: isTeam ? required("Team name", 60) : z.string().max(0).optional().default(""),
       teamMembers: z
@@ -50,12 +52,14 @@ export function registrationSchema(ev: RegEvent) {
       for (const q of ev.extraQuestions) {
         const a = v.answers[q.id]?.trim() ?? "";
         if (q.required && !a) ctx.addIssue({ code: "custom", path: ["answers", q.id], message: "This answer is required" });
+        if (a && q.type === "file" && !/^(https:\/\/[^\s]+|\/media\/submissions\/[\w.-]+)$/.test(a))
+          ctx.addIssue({ code: "custom", path: ["answers", q.id], message: "Please upload the photo again" });
         if (a && q.type === "select" && q.options?.length && !q.options.includes(a))
           ctx.addIssue({ code: "custom", path: ["answers", q.id], message: "Choose one of the options" });
       }
-      const emails = [v.email, ...v.teamMembers.map((m) => m.email)].filter(Boolean);
-      if (new Set(emails).size !== emails.length)
-        ctx.addIssue({ code: "custom", path: ["teamMembers"], message: "Each team member needs a different email" });
+      const phones = [v.phone, ...v.teamMembers.map((m) => m.phone)].filter(Boolean).map((p) => p!.replace(/\D/g, "").slice(-10));
+      if (new Set(phones).size !== phones.length)
+        ctx.addIssue({ code: "custom", path: ["teamMembers"], message: "Each team member needs a different phone number" });
     });
 }
 export type RegistrationInput = z.input<ReturnType<typeof registrationSchema>>;
@@ -87,6 +91,8 @@ export const contentSchemas = {
       slug: z.string().trim().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, "Lowercase letters, numbers and dashes only").max(80),
       name: text(120).min(2),
       category: z.enum(EVENT_CATEGORIES),
+      tier: z.enum(["main", "mini"]),
+      tagline: text(160),
       shortDescription: text(240),
       description: text(4000),
       posterUrl: url,
@@ -112,7 +118,7 @@ export const contentSchemas = {
           z.object({
             id: z.string().regex(/^[a-z0-9_-]{1,40}$/),
             label: text(200).min(1),
-            type: z.enum(["text", "textarea", "select"]),
+            type: z.enum(["text", "textarea", "select", "file"]),
             options: z.array(text(100)).optional(),
             required: z.boolean().optional(),
           }),
@@ -196,6 +202,7 @@ export const settingsSchema = z.object({
   mapLink: url,
   email: z.union([z.literal(""), z.string().email()]),
   phone: text(30),
+  contacts: z.array(text(120)).max(10),
   whatsapp: z.string().regex(/^\d{0,15}$/, "Digits only, including country code (e.g. 9198xxxxxxxx)"),
   instagram: url,
   brochureUrl: url,

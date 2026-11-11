@@ -7,13 +7,13 @@ import { EventCard } from "./event-card";
 import { RegistrationDialog } from "./registration-dialog";
 
 /** Plain grid of event cards with an inline registration dialog. */
-export function EventGrid({ events, className }: { events: PublicEvent[]; className?: string }) {
+export function EventGrid({ events, className, numbers }: { events: PublicEvent[]; className?: string; numbers?: Record<string, number> }) {
   const [active, setActive] = useState<PublicEvent | null>(null);
   return (
     <>
       <div className={className ?? "grid gap-6 sm:grid-cols-2 xl:grid-cols-3"}>
         {events.map((e, i) => (
-          <EventCard key={e.id} event={e} index={i} onRegister={setActive} />
+          <EventCard key={e.id} event={e} index={i} number={numbers?.[e.id]} onRegister={setActive} />
         ))}
       </div>
       <AnimatePresence>{active && <RegistrationDialog key={active.id} event={active} onClose={() => setActive(null)} />}</AnimatePresence>

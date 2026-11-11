@@ -46,7 +46,7 @@ export function Timeline({ items, dayLabels }: { items: ScheduleItem[]; dayLabel
           {list.map((it) => (
             <li key={it.id} className="relative flex gap-6 sm:gap-10">
               <div className="w-[4.5rem] shrink-0 pt-4 text-right sm:w-24">
-                <p className="font-mono text-sm text-ivory">{formatTime(it.time)}</p>
+                <p className="font-mono text-sm text-ivory">{formatTime(it.time) || "TBA"}</p>
                 {it.endTime && <p className="font-mono text-[0.65rem] text-mist">to {formatTime(it.endTime)}</p>}
               </div>
               <span aria-hidden className={cn("absolute left-[5.25rem] top-5 h-3 w-3 -translate-x-1/2 rounded-full border-2 bg-midnight sm:left-[7.5rem]", it.kind === "break" ? "border-mist" : "border-gold")} />

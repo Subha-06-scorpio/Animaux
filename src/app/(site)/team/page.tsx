@@ -2,15 +2,16 @@ import type { Metadata } from "next";
 import { Reveal } from "@/components/ui/reveal";
 import { PageHero, SectionHeading } from "@/components/ui/section-heading";
 import { MemberCard } from "@/components/team/member-card";
+import { DEPARTMENT_MOTTOS } from "@/content/team";
 import { getVisible } from "@/lib/queries";
 import { TEAM_SECTIONS, type TeamGroup, type TeamMember } from "@/lib/types";
 
-export const metadata: Metadata = { title: "Meet the Team", description: "The mentors, coordinators and departments behind ANIMAUX 2026 at SVKM's Mithibai College." };
+export const metadata: Metadata = { title: "Meet the Team", description: "The minds behind the mystery: mentors, coordinators and departments of ANIMAUX’26 at SVKM's Mithibai College." };
 
 /** Faculty + leadership share one "command" row; departments get unit panels. */
 const BLOCKS = [
   { id: "command", groups: ["faculty", "leadership"] as TeamGroup[], eyebrow: "Case command", title: "Mentors & Coordinators", intro: "Keeping the science sharp and steering ANIMAUX from the first clue to the final verdict." },
-  { id: "organizing", groups: ["organizing"] as TeamGroup[], eyebrow: "The task force", title: "Departments", intro: "Eight units, one mission. Like any ecosystem, it only works when every role shows up." },
+  { id: "organizing", groups: ["organizing"] as TeamGroup[], eyebrow: "The task force", title: "Departments", intro: "The minds behind the mystery — eight departments, one investigation." },
 ];
 
 function sectionsFor(group: TeamGroup, members: TeamMember[]) {
@@ -57,13 +58,14 @@ export default async function TeamPage() {
         <section id="organizing" className="scroll-mt-20 bg-night py-20">
           <div className="mx-auto max-w-7xl px-4 sm:px-6">
             <SectionHeading eyebrow={BLOCKS[1].eyebrow} title={BLOCKS[1].title} intro={BLOCKS[1].intro} />
-            <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {units.map(({ section, people }, si) => (
-                <Reveal key={section} delay={(si % 4) * 0.05} className="rounded-2xl border border-ivory/10 bg-midnight/60 p-4">
+                <Reveal key={section} delay={(si % 4) * 0.05} className="rounded-2xl border border-ivory/10 bg-midnight/60 p-5">
                   <div className="mb-4 flex items-center justify-between">
-                    <h3 className="font-mono text-xs uppercase tracking-[0.3em] text-gold">{section}</h3>
+                    <h3 className="font-title text-base font-bold uppercase tracking-[0.12em] text-gold">{section}</h3>
                     <span className="font-mono text-[0.6rem] tracking-widest text-mist">UNIT {String(si + 1).padStart(2, "0")}</span>
                   </div>
+                  {DEPARTMENT_MOTTOS[section] && <p className="mb-4 text-sm leading-relaxed text-ivory/70">{DEPARTMENT_MOTTOS[section]}</p>}
                   <div className="grid grid-cols-2 gap-3">
                     {people.map((m) => <MemberCard key={m.id} m={m} size="sm" />)}
                   </div>

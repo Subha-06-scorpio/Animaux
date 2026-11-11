@@ -27,14 +27,20 @@ export function participationLabel(e: Pick<FestEvent, "participation" | "teamMin
   return e.teamMin === e.teamMax ? `Team of ${e.teamMin}` : `Team · ${e.teamMin}–${e.teamMax}`;
 }
 
+/** "Limit: 5 teams" style capacity line, or "" when unlimited. */
+export const capacityLabel = (e: Pick<FestEvent, "capacity" | "participation">) =>
+  e.capacity ? `Limit: ${e.capacity} ${e.participation === "team" ? "teams" : "participants"}` : "";
+
 export const formatFee = (fee: number | null) => (fee === null ? "TBA" : fee === 0 ? "Free" : `₹${fee}`);
 
 export function eventStatus(ev: FestEvent, settings: Pick<FestivalSettings, "registrationsOpen">, count: number, now = Date.now()): EventStatus {
+  if (ev.tier === "mini") return { open: false, reason: "walkin", label: "On the spot" };
   if (!settings.registrationsOpen) return { open: false, reason: "paused", label: "Registrations paused" };
   if (!ev.registrationOpen) return { open: false, reason: "closed", label: "Registration closed" };
   if (ev.deadline && now > Date.parse(ev.deadline)) return { open: false, reason: "deadline", label: "Registration ended" };
   if (ev.capacity && count >= ev.capacity) return { open: false, reason: "full", label: "Event full" };
   const left = ev.capacity ? ev.capacity - count : null;
+  if (left !== null && ev.participation === "team") return { open: true, label: left <= 3 ? `Only ${left} team slot${left === 1 ? "" : "s"} left` : "Registration open" };
   return { open: true, label: left !== null && left <= 10 ? `Only ${left} spot${left === 1 ? "" : "s"} left` : "Registration open" };
 }
 
@@ -65,3 +71,10 @@ export function festivalDateLabel(s: Pick<FestivalSettings, "startDate" | "endDa
   if (day(s.startDate) === day(s.endDate)) return formatDate(s.startDate, { weekday: "long", day: "numeric", month: "long", year: "numeric" });
   return `${formatDate(s.startDate, { day: "numeric", month: "long" })} – ${day(s.endDate)}`;
 }
+
+/** Parses "Name | +91 98…" lines from festival settings. */
+export const parseContacts = (lines: string[] = []) =>
+  lines
+    .map((l) => l.split("|").map((x) => x.trim()))
+    .filter(([name, phone]) => name && phone)
+    .map(([name, phone]) => ({ name, phone }));
