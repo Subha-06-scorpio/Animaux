@@ -9,6 +9,8 @@ export const env = {
   resendKey: process.env.RESEND_API_KEY ?? "",
   emailFrom: process.env.EMAIL_FROM ?? "",
   organiserEmail: process.env.ORGANISER_EMAIL ?? "",
+  sheetWebhookUrl: process.env.GOOGLE_SHEET_WEBHOOK_URL ?? "",
+  sheetSecret: process.env.GOOGLE_SHEET_SECRET ?? "",
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   localAdminPassword: process.env.LOCAL_ADMIN_PASSWORD ?? "",
   sessionSecret: process.env.LOCAL_SESSION_SECRET ?? "",

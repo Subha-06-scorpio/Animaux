@@ -31,6 +31,8 @@ The **Overview** page lists what still shows placeholder content. Work down it.
 - An event that already has registrations can't be deleted. Hide it instead.
 
 ## Registrations  *(admin and registrations roles)*
+- Every registration is also copied to the **ANIMAUX'26 Registrations** Google Sheet (in the animaux.zoology@gmail.com Drive) and emailed to that inbox. Share the sheet with teammates from Google Sheets → Share (view-only is safest).
+- The sheet only ever gains rows. If you cancel or mark someone "Attended" in the dashboard, that change appears in the dashboard and CSV, not in the sheet.
 - Filter by event and status, or search by name, email, phone, team or ID.
 - Expand a row (▼) to see team members and answers.
 - Set the status to **Attended** at the venue, or **Cancelled** to free up the participant's email and phone for re-registration.

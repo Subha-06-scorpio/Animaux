@@ -1,4 +1,9 @@
-# Put ANIMAUX'26 online (~30 minutes, free, all in the browser)
+# Put ANIMAUX'26 online (~35 minutes, free, all in the browser)
+
+Every registration ends up in three places:
+1. the website's database (the master copy, with the admin dashboard and CSV export)
+2. a **Google Sheet** in the animaux Gmail's Drive
+3. an **email** to animaux.zoology@gmail.com
 
 **Golden rule:** sign up for every service below with **animaux.zoology@gmail.com**. The festival then owns the website, the registration data and the emails, rather than one student.
 
@@ -10,6 +15,7 @@ You will create four free accounts:
 | Supabase | stores registrations, logins and uploaded photos |
 | Vercel | puts the website online |
 | Resend | emails every registration to animaux.zoology@gmail.com |
+| Google Sheets | a live spreadsheet of every registration, in the animaux Gmail's Google Drive |
 
 ---
 
@@ -46,6 +52,26 @@ You will create four free accounts:
    - Hitting reply goes to the participant (when they gave an email).
    - *Optional, later:* to also email confirmations to participants, verify a domain in Resend and set `EMAIL_FROM`.
 
+## Step 3b — Google Sheet of registrations (5 min)
+Do this logged in as **animaux.zoology@gmail.com**.
+1. Go to https://sheets.new and name the sheet **ANIMAUX'26 Registrations**.
+2. **Extensions → Apps Script**. Delete everything in the editor and paste the whole file `integrations/google-sheet/Code.gs`.
+3. On the line `const SECRET = "change-me-…"`, replace the text inside the quotes with a password of your own, e.g. `wild-files-2026-k9x`. Note it down.
+4. Click **Save** (the disk icon).
+5. Click **Deploy → New deployment**, then the gear icon → **Web app**:
+   - Execute as: **Me (animaux.zoology@gmail.com)**
+   - Who has access: **Anyone** (the secret from step 3 keeps strangers out)
+6. Click **Deploy**, then **Authorize access**: choose the animaux account → **Advanced → Go to project (unsafe) → Allow**. Google shows this warning for every personal script; it's your own code.
+7. Copy the **Web app URL** (it ends in `/exec`). Open it in a browser: you should see *"ANIMAUX'26 sheet connector is running."*
+
+The sheet fills itself in:
+- **All registrations:** every registration.
+- **One tab per event:** e.g. *The Last Trace* with team names and members.
+- **Help desk:** contact-form messages.
+- Shutter Safari photos appear as clickable links.
+
+> Changed the script later? Use **Deploy → Manage deployments → Edit → Version: New version** so the URL stays the same.
+
 ## Step 4 — Vercel: put it online (5 min)
 1. Go to https://vercel.com/signup and choose **Continue with GitHub**.
 2. **Add New… → Project** → **Import** `animaux-2026`.
@@ -59,6 +85,8 @@ You will create four free accounts:
 | `SUPABASE_STORAGE_BUCKET` | `media` |
 | `RESEND_API_KEY` | the `re_…` key from Resend |
 | `ORGANISER_EMAIL` | `animaux.zoology@gmail.com` |
+| `GOOGLE_SHEET_WEBHOOK_URL` | the Web app URL from Step 3b |
+| `GOOGLE_SHEET_SECRET` | the secret you typed in Step 3b |
 | `IP_HASH_SALT` | any long random text, e.g. `animaux-mithibai-2026-xyz` |
 | `NEXT_PUBLIC_FEST_TIMEZONE` | `Asia/Kolkata` |
 
@@ -71,6 +99,7 @@ You will create four free accounts:
 
 ## Step 5 — Test before you share (5 min)
 - Open the link on your phone. Register for **7 Steps**; you should get an ID like `ANX26-STE-XXXXX`.
+- Open the **ANIMAUX'26 Registrations** Google Sheet. A row should appear within a few seconds, in "All registrations" and in a "7 Steps" tab.
 - Check the **animaux.zoology@gmail.com** inbox for the registration email. Check Spam the first time and mark it "Not spam".
 - Register again for 7 Steps with the same number. It should be refused.
 - Register for **Shutter Safari** with a photo.
@@ -88,6 +117,7 @@ In Supabase, repeat Steps 2.3–2.4 with their email and a role:
 
 ## If something goes wrong
 - **The site shows "Something went wrong":** go to Vercel → Deployments → your deployment → **Logs**. Usually an environment variable is mistyped. Fix it, then **Redeploy**.
+- **Nothing in the Google Sheet:** open the Web app URL in a browser to confirm it's running. Check that `GOOGLE_SHEET_SECRET` in Vercel matches the script exactly, then Redeploy. The script's **Executions** page (left menu in Apps Script) shows each attempt.
 - **No emails arriving:** check Spam, and check that the Resend account was created with animaux.zoology@gmail.com. Resend → **Emails** shows each attempt and any error.
 - **Login says "no dashboard access":** Step 2.4 wasn't run, or used a different email.
 - **Photo upload fails:** check that Supabase → **Storage** has a bucket called `media`. The first SQL file creates it.

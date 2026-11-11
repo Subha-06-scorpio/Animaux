@@ -1,7 +1,8 @@
 import { CheckCircle2, Circle } from "lucide-react";
 import Link from "next/link";
 import { can, requirePage } from "@/lib/auth";
-import { dataMode, emailConfigured } from "@/lib/config";
+import { dataMode, notifyConfigured } from "@/lib/config";
+import { sheetConfigured } from "@/lib/sheets";
 import { repo } from "@/lib/data";
 import { eventStatus, formatDateTime } from "@/lib/utils";
 
@@ -24,7 +25,8 @@ export default async function Overview({ searchParams }: PageProps<"/admin">) {
 
   const checklist = [
     { done: dataMode === "supabase", label: "Connect Supabase (database, login, media storage)" },
-    { done: emailConfigured, label: "Configure confirmation emails (Resend) — optional" },
+    { done: sheetConfigured(), label: "Connect the Google Sheet (registrations copied to the festival Gmail)" },
+    { done: notifyConfigured, label: "Connect Resend (a registration email to the festival inbox)" },
     { done: settings.datesConfirmed, label: "Confirm festival dates (Festival settings)" },
     { done: !settings.college.includes("placeholder"), label: "Add college name and address" },
     { done: !events.some((e) => e.isSample), label: "Replace sample events with the real event list" },
