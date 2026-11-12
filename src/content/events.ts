@@ -144,15 +144,15 @@ export const eventsSeed: FestEvent[] = [
   ev({
     slug: "flood-zone",
     name: "Flood Zone: Survive the Wild",
-    tagline: "Limited Ground. Changing Rules. One Team to Save.",
+    tagline: "Limited Ground. Changing Rules. Every Step Counts.",
     category: "game",
     tier: "main",
     eligibility: "Individual entry — not a team event. 15–20 participants.",
     startTime: "13:30",
     shortDescription:
-      "Safe ground is shrinking. Cross a simulated danger zone on limited platforms while animal-call signals change the rules — leave no one behind.",
+      "The water is rising and safe ground is running out. Cross the danger zone on limited platforms, read the animal calls and outlast the flood.",
     description:
-      "The route ahead is dangerous, safe ground is limited, and your team must find a way across. Flood Zone: Survive the Wild places participants in a simulated flood, fire, or trap zone where a handful of safe platforms is all that stands between a clever crossing and a failed plan. Choose your moves carefully, shift your platforms forward, and keep every teammate in the picture.\n\nJust when you find your rhythm, animal-call signals change the rules and force you to rethink your strategy. Later rounds add another layer of investigation: follow the evidence to identify a safer route rather than relying on guesswork. Finalists face an extra responsibility — a toy baby animal that must be carried to safety. In this survival challenge, the strongest team isn’t simply the fastest; it’s the one that can adapt without leaving anyone behind.",
+      "The water is rising, safe ground is vanishing, and only the sharpest survivors will make it across. Flood Zone: Survive the Wild drops you into a simulated flood, fire or trap zone where a handful of safe platforms is all that stands between you and the water. Every move is yours alone: choose your footing carefully, plan your next step, and stay on the platforms as the zone keeps shifting.\n\nJust when you think you have the route figured out, animal-call signals change the rules and force you to adapt on the spot. Later rounds test your investigator’s instincts: follow the evidence to find the safer path instead of trusting luck. Make it to the final and you’ll face one last responsibility — carrying a toy baby animal to safety without losing your ground. In the wild, survival isn’t about being the fastest; it’s about reading the signs and keeping your nerve.",
     participation: "individual",
     teamMin: 1,
     teamMax: 1,
