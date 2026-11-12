@@ -52,7 +52,7 @@ const SECTIONS: { title: string; fields: Field[] }[] = [
     title: "Volunteers (Team page)",
     fields: [
       { name: "volunteersPhotoUrl", label: "Volunteers group photo", type: "media", accept: "image/*", folder: "team", span: 2, help: "One wide group photo. Landscape works best." },
-      { name: "volunteers", label: "Volunteer names (one per line)", type: "lines", span: 2 },
+      { name: "volunteers", label: "Volunteers (one per line: Name | Department)", type: "lines", span: 2, help: "e.g. Shifa Khan | Creatives — grouped by department on the Team page." },
     ],
   },
   { title: "Participant guidelines", fields: [{ name: "guidelines", label: "Guidelines (one per line)", type: "lines", span: 2 }] },

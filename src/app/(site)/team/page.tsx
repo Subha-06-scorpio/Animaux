@@ -26,6 +26,15 @@ export default async function TeamPage() {
   const [members, settings] = await Promise.all([getVisible("team"), getSettings()]);
   const volunteers = settings.volunteers ?? [];
   const volunteersPhoto = settings.volunteersPhotoUrl ?? "";
+  // "Name | Department" lines, grouped in the same order as the department panels
+  const deptOrder = TEAM_SECTIONS.organizing;
+  const volunteerGroups = Object.entries(
+    volunteers.reduce<Record<string, string[]>>((acc, line) => {
+      const [name, dept = "Volunteers"] = line.split("|").map((x) => x.trim());
+      if (name) (acc[dept] ??= []).push(name);
+      return acc;
+    }, {}),
+  ).sort(([a], [b]) => (deptOrder.indexOf(a) + 1 || 99) - (deptOrder.indexOf(b) + 1 || 99));
   const hasSample = members.some((m) => m.isSample);
   const command = (["faculty", "leadership"] as TeamGroup[]).flatMap((g) => sectionsFor(g, members).flatMap((s) => s.people));
   const units = sectionsFor("organizing", members);
@@ -93,12 +102,19 @@ export default async function TeamPage() {
             )}
             {volunteers.length > 0 && (
               <Reveal className="mt-10">
-                <p className="eyebrow mb-4">{volunteers.length} volunteer{volunteers.length === 1 ? "" : "s"}</p>
-                <ul className="flex flex-wrap gap-2">
-                  {volunteers.map((v) => (
-                    <li key={v} className="rounded-full border border-ivory/15 bg-night/60 px-4 py-2 text-sm text-ivory/90">{v}</li>
+                <p className="eyebrow mb-5">{volunteers.length} volunteer{volunteers.length === 1 ? "" : "s"}</p>
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {volunteerGroups.map(([dept, names]) => (
+                    <div key={dept} className="rounded-2xl border border-ivory/10 bg-night/60 p-5">
+                      <h3 className="font-title text-sm font-bold uppercase tracking-[0.12em] text-gold">{dept}</h3>
+                      <ul className="mt-3 flex flex-wrap gap-2">
+                        {names.map((n) => (
+                          <li key={n} className="rounded-full border border-ivory/15 px-3 py-1.5 text-sm text-ivory/90">{n}</li>
+                        ))}
+                      </ul>
+                    </div>
                   ))}
-                </ul>
+                </div>
               </Reveal>
             )}
           </div>
