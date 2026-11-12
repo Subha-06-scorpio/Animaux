@@ -48,6 +48,13 @@ const SECTIONS: { title: string; fields: Field[] }[] = [
       { name: "brochureUrl", label: "Brochure (PDF)", type: "media", accept: "application/pdf", folder: "brochure", span: 2, help: "Upload the final PDF here — every brochure button on the site then downloads it directly. A Canva link also works until then." },
     ],
   },
+  {
+    title: "Volunteers (Team page)",
+    fields: [
+      { name: "volunteersPhotoUrl", label: "Volunteers group photo", type: "media", accept: "image/*", folder: "team", span: 2, help: "One wide group photo. Landscape works best." },
+      { name: "volunteers", label: "Volunteer names (one per line)", type: "lines", span: 2 },
+    ],
+  },
   { title: "Participant guidelines", fields: [{ name: "guidelines", label: "Guidelines (one per line)", type: "lines", span: 2 }] },
 ];
 
@@ -62,7 +69,7 @@ export function SettingsForm({ initial }: { initial: FestivalSettings }) {
     e.preventDefault();
     setSaving(true);
     const tidy = (k: string) => ((draft[k] as string[]) ?? []).map((s) => s.trim()).filter(Boolean);
-    const clean = { ...draft, guidelines: tidy("guidelines"), contacts: tidy("contacts") };
+    const clean = { ...draft, guidelines: tidy("guidelines"), contacts: tidy("contacts"), volunteers: tidy("volunteers") };
     const res = await saveSettingsAction(clean);
     setSaving(false);
     if (res.ok) {

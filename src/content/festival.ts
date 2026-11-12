@@ -32,6 +32,8 @@ export const festivalSeed: FestivalSettings = {
     "Mrugank Karandikar (Marketing) | +91 77386 56645",
   ],
   sponsorContact: "Mrugank Karandikar | +91 77386 56645",
+  volunteers: [], // add names from Admin → Festival settings → Volunteers
+  volunteersPhotoUrl: "",
   whatsapp: "",
   instagram: "https://www.instagram.com/animaux.mithibai/",
   brochureUrl: "https://canva.link/nziclf8o20e187l",

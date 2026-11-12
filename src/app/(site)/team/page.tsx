@@ -3,7 +3,7 @@ import { Reveal } from "@/components/ui/reveal";
 import { PageHero, SectionHeading } from "@/components/ui/section-heading";
 import { MemberCard } from "@/components/team/member-card";
 import { DEPARTMENT_MOTTOS } from "@/content/team";
-import { getVisible } from "@/lib/queries";
+import { getSettings, getVisible } from "@/lib/queries";
 import { TEAM_SECTIONS, type TeamGroup, type TeamMember } from "@/lib/types";
 
 export const metadata: Metadata = { title: "Meet the Team", description: "The minds behind the mystery: mentors, coordinators and departments of ANIMAUX’26 at SVKM's Mithibai College." };
@@ -23,7 +23,9 @@ function sectionsFor(group: TeamGroup, members: TeamMember[]) {
 }
 
 export default async function TeamPage() {
-  const members = await getVisible("team");
+  const [members, settings] = await Promise.all([getVisible("team"), getSettings()]);
+  const volunteers = settings.volunteers ?? [];
+  const volunteersPhoto = settings.volunteersPhotoUrl ?? "";
   const hasSample = members.some((m) => m.isSample);
   const command = (["faculty", "leadership"] as TeamGroup[]).flatMap((g) => sectionsFor(g, members).flatMap((s) => s.people));
   const units = sectionsFor("organizing", members);
@@ -35,6 +37,9 @@ export default async function TeamPage() {
           {BLOCKS.map((b) => (
             <a key={b.id} href={`#${b.id}`} className="tag border-ivory/20 py-2 text-ivory/80 hover:border-gold hover:text-gold">{b.title}</a>
           ))}
+          {(volunteers.length > 0 || volunteersPhoto) && (
+            <a href="#volunteers" className="tag border-ivory/20 py-2 text-ivory/80 hover:border-gold hover:text-gold">Volunteers</a>
+          )}
         </nav>
         {hasSample && <p className="mt-6 text-sm text-mist">Some entries are placeholders until the team list is final.</p>}
       </PageHero>
@@ -72,6 +77,30 @@ export default async function TeamPage() {
                 </Reveal>
               ))}
             </div>
+          </div>
+        </section>
+      )}
+
+      {(volunteers.length > 0 || volunteersPhoto) && (
+        <section id="volunteers" className="scroll-mt-20 bg-midnight py-20">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6">
+            <SectionHeading eyebrow="Boots on the ground" title="Volunteers" intro="The field team that keeps every case running — from the first clue to the final verdict." />
+            {volunteersPhoto && (
+              <Reveal className="mt-12 overflow-hidden rounded-3xl border border-gold/25 shadow-2xl">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={volunteersPhoto} alt="ANIMAUX’26 volunteers group photo" loading="lazy" className="w-full object-cover" />
+              </Reveal>
+            )}
+            {volunteers.length > 0 && (
+              <Reveal className="mt-10">
+                <p className="eyebrow mb-4">{volunteers.length} volunteer{volunteers.length === 1 ? "" : "s"}</p>
+                <ul className="flex flex-wrap gap-2">
+                  {volunteers.map((v) => (
+                    <li key={v} className="rounded-full border border-ivory/15 bg-night/60 px-4 py-2 text-sm text-ivory/90">{v}</li>
+                  ))}
+                </ul>
+              </Reveal>
+            )}
           </div>
         </section>
       )}

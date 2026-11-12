@@ -214,6 +214,8 @@ export const settingsSchema = z.object({
   phone: text(30),
   contacts: z.array(text(120)).max(10),
   sponsorContact: text(120),
+  volunteers: z.array(text(80)).max(200),
+  volunteersPhotoUrl: url,
   whatsapp: z.string().regex(/^\d{0,15}$/, "Digits only, including country code (e.g. 9198xxxxxxxx)"),
   instagram: url,
   brochureUrl: url,
