@@ -2,7 +2,8 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AnimatePresence, motion } from "motion/react";
-import { Check, Copy, ImageUp, Loader2, Mail, Minus, Phone, Plus, X } from "lucide-react";
+import { CalendarDays, Check, Copy, ImageUp, Loader2, Mail, Minus, Phone, Plus, X } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useFieldArray, useForm, type FieldErrors } from "react-hook-form";
 import { createSubmissionUploadAction, registerAction, type RegisterResult } from "@/app/actions/public";
@@ -339,6 +340,7 @@ function Success({ result, event, onClose, onAgain }: { result: Extract<Register
       </p>
 
       <div className="mt-8 flex flex-wrap justify-center gap-3">
+        <Link href="/schedule" onClick={onClose} className="btn btn-gold"><CalendarDays size={16} /> View schedule</Link>
         <button type="button" onClick={onClose} className="btn btn-primary">Register for another event</button>
         <button type="button" onClick={onAgain} className="btn btn-ghost">Register someone else</button>
       </div>

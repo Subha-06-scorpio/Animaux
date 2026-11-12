@@ -44,7 +44,7 @@ const SECTIONS: { title: string; fields: Field[] }[] = [
       { name: "contacts", label: "Contact people (one per line: Name | phone)", type: "lines", span: 2, help: "Shown on the Contact page and footer, e.g. Aditya Dubey | +91 91372 84809" },
       { name: "whatsapp", label: "WhatsApp number (digits with country code)", type: "text", placeholder: "9198xxxxxxxx" },
       { name: "instagram", label: "Instagram URL", type: "url" },
-      { name: "brochureUrl", label: "Brochure (PDF)", type: "media", accept: "application/pdf", folder: "brochure", span: 2 },
+      { name: "brochureUrl", label: "Brochure (PDF)", type: "media", accept: "application/pdf", folder: "brochure", span: 2, help: "Upload the final PDF here — every brochure button on the site then downloads it directly. A Canva link also works until then." },
     ],
   },
   { title: "Participant guidelines", fields: [{ name: "guidelines", label: "Guidelines (one per line)", type: "lines", span: 2 }] },

@@ -1,14 +1,16 @@
 "use client";
 
 import { AnimatePresence, motion, useScroll, useSpring } from "motion/react";
-import { Menu, X } from "lucide-react";
+import { Download, Mail, Menu, Phone, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { InstagramIcon, WhatsAppIcon } from "@/components/ui/icons";
+import type { FestivalSettings } from "@/lib/types";
+import { brochureLabel, cn, parseContacts, telLink, whatsappLink } from "@/lib/utils";
 import { Logo, NAV } from "./brand";
-import { cn } from "@/lib/utils";
 
-export function Navbar() {
+export function Navbar({ s }: { s: Pick<FestivalSettings, "email" | "instagram" | "whatsapp" | "contacts" | "brochureUrl"> }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -42,7 +44,11 @@ export function Navbar() {
 
   const active = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
+  const contacts = parseContacts(s.contacts);
+  const wa = whatsappLink(s.whatsapp, "Hi! I have a question about ANIMAUX’26.");
+
   return (
+    <>
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-500",
@@ -91,6 +97,9 @@ export function Navbar() {
       </nav>
       <motion.div style={{ scaleX: progress }} className="absolute bottom-0 left-0 h-px w-full origin-left bg-gradient-to-r from-gold/0 via-gold to-ember" />
 
+    </header>
+
+    {/* Rendered outside <header>: its backdrop-filter would otherwise trap this fixed panel at 0 height. */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -98,7 +107,7 @@ export function Navbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-x-0 top-16 bottom-0 overflow-y-auto bg-night/95 backdrop-blur-xl lg:hidden"
+            className="fixed inset-x-0 top-16 bottom-0 z-40 overflow-y-auto bg-night/[0.97] backdrop-blur-xl lg:hidden"
           >
             <ul className="topo flex min-h-full flex-col gap-1 px-6 py-8">
               {NAV.map((n, i) => (
@@ -112,15 +121,31 @@ export function Navbar() {
                   </Link>
                 </motion.li>
               ))}
-              <li className="mt-6">
+              <li className="mt-6 grid gap-3">
                 <Link href="/register" className="btn btn-primary w-full py-4 text-base">
                   Register for events
                 </Link>
+                {s.brochureUrl && (
+                  <a href={s.brochureUrl} target="_blank" rel="noopener noreferrer" className="btn btn-ghost w-full py-3">
+                    <Download size={16} /> {brochureLabel(s.brochureUrl)}
+                  </a>
+                )}
+              </li>
+              <li className="mt-8 space-y-3 border-t border-ivory/10 pt-6 text-sm text-ivory/80">
+                <p className="eyebrow">Reach us</p>
+                {contacts.map((c) => (
+                  <a key={c.phone} href={telLink(c.phone)} className="flex items-center gap-3 hover:text-gold"><Phone size={15} className="text-gold" /> {c.name.split(" ")[0]} · {c.phone}</a>
+                ))}
+                {s.email && <a href={`mailto:${s.email}`} className="flex items-center gap-3 hover:text-gold"><Mail size={15} className="text-gold" /> {s.email}</a>}
+                <div className="flex gap-3 pt-2">
+                  {s.instagram && <a href={s.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="grid h-11 w-11 place-items-center rounded-full border border-ivory/20 hover:border-gold hover:text-gold"><InstagramIcon className="h-5 w-5" /></a>}
+                  {wa && <a href={wa} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="grid h-11 w-11 place-items-center rounded-full border border-ivory/20 hover:border-gold hover:text-gold"><WhatsAppIcon className="h-5 w-5" /></a>}
+                </div>
               </li>
             </ul>
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </>
   );
 }

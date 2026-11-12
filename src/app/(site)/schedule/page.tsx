@@ -6,7 +6,7 @@ import { InstagramIcon } from "@/components/ui/icons";
 import { Reveal } from "@/components/ui/reveal";
 import { PageHero, SectionHeading } from "@/components/ui/section-heading";
 import { getPublicEvents, getSettings, getVisible } from "@/lib/queries";
-import { festivalDateLabel, formatDate, formatDateTime } from "@/lib/utils";
+import { brochureLabel, festivalDateLabel, formatDate, formatDateTime, isPdf } from "@/lib/utils";
 
 export const metadata: Metadata = { title: "Schedule & Festival Info", description: "ANIMAUX 2026 dates, schedule, venue, directions, deadlines and participant guidelines." };
 
@@ -36,7 +36,7 @@ export default async function SchedulePage() {
             <Download className="text-gold" size={20} />
             <p className="mt-3 text-sm text-mist">Festival brochure</p>
             {s.brochureUrl ? (
-              <a href={s.brochureUrl} target="_blank" rel="noopener noreferrer" className="font-display text-xl text-gold hover:text-ember-bright">View brochure</a>
+              <a href={s.brochureUrl} target="_blank" rel="noopener noreferrer" className="font-display text-xl text-gold hover:text-ember-bright">{brochureLabel(s.brochureUrl)}</a>
             ) : (
               <p className="font-display text-xl text-ivory/60">Coming soon</p>
             )}
@@ -62,7 +62,7 @@ export default async function SchedulePage() {
             <div className="mt-8 flex flex-wrap gap-3">
               <a href="/animaux26-flyer.jpg" download="ANIMAUX26-poster.jpg" className="btn btn-gold"><Download size={16} /> Download poster</a>
               {s.brochureUrl && (
-                <a href={s.brochureUrl} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">Open brochure <ExternalLink size={16} /></a>
+                <a href={s.brochureUrl} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">{brochureLabel(s.brochureUrl)} {isPdf(s.brochureUrl) ? <Download size={16} /> : <ExternalLink size={16} />}</a>
               )}
             </div>
           </div>
@@ -112,12 +112,19 @@ export default async function SchedulePage() {
             {deadlines.map((e) => (
               <li key={e.id} className="flex items-center justify-between gap-4 px-5 py-4">
                 <Link href={`/events/${e.slug}`} className="font-medium hover:text-gold">{e.name}</Link>
-                <span className={`flex shrink-0 items-center gap-2 font-mono text-xs ${e.status.open ? "text-gold" : "text-mist line-through"}`}>
-                  <Hourglass size={12} /> {formatDateTime(e.deadline)}
-                </span>
+                {e.tier === "mini" ? (
+                  <span className="shrink-0 font-mono text-sm text-mist" title="On the spot — no registration needed">
+                    —<span className="sr-only">no registration needed</span>
+                  </span>
+                ) : (
+                  <span className={`flex shrink-0 items-center gap-2 font-mono text-xs ${e.status.open ? "text-gold" : "text-mist"}`}>
+                    <Hourglass size={12} /> {e.status.open ? formatDateTime(e.deadline) : "Closed"}
+                  </span>
+                )}
               </li>
             ))}
           </ul>
+          <p className="mt-3 text-xs text-mist">— = mini event, on the spot, no registration needed.</p>
         </div>
         <div>
           <SectionHeading eyebrow="Latest" title="Announcements" />

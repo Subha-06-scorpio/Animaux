@@ -78,3 +78,7 @@ export const parseContacts = (lines: string[] = []) =>
     .map((l) => l.split("|").map((x) => x.trim()))
     .filter(([name, phone]) => name && phone)
     .map(([name, phone]) => ({ name, phone }));
+
+/** Brochure links open the PDF directly once one is uploaded; otherwise they open the link (e.g. Canva). */
+export const isPdf = (url: string) => /\.pdf($|\?)/i.test(url);
+export const brochureLabel = (url: string) => (isPdf(url) ? "Download brochure (PDF)" : "View brochure");
