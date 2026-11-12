@@ -151,6 +151,7 @@ export type FestivalSettings = {
   email: string;
   phone: string;
   contacts: string[]; // "Name | +91 phone" — shown on contact page & footer
+  sponsorContact: string; // "Name | +91 phone" — shown in the Sponsors section
   whatsapp: string; // digits only, with country code
   instagram: string;
   brochureUrl: string;

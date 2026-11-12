@@ -2,7 +2,7 @@ import type { TeamGroup, TeamMember } from "@/lib/types";
 
 /**
  * SEED CONTENT — ANIMAUX 2026 core committee, from the organisers' theme doc
- * ("The minds behind the mystery"). Add photos from Admin → Team.
+ * ("The minds behind the mystery"). Photos can be replaced from Admin → Team.
  */
 type Row = [name: string, role: string, group: TeamGroup, section: string, bio: string];
 
@@ -23,6 +23,7 @@ const ROWS: Row[] = [
   ["Anisha Sagare", "Sub-Head · Marketing", "organizing", "Marketing", "Builds the network of sponsors and stalls, bringing vital backing to the Animaux operation."],
   ["Mihika Mishra", "Head · Public Relations", "organizing", "Public Relations", "Takes the case across campuses, turning college visits and conversations into invitations to investigate."],
   ["Prachi Gupta", "Head · Hospitality", "organizing", "Hospitality", "Makes investigation headquarters a welcoming space, keeping guests, teachers and participants well cared for."],
+  ["Raj Jatrara", "Sub-Head · Hospitality", "organizing", "Hospitality", "Keeps investigation headquarters running smoothly, so every guest and participant feels at home."],
 ];
 
 /** Two-line department mottos from the theme doc, shown on the Team page. */
@@ -37,6 +38,11 @@ export const DEPARTMENT_MOTTOS: Record<string, string> = {
   Creatives: "We build the scene, handcraft the props, and leave imagination’s fingerprints. Every detail is handmade, every corner suspiciously creative!",
 };
 
+/** Portraits in public/team/<name-slug>.jpg (background removed, branded backdrop). */
+const NO_PHOTO = new Set(["Dr. Shouriehebal Soni"]);
+const photoFor = (name: string) =>
+  NO_PHOTO.has(name) ? "" : `/team/${name.toLowerCase().replace(/[^a-z\s-]/g, "").trim().replace(/\s+/g, "-")}.jpg`;
+
 export const teamSeed: TeamMember[] = ROWS.map(([name, role, group, section, bio], i) => ({
   id: `7e000000-0000-4000-8000-${String(i + 1).padStart(12, "0")}`,
   name,
@@ -44,7 +50,7 @@ export const teamSeed: TeamMember[] = ROWS.map(([name, role, group, section, bio
   group,
   section,
   bio,
-  photoUrl: "",
+  photoUrl: photoFor(name),
   socialUrl: "",
   spiritAnimal: "",
   visible: true,

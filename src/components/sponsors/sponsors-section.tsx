@@ -1,10 +1,12 @@
-import { Handshake, Mail } from "lucide-react";
+import { Handshake, Mail, Phone } from "lucide-react";
 import { Reveal } from "@/components/ui/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
 import type { FestivalSettings, Sponsor } from "@/lib/types";
+import { parseContacts, telLink } from "@/lib/utils";
 
 /** Sponsor logos (managed in Admin → Sponsors) plus a standing invitation to partner. */
 export function SponsorsSection({ sponsors, s }: { sponsors: Sponsor[]; s: FestivalSettings }) {
+  const sponsorContact = parseContacts([s.sponsorContact ?? ""])[0];
   const mail = `mailto:${s.email}?subject=${encodeURIComponent(`Sponsorship — ${s.name}’${s.edition.slice(-2)}`)}`;
   return (
     <section id="sponsors" className="relative border-t border-ivory/10 bg-night py-24" aria-labelledby="sponsors-heading">
@@ -53,9 +55,14 @@ export function SponsorsSection({ sponsors, s }: { sponsors: Sponsor[]; s: Festi
           <p className="max-w-xl text-ivory/75">
             Put your brand at the heart of the Department of Zoology’s festival at {s.college} on 2 December — stalls, prizes, goodies and event partnerships. Our Marketing team, led by Mrugank Karandikar and Anisha Sagare, would love to hear from you.
           </p>
-          {s.email && (
-            <a href={mail} className="btn btn-gold"><Mail size={16} /> Become a sponsor</a>
-          )}
+          <div className="flex flex-wrap justify-center gap-3">
+            {sponsorContact && (
+              <a href={telLink(sponsorContact.phone)} className="btn btn-gold"><Phone size={16} /> Call {sponsorContact.name.split(" ")[0]} · {sponsorContact.phone}</a>
+            )}
+            {s.email && (
+              <a href={mail} className="btn btn-ghost"><Mail size={16} /> Email us</a>
+            )}
+          </div>
         </Reveal>
       </div>
     </section>

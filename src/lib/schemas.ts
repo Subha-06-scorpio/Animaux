@@ -213,6 +213,7 @@ export const settingsSchema = z.object({
   email: z.union([z.literal(""), z.string().email()]),
   phone: text(30),
   contacts: z.array(text(120)).max(10),
+  sponsorContact: text(120),
   whatsapp: z.string().regex(/^\d{0,15}$/, "Digits only, including country code (e.g. 9198xxxxxxxx)"),
   instagram: url,
   brochureUrl: url,

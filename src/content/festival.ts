@@ -25,7 +25,13 @@ export const festivalSeed: FestivalSettings = {
   mapLink: "https://www.google.com/maps/search/?api=1&query=Mithibai+College+Vile+Parle+West+Mumbai",
   email: "animaux.zoology@gmail.com",
   phone: "+91 91372 84809",
-  contacts: ["Aditya Dubey | +91 91372 84809", "Subha Nandula | +91 84540 26143"],
+  contacts: [
+    "Aditya Dubey | +91 91372 84809",
+    "Subha Nandula | +91 84540 26143",
+    "Niharika Kambli (Events) | +91 99208 24982",
+    "Mrugank Karandikar (Marketing) | +91 77386 56645",
+  ],
+  sponsorContact: "Mrugank Karandikar | +91 77386 56645",
   whatsapp: "",
   instagram: "https://www.instagram.com/animaux.mithibai/",
   brochureUrl: "https://canva.link/nziclf8o20e187l",
@@ -53,7 +59,7 @@ export const announcementsSeed: Announcement[] = [
   {
     id: "a0000000-0000-4000-8000-000000000002",
     title: "Save the date: 2 December 2026 · SVKM's Mithibai College",
-    body: "ANIMAUX'26 — Echoes of the Wild: The Survival Files — 8 main events and 6 mini events, hosted by the Department of Zoology. Event timings will be published here.",
+    body: "ANIMAUX'26 — Echoes of the Wild: The Survival Files — 8 main events and 6 mini events, hosted by the Department of Zoology. The full event schedule is now on the Schedule page.",
     publishedOn: "2026-10-21",
     pinned: false,
     visible: true,
@@ -63,24 +69,20 @@ export const announcementsSeed: Announcement[] = [
 
 const s = (n: number) => `5c000000-0000-4000-8000-0000000000${String(n).padStart(2, "0")}`;
 
-// Timings not announced yet: slots without a time show as "TBA" and keep this order.
-const slot = (n: number, title: string, kind: ScheduleItem["kind"], eventSlug = "", time = ""): ScheduleItem => ({
-  id: s(n), day: 1, time, endTime: "", title, venue: "", kind, eventSlug, visible: true, sortOrder: n,
+// Official timings (2 December 2026). Add venues/rooms from Admin → Schedule.
+const slot = (n: number, time: string, endTime: string, title: string, eventSlug = "", kind: ScheduleItem["kind"] = "event"): ScheduleItem => ({
+  id: s(n), day: 1, time, endTime, title, venue: "", kind, eventSlug, visible: true, sortOrder: n,
 });
 
 export const scheduleSeed: ScheduleItem[] = [
-  slot(1, "Check-in at the registration desk", "other"),
-  slot(2, "Opening — Echoes of the Wild: The Survival Files", "ceremony"),
-  slot(3, "The Last Trace", "event", "the-last-trace"),
-  slot(4, "Trace Evidence Relay", "event", "trace-evidence-relay"),
-  slot(5, "Wild Shark Tank: Eco-Startup Pitch", "event", "wild-shark-tank"),
-  slot(6, "The Poacher’s Tale", "event", "the-poachers-tale"),
-  slot(7, "Flood Zone: Survive the Wild", "event", "flood-zone"),
-  slot(8, "7 Steps", "event", "7-steps"),
-  slot(9, "Shutter Safari: Photography Competition", "event", "shutter-safari"),
-  slot(10, "Strokes of Wild", "event", "strokes-of-wild"),
-  slot(11, "Mini events — Pictionary, Wild Aim, Wild Eye, Fingerprint Paintings, Who Am I?, Memory Game", "other"),
-  slot(12, "Verdicts, prize distribution & closing", "ceremony"),
+  slot(1, "09:00", "10:00", "The Last Trace — Round 1", "the-last-trace"),
+  slot(2, "10:15", "11:00", "Trace Evidence Relay", "trace-evidence-relay"),
+  slot(3, "11:15", "", "The Poacher’s Tale", "the-poachers-tale"),
+  slot(4, "11:30", "", "Strokes of Wild — coaster making", "strokes-of-wild"),
+  slot(5, "11:30", "", "Wild Shark Tank: Eco-Startup Pitch", "wild-shark-tank"),
+  slot(6, "12:00", "", "The Last Trace — Round 2", "the-last-trace"),
+  slot(7, "13:30", "", "Flood Zone: Survive the Wild", "flood-zone"),
+  slot(8, "14:15", "", "7 Steps", "7-steps"),
 ];
 
 const f = (n: number) => `fa000000-0000-4000-8000-0000000000${String(n).padStart(2, "0")}`;
@@ -93,5 +95,5 @@ export const faqsSeed: Faq[] = [
   { id: f(5), question: "How do team registrations work?", answer: "The team leader registers once for the whole team: a team name, plus each member’s name. Team sizes and team limits (for example, 5 teams for The Last Trace) are shown on each event.", visible: true, sortOrder: 4 },
   { id: f(6), question: "What are mini events?", answer: "Six quick, on-the-spot games — Wildlife Pictionary, Wild Aim, Wild Eye, Fingerprint Paintings, Who Am I? and the Memory Game. Just walk in on 2 December; no online registration needed.", visible: true, sortOrder: 5 },
   { id: f(7), question: "How do I submit my photo for Shutter Safari?", answer: "Upload it in the registration form for Shutter Safari (JPG, PNG or WebP, up to 10 MB). Large photos are resized automatically before upload.", visible: true, sortOrder: 6 },
-  { id: f(8), question: "Who do I contact with questions?", answer: "Call Aditya (+91 91372 84809) or Subha (+91 84540 26143), email animaux.zoology@gmail.com, or use the help desk form on the Contact page.", visible: true, sortOrder: 7 },
+  { id: f(8), question: "Who do I contact with questions?", answer: "For event questions call Niharika (+91 99208 24982); for anything else call Aditya (+91 91372 84809) or Subha (+91 84540 26143), email animaux.zoology@gmail.com, or use the help desk form on the Contact page. Sponsors: Mrugank (+91 77386 56645).", visible: true, sortOrder: 7 },
 ];

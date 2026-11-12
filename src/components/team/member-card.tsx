@@ -12,7 +12,7 @@ export function MemberCard({ m, size = "md" }: { m: TeamMember; size?: "lg" | "m
       <div className="relative aspect-[4/5] overflow-hidden">
         {m.photoUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={m.photoUrl} alt={`Portrait of ${m.name}`} loading="lazy" decoding="async" className="h-full w-full object-cover grayscale-[35%] transition duration-700 group-hover:scale-105 group-hover:grayscale-0" />
+          <img src={m.photoUrl} alt={`Portrait of ${m.name}`} loading="lazy" decoding="async" className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
         ) : (
           <>
             <PlaceholderArt seed={m.id} compact label={m.name} />

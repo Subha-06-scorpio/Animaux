@@ -42,6 +42,7 @@ const SECTIONS: { title: string; fields: Field[] }[] = [
       { name: "email", label: "Festival email", type: "email" },
       { name: "phone", label: "General phone (fallback)", type: "text" },
       { name: "contacts", label: "Contact people (one per line: Name | phone)", type: "lines", span: 2, help: "Shown on the Contact page and footer, e.g. Aditya Dubey | +91 91372 84809" },
+      { name: "sponsorContact", label: "Sponsorship contact (Name | phone)", type: "text", span: 2, help: "Shown on the “Become a sponsor” card." },
       { name: "whatsapp", label: "WhatsApp number (digits with country code)", type: "text", placeholder: "9198xxxxxxxx" },
       { name: "instagram", label: "Instagram URL", type: "url" },
       { name: "brochureUrl", label: "Brochure (PDF)", type: "media", accept: "application/pdf", folder: "brochure", span: 2, help: "Upload the final PDF here — every brochure button on the site then downloads it directly. A Canva link also works until then." },
