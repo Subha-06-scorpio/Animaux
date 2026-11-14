@@ -45,7 +45,7 @@ export default async function SchedulePage() {
       </PageHero>
 
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
-        <SectionHeading eyebrow="Timeline" title="The full schedule" intro={schedule.some((i) => !i.time) ? "Event timings will be announced soon — check back here or follow the announcements." : undefined} />
+        <SectionHeading eyebrow="Timeline" title="The full schedule" intro={schedule.some((i) => !i.time) ? "Event timings will be announced soon — check back here or follow the announcements." : "Timings may shift a little on the day — keep an eye on the announcements and listen for calls at the venue."} />
         <div className="mt-10">
           <Timeline items={schedule} dayLabels={dayLabels} />
         </div>

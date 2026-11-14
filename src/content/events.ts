@@ -53,8 +53,7 @@ export const eventsSeed: FestEvent[] = [
     tagline: "The flagship investigation of ANIMAUX'26.",
     category: "competition",
     tier: "main",
-    endTime: "10:00",
-    startTime: "09:00",
+    startTime: "11:30",
     shortDescription:
       "An endangered animal found dead under suspicious circumstances. 45 minutes to hunt clues, decode forensic reports and crack the case.",
     description:
@@ -64,7 +63,7 @@ export const eventsSeed: FestEvent[] = [
     teamMax: 5,
     capacity: 4,
     rules: [
-      "Round 1: 9:00–10:00 AM · Round 2: 12:00 PM.",
+      "Round 1: 11:30 AM · Round 2: 2:15 PM.",
       "Participation: 4 teams, up to 5 members each.",
       "Duration: approximately 45 minutes per session.",
       "One continuous investigation combining clue-hunting, puzzles and case-solving.",
@@ -79,8 +78,7 @@ export const eventsSeed: FestEvent[] = [
     category: "competition",
     tier: "main",
     capacity: 4,
-    endTime: "11:00",
-    startTime: "10:15",
+    startTime: "13:30",
     shortDescription:
       "A fast-paced race through hands-on forensic checkpoints: soil pH matching, fingerprint lifting, mock fur comparison and chemical colour tests.",
     description:
@@ -102,7 +100,7 @@ export const eventsSeed: FestEvent[] = [
     category: "competition",
     tier: "main",
     capacity: 7,
-    startTime: "11:30",
+    startTime: "13:00",
     shortDescription:
       "Pitch a business, product or technology that tackles a wildlife or environmental challenge — and survive the Sharks’ questions.",
     description:
@@ -129,7 +127,7 @@ export const eventsSeed: FestEvent[] = [
     teamMax: 1,
     teamMin: 1,
     participation: "individual",
-    startTime: "11:15",
+    startTime: "13:00",
     shortDescription:
       "Rangers build the Sanctuary Fund while secret Poachers work against them. Tell true or tall wildlife tales, cross-examine, and vote at the Campfire Council.",
     description:
@@ -148,7 +146,7 @@ export const eventsSeed: FestEvent[] = [
     category: "game",
     tier: "main",
     eligibility: "Individual entry — not a team event. 15–20 participants.",
-    startTime: "13:30",
+    startTime: "11:00",
     shortDescription:
       "The water is rising and safe ground is running out. Cross the danger zone on limited platforms, read the animal calls and outlast the flood.",
     description:
@@ -174,7 +172,7 @@ export const eventsSeed: FestEvent[] = [
     teamMax: 1,
     teamMin: 1,
     participation: "individual",
-    startTime: "14:15",
+    startTime: "10:30",
     shortDescription:
       "The counter has turned away. Answer right to step forward, wrong to step back — how far can you get before they turn around?",
     description:
@@ -215,7 +213,7 @@ export const eventsSeed: FestEvent[] = [
     teamMax: 1,
     teamMin: 1,
     participation: "individual",
-    startTime: "11:30",
+    startTime: "10:30",
     shortDescription:
       "Turn a simple coaster into a colourful celebration of nature — animal designs, leafy patterns, marine scenes or a conservation message.",
     description:

@@ -5,19 +5,22 @@ import type { FestivalSettings, Sponsor } from "@/lib/types";
 import { parseContacts, telLink } from "@/lib/utils";
 
 /** Sponsor logos (managed in Admin → Sponsors) plus a standing invitation to partner. */
-export function SponsorsSection({ sponsors, s }: { sponsors: Sponsor[]; s: FestivalSettings }) {
+export function SponsorsSection({ sponsors, s, hideHeading }: { sponsors: Sponsor[]; s: FestivalSettings; hideHeading?: boolean }) {
   const sponsorContact = parseContacts([s.sponsorContact ?? ""])[0];
   const mail = `mailto:${s.email}?subject=${encodeURIComponent(`Sponsorship — ${s.name}’${s.edition.slice(-2)}`)}`;
   return (
     <section id="sponsors" className="relative border-t border-ivory/10 bg-night py-24" aria-labelledby="sponsors-heading">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <SectionHeading
+        {!hideHeading && <SectionHeading
           align="center"
           eyebrow="Backing the investigation"
           title={<span id="sponsors-heading">Our <em className="text-gold">sponsors</em></span>}
           intro={sponsors.length ? "ANIMAUX’26 is made possible by partners who believe every species deserves a future." : undefined}
-        />
+        />}
 
+        {hideHeading && sponsors.length === 0 && (
+          <p className="mx-auto max-w-xl text-center text-ivory/70">Sponsors will be announced soon.</p>
+        )}
         {sponsors.length > 0 && (
           <ul className="mx-auto mt-12 flex max-w-5xl flex-wrap items-stretch justify-center gap-4">
             {sponsors.map((sp, i) => {
@@ -31,7 +34,8 @@ export function SponsorsSection({ sponsors, s }: { sponsors: Sponsor[]; s: Festi
                       <span className="font-title text-xl font-bold text-midnight">{sp.name}</span>
                     )}
                   </span>
-                  {sp.tier && <span className="mt-3 block font-mono text-[0.6rem] uppercase tracking-[0.25em] text-olive">{sp.tier}</span>}
+                  {sp.logoUrl && <span className="mt-3 block font-display text-base font-semibold leading-tight text-midnight">{sp.name}</span>}
+                  {sp.tier && <span className="mt-1 block font-mono text-[0.6rem] uppercase tracking-[0.25em] text-olive">{sp.tier}</span>}
                 </>
               );
               return (

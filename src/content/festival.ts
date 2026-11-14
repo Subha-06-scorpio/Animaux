@@ -98,14 +98,17 @@ const slot = (n: number, time: string, endTime: string, title: string, eventSlug
 });
 
 export const scheduleSeed: ScheduleItem[] = [
-  slot(1, "09:00", "10:00", "The Last Trace — Round 1", "the-last-trace"),
-  slot(2, "10:15", "11:00", "Trace Evidence Relay", "trace-evidence-relay"),
-  slot(3, "11:15", "", "The Poacher’s Tale", "the-poachers-tale"),
-  slot(4, "11:30", "", "Strokes of Wild — coaster making", "strokes-of-wild"),
-  slot(5, "11:30", "", "Wild Shark Tank: Eco-Startup Pitch", "wild-shark-tank"),
-  slot(6, "12:00", "", "The Last Trace — Round 2", "the-last-trace"),
-  slot(7, "13:30", "", "Flood Zone: Survive the Wild", "flood-zone"),
-  slot(8, "14:15", "", "7 Steps", "7-steps"),
+  slot(1, "09:00", "10:30", "Inauguration — Echoes of the Wild: The Survival Files", "", "ceremony"),
+  slot(2, "10:30", "", "7 Steps", "7-steps"),
+  slot(3, "10:30", "", "Strokes of Wild — coaster making", "strokes-of-wild"),
+  slot(4, "11:00", "", "Flood Zone: Survive the Wild", "flood-zone"),
+  slot(5, "11:30", "", "The Last Trace — Round 1", "the-last-trace"),
+  slot(6, "12:30", "13:00", "Break", "", "break"),
+  slot(7, "13:00", "", "Wild Shark Tank: Eco-Startup Pitch", "wild-shark-tank"),
+  slot(8, "13:00", "", "The Poacher’s Tale", "the-poachers-tale"),
+  slot(9, "13:30", "", "Trace Evidence Relay", "trace-evidence-relay"),
+  slot(10, "14:15", "", "The Last Trace — Round 2", "the-last-trace"),
+  slot(11, "16:00", "", "Closing ceremony & prize distribution", "", "ceremony"),
 ];
 
 const f = (n: number) => `fa000000-0000-4000-8000-0000000000${String(n).padStart(2, "0")}`;
