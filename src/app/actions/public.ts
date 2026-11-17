@@ -50,6 +50,17 @@ export async function registerAction(input: unknown): Promise<RegisterResult> {
       }
     }
 
+    // Per-option limits, e.g. 4 teams in each time slot.
+    for (const q of ev.extraQuestions) {
+      const a = d.answers[q.id];
+      if (q.type === "select" && q.limitPerOption && a) {
+        const taken = (await r.answerCounts(ev.id, q.id))[a] ?? 0;
+        if (taken >= q.limitPerOption) {
+          return { ok: false, error: `${a} is full — please choose another option.`, fieldErrors: { [`answers.${q.id}`]: "This one is full — please choose another" } };
+        }
+      }
+    }
+
     // Only keep answers to questions this event actually asks.
     const answers = Object.fromEntries(ev.extraQuestions.map((q) => [q.id, d.answers[q.id] ?? ""]).filter(([, v]) => v));
 

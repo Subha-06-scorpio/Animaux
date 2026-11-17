@@ -24,6 +24,8 @@ export interface Repo {
   createRegistration(r: Registration, ipHash: string): Promise<void>;
   listRegistrations(f?: RegistrationFilter): Promise<Registration[]>;
   registrationCounts(): Promise<Record<string, number>>;
+  /** Active registrations per answer to one question, e.g. { "Slot 1 — 11:30 AM": 3 }. */
+  answerCounts(eventId: string, questionId: string): Promise<Record<string, number>>;
   updateRegistration(id: string, patch: Partial<Pick<Registration, "status" | "emailSent">>): Promise<void>;
   deleteRegistration(id: string): Promise<void>;
 

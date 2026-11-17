@@ -270,7 +270,14 @@ function RegistrationForm({ event, onDone }: { event: PublicEvent; onDone: (r: E
                 ) : q.type === "select" ? (
                   <select id={id} className="field" defaultValue="" {...aria(err)} {...register(`answers.${q.id}`)}>
                     <option value="">Select…</option>
-                    {q.options?.map((o) => <option key={o}>{o}</option>)}
+                    {q.options?.map((o) => {
+                      const left = q.limitPerOption ? q.limitPerOption - (event.optionCounts?.[q.id]?.[o] ?? 0) : null;
+                      return (
+                        <option key={o} value={o} disabled={left !== null && left <= 0}>
+                          {left === null ? o : left <= 0 ? `${o} (full)` : `${o} (${left} ${event.participation === "team" ? (left === 1 ? "team" : "teams") : left === 1 ? "spot" : "spots"} left)`}
+                        </option>
+                      );
+                    })}
                   </select>
                 ) : q.type === "textarea" ? (
                   <textarea id={id} rows={3} className="field" {...aria(err)} {...register(`answers.${q.id}`)} />

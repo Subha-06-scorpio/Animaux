@@ -8,7 +8,7 @@ import { RegisterButton } from "@/components/events/event-grid";
 import { WhatsAppIcon } from "@/components/ui/icons";
 import { getPublicEvent } from "@/lib/queries";
 import { CATEGORY_LABELS } from "@/lib/types";
-import { deadlineLabel, eventTimeLabel, formatDate, formatFee, isPlaceholder, participationLabel, telLink, whatsappLink } from "@/lib/utils";
+import { capacityLabel, deadlineLabel, eventTimeLabel, formatDate, formatFee, isPlaceholder, participationLabel, telLink, whatsappLink } from "@/lib/utils";
 
 export async function generateMetadata({ params }: PageProps<"/events/[slug]">): Promise<Metadata> {
   const ev = await getPublicEvent((await params).slug);
@@ -105,7 +105,7 @@ export default async function EventPage({ params }: PageProps<"/events/[slug]">)
                 <div className="flex items-start gap-4 py-3.5">
                   <Paw className="mt-0.5 h-[18px] w-[18px] shrink-0 text-gold" />
                   <dt className="w-32 shrink-0 text-sm text-mist">Limit</dt>
-                  <dd className="text-sm font-semibold text-gold-soft">{ev.capacity} {ev.participation === "team" ? "teams" : "participants"} · first come, first served</dd>
+                  <dd className="text-sm font-semibold text-gold-soft">{capacityLabel(ev).replace(/^Limit: /, "")} · first come, first served</dd>
                 </div>
               )}
             </dl>

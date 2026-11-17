@@ -18,6 +18,7 @@ export type ExtraQuestion = {
   type: "text" | "textarea" | "select" | "file"; // file = participant photo upload
   options?: string[];
   required?: boolean;
+  limitPerOption?: number; // e.g. 4 teams per time slot (select questions only)
 };
 
 export type FestEvent = {

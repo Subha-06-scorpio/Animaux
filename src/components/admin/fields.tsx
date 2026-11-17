@@ -179,6 +179,9 @@ function QuestionsEditor({ value, onChange }: { value: ExtraQuestion[]; onChange
           {q.type === "select" && (
             <input className="field sm:col-span-4" value={(q.options ?? []).join(", ")} placeholder="Options, separated by commas" onChange={(e) => set(i, { options: e.target.value.split(",").map((s) => s.trimStart()) })} onBlur={(e) => set(i, { options: e.target.value.split(",").map((s) => s.trim()).filter(Boolean) })} aria-label="Options" />
           )}
+          {q.type === "select" && (
+            <input type="number" min={1} className="field sm:col-span-2" value={q.limitPerOption ?? ""} placeholder="Limit per option (optional)" onChange={(e) => set(i, { limitPerOption: e.target.value ? Math.max(1, Number(e.target.value)) : undefined })} aria-label="Limit per option" title="e.g. 4 = at most 4 registrations for each option (like 4 teams per slot)" />
+          )}
           <label className="flex items-center gap-2 text-xs sm:col-span-2">
             <input type="checkbox" checked={!!q.required} onChange={(e) => set(i, { required: e.target.checked })} className="accent-[#cfa96b]" /> Required
           </label>

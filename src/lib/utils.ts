@@ -17,7 +17,9 @@ export const formatDateTime = (iso: string) =>
   formatDate(iso, { day: "numeric", month: "short", year: "numeric", hour: "numeric", minute: "2-digit" });
 
 /** "10:30 AM – 3:30 PM", or "Open now – 3:00 PM" when only a closing time is set. */
-export function eventTimeLabel(e: { startTime: string; endTime: string }, tba = "TBA") {
+export function eventTimeLabel(e: { startTime: string; endTime: string; extraQuestions?: { id: string; options?: string[] }[] }, tba = "TBA") {
+  const slots = e.extraQuestions?.find((q) => q.id === "slot")?.options?.map((o) => o.match(/\d{1,2}:\d{2}\s?[AP]M/i)?.[0]).filter(Boolean);
+  if (slots && slots.length > 1) return slots.join(" & ");
   if (e.startTime) return `${formatTime(e.startTime)}${e.endTime ? ` – ${formatTime(e.endTime)}` : ""}`;
   return e.endTime ? `Open now – ${formatTime(e.endTime)}` : tba;
 }
@@ -40,8 +42,12 @@ export function participationLabel(e: Pick<FestEvent, "participation" | "teamMin
 }
 
 /** "Limit: 5 teams" style capacity line, or "" when unlimited. */
-export const capacityLabel = (e: Pick<FestEvent, "capacity" | "participation">) =>
-  e.capacity ? `Limit: ${e.capacity} ${e.participation === "team" ? "teams" : "participants"}` : "";
+export const capacityLabel = (e: Pick<FestEvent, "capacity" | "participation"> & { extraQuestions?: FestEvent["extraQuestions"] }) => {
+  const unit = e.participation === "team" ? "teams" : "participants";
+  const slot = e.extraQuestions?.find((q) => q.id === "slot" && q.limitPerOption);
+  if (slot) return `Limit: ${slot.limitPerOption} ${unit} per slot`;
+  return e.capacity ? `Limit: ${e.capacity} ${unit}` : "";
+};
 
 export const formatFee = (fee: number | null) => (fee === null ? "TBA" : fee === 0 ? "Free" : `₹${fee}`);
 

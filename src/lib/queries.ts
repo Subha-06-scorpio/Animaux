@@ -14,7 +14,8 @@ import { eventStatus } from "./utils";
 const EVENT_ART = new Map(eventsSeed.map((e) => [e.slug, e.posterUrl]));
 const TEAM_PHOTO = new Map(teamSeed.filter((m) => m.photoUrl).map((m) => [m.name.toLowerCase(), m.photoUrl]));
 
-export type PublicEvent = FestEvent & { status: EventStatus };
+/** optionCounts[questionId][option] = registrations so far (only for questions with a per-option limit). */
+export type PublicEvent = FestEvent & { status: EventStatus; optionCounts?: Record<string, Record<string, number>> };
 
 export async function getSettings() {
   return repo().getSettings();
@@ -23,9 +24,17 @@ export async function getSettings() {
 export async function getPublicEvents(): Promise<PublicEvent[]> {
   const r = repo();
   const [events, settings, counts] = await Promise.all([r.list("events"), r.getSettings(), r.registrationCounts()]);
-  return events
-    .filter((e) => e.visible)
-    .map((e) => ({ ...e, posterUrl: e.posterUrl || EVENT_ART.get(e.slug) || "", status: eventStatus(e, settings, counts[e.id] ?? 0) }));
+  return Promise.all(
+    events
+      .filter((e) => e.visible)
+      .map(async (e) => {
+        const limited = (e.extraQuestions ?? []).filter((q) => q.type === "select" && q.limitPerOption);
+        const optionCounts = limited.length
+          ? Object.fromEntries(await Promise.all(limited.map(async (q) => [q.id, await r.answerCounts(e.id, q.id)] as const)))
+          : undefined;
+        return { ...e, posterUrl: e.posterUrl || EVENT_ART.get(e.slug) || "", status: eventStatus(e, settings, counts[e.id] ?? 0), optionCounts };
+      }),
+  );
 }
 
 export async function getPublicEvent(slug: string) {

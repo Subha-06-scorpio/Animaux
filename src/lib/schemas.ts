@@ -123,6 +123,7 @@ export const contentSchemas = {
             type: z.enum(["text", "textarea", "select", "file"]),
             options: z.array(text(100)).optional(),
             required: z.boolean().optional(),
+            limitPerOption: z.number().int().min(1).max(100000).optional(),
           }),
         )
         .max(10),

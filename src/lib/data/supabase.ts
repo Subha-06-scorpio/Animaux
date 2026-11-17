@@ -89,6 +89,15 @@ export const supabaseRepo: Repo = {
     }
     return (check(await q) ?? []).map((r) => fromRow<Registration>(r));
   },
+  async answerCounts(eventId, questionId) {
+    const rows = check(await admin().from("registrations").select("answers").eq("event_id", eventId).neq("status", "cancelled").limit(20000));
+    const out: Record<string, number> = {};
+    for (const r of rows ?? []) {
+      const a = (r.answers as Record<string, string> | null)?.[questionId];
+      if (a) out[a] = (out[a] ?? 0) + 1;
+    }
+    return out;
+  },
   async registrationCounts() {
     const rows = check(await admin().from("registrations").select("event_id").neq("status", "cancelled").limit(20000));
     const out: Record<string, number> = {};

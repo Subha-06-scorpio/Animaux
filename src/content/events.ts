@@ -62,10 +62,13 @@ export const eventsSeed: FestEvent[] = [
     participation: "team",
     teamMin: 2,
     teamMax: 5,
-    capacity: 4,
+    capacity: 8,
+    extraQuestions: [
+      { id: "slot", label: "Choose your slot", type: "select", options: ["Slot 1 — 11:30 AM", "Slot 2 — 2:15 PM"], required: true, limitPerOption: 4 },
+    ],
     rules: [
-      "Round 1: 11:30 AM · Round 2: 2:15 PM.",
-      "Participation: 4 teams, up to 5 members each.",
+      "Two slots: Slot 1 at 11:30 AM and Slot 2 at 2:15 PM — pick one when you register.",
+      "4 teams per slot (8 teams in total), up to 5 members each.",
       "Duration: approximately 45 minutes per session.",
       "One continuous investigation combining clue-hunting, puzzles and case-solving.",
       "Evidence must be collected and labelled correctly — mishandled clues may be declared compromised.",

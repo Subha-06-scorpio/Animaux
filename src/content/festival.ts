@@ -102,12 +102,12 @@ export const scheduleSeed: ScheduleItem[] = [
   slot(2, "10:30", "", "7 Steps", "7-steps"),
   slot(3, "11:00", "15:30", "Strokes of Wild — coaster making", "strokes-of-wild"),
   slot(4, "11:00", "", "Flood Zone: Survive the Wild", "flood-zone"),
-  slot(5, "11:30", "", "The Last Trace — Round 1", "the-last-trace"),
+  slot(5, "11:30", "", "The Last Trace — Slot 1", "the-last-trace"),
   slot(6, "12:30", "13:00", "Break", "", "break"),
   slot(7, "13:00", "", "Wild Shark Tank: Eco-Startup Pitch", "wild-shark-tank"),
   slot(8, "13:00", "", "The Poacher’s Tale", "the-poachers-tale"),
   slot(9, "13:30", "", "Trace Evidence Relay", "trace-evidence-relay"),
-  slot(10, "14:15", "", "The Last Trace — Round 2", "the-last-trace"),
+  slot(10, "14:15", "", "The Last Trace — Slot 2", "the-last-trace"),
   slot(11, "16:00", "", "Closing ceremony & prize distribution", "", "ceremony"),
 ];
 
@@ -118,7 +118,7 @@ export const faqsSeed: Faq[] = [
   { id: f(2), question: "Can I take part in more than one event?", answer: "Yes. Register separately for each event — the form remembers your details on your phone, so the next one takes seconds. Event timings will be announced; we’ll try to avoid clashes.", visible: true, sortOrder: 1 },
   { id: f(3), question: "Can students from other colleges participate?", answer: "Yes! ANIMAUX’26 is an intercollegiate fest — students from any college are welcome to take part. Just register with your college name.", visible: true, sortOrder: 2 },
   { id: f(4), question: "Is there a registration fee?", answer: "No — every ANIMAUX’26 event is free to enter. Just register for the main events online; mini events are walk-in.", visible: true, sortOrder: 3 },
-  { id: f(5), question: "How do team registrations work?", answer: "The team leader registers once for the whole team: a team name, plus each member’s name. Team sizes and team limits (for example, 5 teams for The Last Trace) are shown on each event.", visible: true, sortOrder: 4 },
+  { id: f(5), question: "How do team registrations work?", answer: "The team leader registers once for the whole team: a team name, plus each member’s name. Team sizes and team limits (for example, 4 teams in each of the two slots for The Last Trace) are shown on each event.", visible: true, sortOrder: 4 },
   { id: f(6), question: "What are mini events?", answer: "Six quick, on-the-spot games — Wildlife Pictionary, Spirit Animal, Wild Eye, Fingerprint Paintings, Who Am I? and the Memory Game. Just walk in on 2 December; no online registration needed.", visible: true, sortOrder: 5 },
   { id: f(7), question: "How do I submit my photo for Shutter Safari?", answer: "Upload it in the registration form for Shutter Safari (JPG, PNG or WebP, up to 10 MB). Large photos are resized automatically before upload.", visible: true, sortOrder: 6 },
   { id: f(8), question: "Who do I contact with questions?", answer: "For event questions call Niharika (+91 99208 24982); for anything else call Aditya (+91 91372 84809) or Subha (+91 84540 26143), email animaux.zoology@gmail.com, or use the help desk form on the Contact page. Sponsors: Mrugank (+91 77386 56645).", visible: true, sortOrder: 7 },

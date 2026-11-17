@@ -120,6 +120,15 @@ export const localRepo: Repo = {
       .map(({ ipHash, ...r }) => r)
       .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
   },
+  async answerCounts(eventId, questionId) {
+    const db = await read();
+    const out: Record<string, number> = {};
+    for (const r of db.registrations) {
+      const a = r.answers?.[questionId];
+      if (r.eventId === eventId && r.status !== "cancelled" && a) out[a] = (out[a] ?? 0) + 1;
+    }
+    return out;
+  },
   async registrationCounts() {
     const db = await read();
     const out: Record<string, number> = {};
