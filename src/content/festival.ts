@@ -100,7 +100,7 @@ const slot = (n: number, time: string, endTime: string, title: string, eventSlug
 export const scheduleSeed: ScheduleItem[] = [
   slot(1, "09:00", "10:30", "Inauguration — Echoes of the Wild: The Survival Files", "", "ceremony"),
   slot(2, "10:30", "", "7 Steps", "7-steps"),
-  slot(3, "10:30", "", "Strokes of Wild — coaster making", "strokes-of-wild"),
+  slot(3, "11:00", "15:30", "Strokes of Wild — coaster making", "strokes-of-wild"),
   slot(4, "11:00", "", "Flood Zone: Survive the Wild", "flood-zone"),
   slot(5, "11:30", "", "The Last Trace — Round 1", "the-last-trace"),
   slot(6, "12:30", "13:00", "Break", "", "break"),
