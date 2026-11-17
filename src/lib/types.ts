@@ -157,6 +157,7 @@ export type FestivalSettings = {
   volunteers: string[]; // one name per entry — Team page "Volunteers" section
   volunteersPhotoUrl: string; // group photo for that section
   whatsapp: string; // digits only, with country code
+  whatsappCommonGroup: string; // common participants' group, shown after every registration
   instagram: string;
   brochureUrl: string;
   registrationsOpen: boolean;

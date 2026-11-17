@@ -56,6 +56,7 @@ export const festivalSeed: FestivalSettings = {
   ],
   volunteersPhotoUrl: "",
   whatsapp: "",
+  whatsappCommonGroup: "https://chat.whatsapp.com/D7NampL9cIo2YA4wybPwpM",
   instagram: "https://www.instagram.com/animaux.mithibai/",
   brochureUrl: "https://canva.link/nziclf8o20e187l",
   registrationsOpen: true,

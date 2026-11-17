@@ -346,12 +346,21 @@ function Success({ result, event, onClose, onAgain }: { result: Extract<Register
         {result.emailSent ? `A confirmation email is on its way to ${result.email}.` : "Email confirmations aren't switched on yet — please screenshot or note down this ID."}
       </p>
 
-      {event.whatsappGroup && (
+      {(event.whatsappGroup || result.commonGroup) && (
         <div className="mx-auto mt-6 max-w-sm rounded-2xl border border-[#25D366]/40 bg-[#25D366]/10 p-4">
-          <p className="text-sm text-ivory/85">Join the participants’ WhatsApp group for updates, timings and results.</p>
-          <a href={event.whatsappGroup} target="_blank" rel="noopener noreferrer" className="btn mt-3 w-full bg-[#25D366] text-[#0b2e17] hover:bg-[#2fe072]">
-            <WhatsAppIcon className="h-4 w-4" /> Join the WhatsApp group
-          </a>
+          <p className="text-sm text-ivory/85">Join {event.whatsappGroup && result.commonGroup ? "both WhatsApp groups" : "the WhatsApp group"} for updates, timings and results.</p>
+          <div className="mt-3 grid gap-2">
+            {event.whatsappGroup && (
+              <a href={event.whatsappGroup} target="_blank" rel="noopener noreferrer" className="btn w-full bg-[#25D366] text-[#0b2e17] hover:bg-[#2fe072]">
+                <WhatsAppIcon className="h-4 w-4" /> {result.eventName} group
+              </a>
+            )}
+            {result.commonGroup && (
+              <a href={result.commonGroup} target="_blank" rel="noopener noreferrer" className="btn w-full border border-[#25D366]/60 text-[#7ee2a6] hover:bg-[#25D366]/15">
+                <WhatsAppIcon className="h-4 w-4" /> ANIMAUX’26 common group
+              </a>
+            )}
+          </div>
         </div>
       )}
 

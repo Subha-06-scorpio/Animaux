@@ -14,7 +14,7 @@ import { eventStatus } from "@/lib/utils";
 
 type FieldErrors = Record<string, string>;
 export type RegisterResult =
-  | { ok: true; regCode: string; eventName: string; emailSent: boolean; email: string }
+  | { ok: true; regCode: string; eventName: string; emailSent: boolean; email: string; commonGroup?: string }
   | { ok: false; error: string; fieldErrors?: FieldErrors };
 
 const flatten = (issues: { path: PropertyKey[]; message: string }[]) =>
@@ -108,7 +108,7 @@ export async function registerAction(input: unknown): Promise<RegisterResult> {
     ]);
     if (emailSent) await r.updateRegistration(reg.id, { emailSent: true });
 
-    return { ok: true, regCode: reg.regCode, eventName: ev.name, emailSent, email: reg.email };
+    return { ok: true, regCode: reg.regCode, eventName: ev.name, emailSent, email: reg.email, commonGroup: settings.whatsappCommonGroup || "" };
   } catch (e) {
     console.error("registerAction failed", e);
     return { ok: false, error: "Something went wrong on our side and your registration was not saved. Please try again in a moment." };

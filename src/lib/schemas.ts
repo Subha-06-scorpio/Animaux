@@ -79,6 +79,7 @@ export type EnquiryInput = z.input<typeof enquirySchema>;
 // ---------- Admin content (server-side validation) ----------
 
 const id = z.string().uuid();
+const waGroup = z.union([z.literal(""), z.string().trim().max(300).regex(/^https:\/\/(chat\.whatsapp\.com|wa\.me|(www\.)?whatsapp\.com)\//, "Paste a WhatsApp invite link (https://chat.whatsapp.com/…)")]).default("");
 const url = z.union([z.literal(""), z.string().trim().max(1000).refine((s) => s.startsWith("/") || /^https?:\/\//.test(s), "Must be a URL or /path")]);
 const date = z.union([z.literal(""), z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Use YYYY-MM-DD")]);
 const time = z.union([z.literal(""), z.string().regex(/^\d{2}:\d{2}$/, "Use HH:MM")]);
@@ -94,7 +95,7 @@ export const contentSchemas = {
       tier: z.enum(["main", "mini"]),
       tagline: text(160),
       prize: text(120),
-      whatsappGroup: z.union([z.literal(""), z.string().trim().max(300).regex(/^https:\/\/(chat\.whatsapp\.com|wa\.me|(www\.)?whatsapp\.com)\//, "Paste a WhatsApp invite link (https://chat.whatsapp.com/…)")]).default(""),
+      whatsappGroup: waGroup,
       shortDescription: text(240),
       description: text(4000),
       posterUrl: url,
@@ -218,6 +219,7 @@ export const settingsSchema = z.object({
   sponsorContact: text(120),
   volunteers: z.array(text(80)).max(200),
   volunteersPhotoUrl: url,
+  whatsappCommonGroup: waGroup,
   whatsapp: z.string().regex(/^\d{0,15}$/, "Digits only, including country code (e.g. 9198xxxxxxxx)"),
   instagram: url,
   brochureUrl: url,

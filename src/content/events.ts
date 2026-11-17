@@ -49,6 +49,7 @@ export const eventsSeed: FestEvent[] = [
   // ───────────── MAIN EVENTS (as numbered on the flyer) ─────────────
   ev({
     slug: "the-last-trace",
+    whatsappGroup: "https://chat.whatsapp.com/CyiWoHAe9IU0tY1BPhGoRL",
     prize: "Winners get goodies",
     name: "The Last Trace",
     tagline: "The flagship investigation of ANIMAUX'26.",
@@ -76,6 +77,7 @@ export const eventsSeed: FestEvent[] = [
   }),
   ev({
     slug: "trace-evidence-relay",
+    whatsappGroup: "https://chat.whatsapp.com/JcCrxrnqNYG1B2aVL3ZL93",
     prize: "Winners get goodies",
     name: "Trace Evidence Relay",
     tagline: "Follow the Clues. Beat the Clock.",
@@ -98,6 +100,7 @@ export const eventsSeed: FestEvent[] = [
   }),
   ev({
     slug: "wild-shark-tank",
+    whatsappGroup: "https://chat.whatsapp.com/BLEKOu6lXtcHacthgH8HAL",
     prize: "Winners get goodies",
     name: "Wild Shark Tank: Eco-Startup Pitch",
     tagline: "Pitch for the Planet. Negotiate for the Wild.",
@@ -123,6 +126,7 @@ export const eventsSeed: FestEvent[] = [
   }),
   ev({
     slug: "the-poachers-tale",
+    whatsappGroup: "https://chat.whatsapp.com/I94F9k3YUL7CljNVPpYJxz",
     name: "The Poacher’s Tale",
     tagline: "Protect the Sanctuary. Suspect Everyone.",
     category: "game",
@@ -145,6 +149,7 @@ export const eventsSeed: FestEvent[] = [
   }),
   ev({
     slug: "flood-zone",
+    whatsappGroup: "https://chat.whatsapp.com/BUoAEL5OoVr1s53ZpX3gnA",
     name: "Flood Zone: Survive the Wild",
     tagline: "Limited Ground. Changing Rules. Every Step Counts.",
     category: "game",
@@ -167,6 +172,7 @@ export const eventsSeed: FestEvent[] = [
   }),
   ev({
     slug: "7-steps",
+    whatsappGroup: "https://chat.whatsapp.com/E1qU0jAaWja6prqOZYDSPn",
     name: "7 Steps",
     tagline: "Trust Your Knowledge. Earn Your Next Move.",
     category: "quiz",
@@ -189,6 +195,7 @@ export const eventsSeed: FestEvent[] = [
   }),
   ev({
     slug: "shutter-safari",
+    whatsappGroup: "https://chat.whatsapp.com/LCLmk5gh0jDEUpf40g7l24",
     prize: "Winners get goodies",
     name: "Shutter Safari: Photography Competition",
     tagline: "Every picture has a story — what will yours reveal?",
@@ -214,6 +221,7 @@ export const eventsSeed: FestEvent[] = [
   }),
   ev({
     slug: "strokes-of-wild",
+    whatsappGroup: "https://chat.whatsapp.com/Jqf2DNL8QAZASjzNEoIgLz",
     name: "Strokes of Wild",
     tagline: "Small canvas, wild possibilities!",
     category: "creative",
