@@ -249,13 +249,10 @@ export const eventsSeed: FestEvent[] = [
   ev({
     slug: "spirit-animal",
     name: "Spirit Animal",
-    tagline: "Which creature of the wild are you?",
     category: "game",
     tier: "mini",
-    shortDescription: "Answer a few quick questions and discover the animal that matches your personality.",
-    description:
-      "Are you a lone leopard, a loyal wolf, a curious octopus or a wise old owl? Answer a few quick, fun questions about how you think, act and react — and uncover the creature of the wild that matches your personality.\n\nWalk away with your spirit animal and a fascinating fact about your wild twin.",
-    rules: ["Walk in any time — takes just a couple of minutes."],
+    shortDescription: "A few quick questions. One animal that matches you.",
+    description: "Answer a few quick questions and find out which animal matches your personality.",
   }),
   ev({
     slug: "wild-eye",
