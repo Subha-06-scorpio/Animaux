@@ -108,7 +108,7 @@ export function EventCard({ event, onRegister, index = 0, number }: { event: Pub
             <div className="flex items-center gap-2"><IndianRupee size={14} className="shrink-0 text-gold" /><dt className="sr-only">Fee</dt><dd>Fee: {formatFee(event.fee)}</dd></div>
           )}
           <div className="flex items-center gap-2"><CalendarDays size={14} className="shrink-0 text-gold" /><dt className="sr-only">Date</dt><dd>{formatDate(event.eventDate, { day: "numeric", month: "short" })}</dd></div>
-          <div className="flex items-center gap-2"><Clock size={14} className="shrink-0 text-gold" /><dt className="sr-only">Time</dt><dd>{formatTime(event.startTime) || "Time TBA"}</dd></div>
+          <div className="flex items-center gap-2"><Clock size={14} className="shrink-0 text-gold" /><dt className="sr-only">Time</dt><dd>{event.startTime ? `${formatTime(event.startTime)}${event.endTime ? ` – ${formatTime(event.endTime)}` : ""}` : "Time TBA"}</dd></div>
           <div className="col-span-2 flex items-center gap-2"><MapPin size={14} className="shrink-0 text-gold" /><dt className="sr-only">Venue</dt><dd className="truncate">{event.venue}</dd></div>
         </dl>
         {!mini && (

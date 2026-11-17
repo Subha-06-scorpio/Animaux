@@ -94,6 +94,7 @@ export const contentSchemas = {
       tier: z.enum(["main", "mini"]),
       tagline: text(160),
       prize: text(120),
+      whatsappGroup: z.union([z.literal(""), z.string().trim().max(300).regex(/^https:\/\/(chat\.whatsapp\.com|wa\.me|(www\.)?whatsapp\.com)\//, "Paste a WhatsApp invite link (https://chat.whatsapp.com/…)")]).default(""),
       shortDescription: text(240),
       description: text(4000),
       posterUrl: url,

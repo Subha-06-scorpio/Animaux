@@ -28,6 +28,7 @@ export type FestEvent = {
   tier: "main" | "mini"; // mini events are on-the-spot: no online registration
   tagline: string;
   prize: string; // e.g. "Winners get goodies" — shown as a badge
+  whatsappGroup: string; // invite link shown after registering (https://chat.whatsapp.com/…)
   shortDescription: string;
   description: string;
   posterUrl: string;
@@ -58,7 +59,7 @@ export type TeamGroup = (typeof TEAM_GROUPS)[number];
 
 export const TEAM_SECTIONS: Record<TeamGroup, string[]> = {
   faculty: ["Teacher in Charge", "Faculty Mentors"],
-  leadership: ["Coordinators", "Advisory"],
+  leadership: ["Advisory", "Coordinators"],
   organizing: ["Events", "Creatives", "Social Media and Photography", "Logistics", "Productions", "Marketing", "Public Relations", "Hospitality", "Volunteers"],
 };
 

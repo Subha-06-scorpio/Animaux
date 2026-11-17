@@ -39,7 +39,7 @@ export const DEPARTMENT_MOTTOS: Record<string, string> = {
 };
 
 /** Portraits in public/team/<name-slug>.jpg (background removed, branded backdrop). */
-const NO_PHOTO = new Set(["Dr. Shouriehebal Soni"]);
+const NO_PHOTO = new Set<string>([]);
 const photoFor = (name: string) =>
   NO_PHOTO.has(name) ? "" : `/team/${name.toLowerCase().replace(/[^a-z\s-]/g, "").trim().replace(/\s+/g, "-")}.jpg`;
 

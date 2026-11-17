@@ -42,7 +42,7 @@ export const CONFIG: { [C in CollectionName]: ResourceConfig<C> } = {
     publicHref: (e) => `/events/${e.slug}`,
     filter: { field: "category", label: "Category", options: EVENT_CATEGORIES.map((c) => ({ value: c, label: CATEGORY_LABELS[c] })) },
     blank: (sortOrder) => ({
-      id: uuid(), slug: "", name: "", category: "competition", tier: "main", tagline: "", prize: "", shortDescription: "", description: "", posterUrl: "",
+      id: uuid(), slug: "", name: "", category: "competition", tier: "main", tagline: "", prize: "", whatsappGroup: "", shortDescription: "", description: "", posterUrl: "",
       eventDate: "", startTime: "", endTime: "", venue: "", participation: "individual", teamMin: 1, teamMax: 1, fee: null,
       deadline: inAWeek(), rules: [], eligibility: "", coordinatorName: "", coordinatorPhone: "", coordinatorEmail: "",
       registrationOpen: true, visible: false, capacity: null, extraQuestions: [], sortOrder, isSample: false,
@@ -54,6 +54,7 @@ export const CONFIG: { [C in CollectionName]: ResourceConfig<C> } = {
       { name: "tier", label: "Event type", type: "select", options: [{ value: "main", label: "Main event (online registration)" }, { value: "mini", label: "Mini event (on the spot, no registration)" }] },
       { name: "tagline", label: "Tagline (optional)", type: "text" },
       { name: "prize", label: "Prize badge (optional)", type: "text", placeholder: "Winners get goodies", help: "Shown as a 🏆 badge on the event card and page." },
+      { name: "whatsappGroup", label: "WhatsApp group invite link (optional)", type: "text", placeholder: "https://chat.whatsapp.com/…", span: 2, help: "Shown as a “Join the WhatsApp group” button right after someone registers. In WhatsApp: group info → Invite via link → Copy link." },
       { name: "shortDescription", label: "Short description (card)", type: "textarea", span: 2 },
       { name: "description", label: "Full description", type: "textarea", span: 2 },
       { name: "posterUrl", label: "Poster / image", type: "media", accept: "image/*", folder: "posters", span: 2 },

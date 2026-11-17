@@ -38,6 +38,7 @@ const sql = [
   "-- Schema updates first (all idempotent), so this file works even if a migration was skipped.",
   readFileSync("supabase/migrations/20261111000000_survival_files.sql", "utf8"),
   readFileSync("supabase/migrations/20261112000000_prizes_sponsors.sql", "utf8"),
+  readFileSync("supabase/migrations/20261117000000_whatsapp_groups.sql", "utf8"),
   "begin;",
   // Old placeholder events from the first draft (kept if anyone already registered for them).
   prune("events", "e0000000-", [], " and not exists (select 1 from public.registrations r where r.event_id = events.id)"),

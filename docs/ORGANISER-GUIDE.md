@@ -67,3 +67,10 @@ Messages from the Contact page arrive here. Reply by email, then mark them **In 
 
 ## Content that lives in code
 The Species Spotlight and the Forensics evidence board are in `src/content/species.ts`. A developer can edit them, and should confirm the conservation statuses on iucnredlist.org.
+
+## WhatsApp groups for participants
+
+Admin → Events → open an event → **WhatsApp group invite link** → paste the group's invite link
+(WhatsApp: group info → Invite via link → Copy link) → Save. Right after someone registers for that
+event, they see a green **Join the WhatsApp group** button. Leave it empty to hide the button.
+(One-time: run `supabase/update-whatsapp.sql` in the Supabase SQL Editor first.)
