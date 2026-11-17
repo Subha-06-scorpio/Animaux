@@ -215,9 +215,9 @@ export const eventsSeed: FestEvent[] = [
     tier: "main",
     rules: [
       "Open from 11:00 AM to 3:30 PM — drop in any time in between.",
-      "Participation: individual, up to 20 participants.",
+      "Participation: individual — no limit on participants.",
     ],
-    capacity: 20,
+    capacity: null,
     teamMax: 1,
     teamMin: 1,
     participation: "individual",
@@ -227,7 +227,7 @@ export const eventsSeed: FestEvent[] = [
       "Turn a simple coaster into a colourful celebration of nature — animal designs, leafy patterns, marine scenes or a conservation message.",
     description:
       "Small canvas, wild possibilities! Turn a simple coaster into a colourful celebration of nature with animal-inspired designs, leafy patterns, marine scenes, or a conservation message close to your heart. Experiment with colours and details to create something that’s both useful and uniquely yours.\n\nWhether your style is bold, playful, or beautifully minimal, this is your chance to bring the natural world to the table. Let your imagination run wild, one coaster at a time!",
-    eligibility: "Individual entry — not a team event. Up to 20 participants.",
+    eligibility: "Individual entry — not a team event. No limit on participants.",
   }),
 
   // ───────────── MINI EVENTS (on the spot, no online registration) ─────────────
