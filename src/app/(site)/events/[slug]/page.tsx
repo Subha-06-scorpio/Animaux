@@ -8,7 +8,7 @@ import { RegisterButton } from "@/components/events/event-grid";
 import { WhatsAppIcon } from "@/components/ui/icons";
 import { getPublicEvent } from "@/lib/queries";
 import { CATEGORY_LABELS } from "@/lib/types";
-import { formatDate, formatDateTime, formatFee, formatTime, isPlaceholder, participationLabel, telLink, whatsappLink } from "@/lib/utils";
+import { deadlineLabel, eventTimeLabel, formatDate, formatFee, isPlaceholder, participationLabel, telLink, whatsappLink } from "@/lib/utils";
 
 export async function generateMetadata({ params }: PageProps<"/events/[slug]">): Promise<Metadata> {
   const ev = await getPublicEvent((await params).slug);
@@ -23,12 +23,12 @@ export default async function EventPage({ params }: PageProps<"/events/[slug]">)
   const realPhone = !isPlaceholder(ev.coordinatorPhone) && digits.length >= 10;
   const facts = [
     { icon: CalendarDays, k: "Date", v: formatDate(ev.eventDate, { weekday: "short", day: "numeric", month: "long", year: "numeric" }) },
-    { icon: Clock, k: "Time", v: ev.startTime ? `${formatTime(ev.startTime)}${ev.endTime ? ` – ${formatTime(ev.endTime)}` : ""}` : "TBA" },
+    { icon: Clock, k: "Time", v: eventTimeLabel(ev) },
     { icon: MapPin, k: "Venue", v: ev.venue },
     { icon: Users, k: "Participation", v: participationLabel(ev) },
     { icon: IndianRupee, k: "Registration fee", v: formatFee(ev.fee) },
-    { icon: Hourglass, k: "Register by", v: formatDateTime(ev.deadline) },
-  ].filter((f) => ev.tier === "main" || !["Register by", "Registration fee"].includes(f.k));
+    { icon: Hourglass, k: "Register by", v: deadlineLabel(ev) },
+  ].filter((f) => (ev.tier === "main" || !["Register by", "Registration fee"].includes(f.k)) && (f.k !== "Date" || ev.eventDate));
 
   return (
     <article>

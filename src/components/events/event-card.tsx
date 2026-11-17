@@ -9,7 +9,7 @@ import {
 import Link from "next/link";
 import type { PublicEvent } from "@/lib/queries";
 import { CATEGORY_LABELS } from "@/lib/types";
-import { capacityLabel, cn, formatDate, formatFee, formatTime, participationLabel } from "@/lib/utils";
+import { capacityLabel, cn, deadlineLabel, eventTimeLabel, formatDate, formatFee, participationLabel } from "@/lib/utils";
 
 /** Evidence icon per event (falls back by category) — used where there is no poster image. */
 const ICONS: Record<string, LucideIcon> = {
@@ -107,13 +107,13 @@ export function EventCard({ event, onRegister, index = 0, number }: { event: Pub
           ) : (
             <div className="flex items-center gap-2"><IndianRupee size={14} className="shrink-0 text-gold" /><dt className="sr-only">Fee</dt><dd>Fee: {formatFee(event.fee)}</dd></div>
           )}
-          <div className="flex items-center gap-2"><CalendarDays size={14} className="shrink-0 text-gold" /><dt className="sr-only">Date</dt><dd>{formatDate(event.eventDate, { day: "numeric", month: "short" })}</dd></div>
-          <div className="flex items-center gap-2"><Clock size={14} className="shrink-0 text-gold" /><dt className="sr-only">Time</dt><dd>{event.startTime ? `${formatTime(event.startTime)}${event.endTime ? ` – ${formatTime(event.endTime)}` : ""}` : "Time TBA"}</dd></div>
+          {event.eventDate && <div className="flex items-center gap-2"><CalendarDays size={14} className="shrink-0 text-gold" /><dt className="sr-only">Date</dt><dd>{formatDate(event.eventDate, { day: "numeric", month: "short" })}</dd></div>}
+          <div className="flex items-center gap-2"><Clock size={14} className="shrink-0 text-gold" /><dt className="sr-only">Time</dt><dd>{eventTimeLabel(event, "Time TBA")}</dd></div>
           <div className="col-span-2 flex items-center gap-2"><MapPin size={14} className="shrink-0 text-gold" /><dt className="sr-only">Venue</dt><dd className="truncate">{event.venue}</dd></div>
         </dl>
         {!mini && (
           <p className="mt-4 font-mono text-[0.65rem] uppercase tracking-[0.2em] text-mist">
-            Register by {formatDate(event.deadline, { day: "numeric", month: "short" })}
+            Register by {deadlineLabel(event, { day: "numeric", month: "short" })}
           </p>
         )}
         <div className="relative z-10 mt-auto flex items-center gap-3 pt-6">

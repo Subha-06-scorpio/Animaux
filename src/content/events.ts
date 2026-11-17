@@ -195,10 +195,12 @@ export const eventsSeed: FestEvent[] = [
       "Capture the beauty, mystery and unexpected details of the natural world — and upload your photograph when you register.",
     description:
       "Every picture has a story — what will yours reveal? Capture the beauty, mystery, and unexpected details of the natural world through your lens. From a bird in motion to the tiny life hidden beneath a leaf, turn an ordinary moment into an extraordinary frame.\n\nPlay with light, perspective, and composition to create a photograph that makes people pause and look closer. Whether you focus on wildlife, plants, or nature’s fascinating patterns, let your creativity shine and show us the wild through your eyes!",
-    startTime: "09:00",
-    endTime: "16:00",
+    eventDate: "",
+    startTime: "",
+    endTime: "15:00",
+    deadline: "2026-12-02T15:00:00+05:30",
     rules: [
-      "Open all day — submissions accepted from 9:00 AM until the closing ceremony.",
+      "Submissions are open now and close at 3:00 PM.",
       "No limit on participants: every registration is accepted.",
     ],
     extraQuestions: [

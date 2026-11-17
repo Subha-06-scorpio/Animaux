@@ -1,13 +1,15 @@
--- ANIMAUX'26 update (17 Nov): WhatsApp group links, Shutter Safari open all day,
+-- ANIMAUX'26 update (17 Nov): WhatsApp group links, Shutter Safari open now, closes 3:00 PM,
 -- coaster making (Strokes of Wild) 11:00 AM – 3:30 PM, no limit.
 -- Paste into Supabase → SQL Editor → Run. Safe to run more than once; changes nothing else.
 alter table public.events add column if not exists whatsapp_group text not null default '';
 
 update public.events
-set start_time = '09:00',
-    end_time = '16:00',
+set event_date = '',
+    start_time = '',
+    end_time = '15:00',
+    deadline = '2026-12-02T15:00:00+05:30',
     capacity = null,
-    rules = '["Open all day — submissions accepted from 9:00 AM until the closing ceremony.","No limit on participants: every registration is accepted."]'::jsonb
+    rules = '["Submissions are open now and close at 3:00 PM.","No limit on participants: every registration is accepted."]'::jsonb
 where slug = 'shutter-safari';
 
 update public.events

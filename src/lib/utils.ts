@@ -16,6 +16,18 @@ export function formatDate(iso: string, opts: Intl.DateTimeFormatOptions = { day
 export const formatDateTime = (iso: string) =>
   formatDate(iso, { day: "numeric", month: "short", year: "numeric", hour: "numeric", minute: "2-digit" });
 
+/** "10:30 AM – 3:30 PM", or "Open now – 3:00 PM" when only a closing time is set. */
+export function eventTimeLabel(e: { startTime: string; endTime: string }, tba = "TBA") {
+  if (e.startTime) return `${formatTime(e.startTime)}${e.endTime ? ` – ${formatTime(e.endTime)}` : ""}`;
+  return e.endTime ? `Open now – ${formatTime(e.endTime)}` : tba;
+}
+
+/** Registration deadline. Events with no date set show the time only ("3:00 PM"). */
+export function deadlineLabel(e: { eventDate: string; deadline: string }, opts?: Intl.DateTimeFormatOptions) {
+  if (!e.eventDate) return formatDate(e.deadline, { hour: "numeric", minute: "2-digit" });
+  return opts ? formatDate(e.deadline, opts) : formatDateTime(e.deadline);
+}
+
 export function formatTime(hhmm: string) {
   if (!hhmm) return "";
   const [h, m] = hhmm.split(":").map(Number);

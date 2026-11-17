@@ -12,7 +12,7 @@ import { WhatsAppIcon } from "@/components/ui/icons";
 import { compressImage } from "@/lib/image";
 import type { PublicEvent } from "@/lib/queries";
 import { registrationSchema, YEARS, type RegistrationInput } from "@/lib/schemas";
-import { cn, formatDate, formatFee, formatTime, isPlaceholder, telLink, whatsappLink } from "@/lib/utils";
+import { cn, deadlineLabel, eventTimeLabel, formatDate, formatFee, isPlaceholder, telLink, whatsappLink } from "@/lib/utils";
 
 const STORE_KEY = "animaux-participant";
 type Saved = Pick<RegistrationInput, "fullName" | "institution" | "year" | "email" | "phone">;
@@ -85,7 +85,7 @@ export function RegistrationDialog({ event, onClose }: { event: PublicEvent; onC
           <p className="eyebrow relative">{result ? "Registration confirmed" : "Register · " + (event.participation === "team" ? `Team of ${event.teamMin}–${event.teamMax}` : "Individual")}</p>
           <h2 id="reg-title" className="relative mt-1 font-display text-2xl sm:text-3xl">{event.name}</h2>
           <p className="relative mt-1 text-xs text-mist">
-            {formatDate(event.eventDate)} {event.startTime && `· ${formatTime(event.startTime)}`} · {event.venue} · Fee: {formatFee(event.fee)}
+            {[event.eventDate && formatDate(event.eventDate), (event.startTime || event.endTime) && eventTimeLabel(event), event.venue].filter(Boolean).join(" · ")} · Fee: {formatFee(event.fee)}
           </p>
           <button type="button" onClick={onClose} aria-label="Close" className="absolute right-4 top-4 grid h-10 w-10 place-items-center rounded-full border border-ivory/20 hover:border-gold hover:text-gold">
             <X size={18} />
@@ -302,7 +302,7 @@ function RegistrationForm({ event, onDone }: { event: PublicEvent; onDone: (r: E
         <button type="submit" disabled={isSubmitting} className="btn btn-primary w-full py-4 text-base">
           {isSubmitting ? <><Loader2 size={18} className="animate-spin" /> Registering…</> : <>Confirm registration <Paw className="h-4 w-4" /></>}
         </button>
-        <p className="text-center text-xs text-mist">No account needed. Registration closes {formatDate(event.deadline, { day: "numeric", month: "short", hour: "numeric", minute: "2-digit" })}.</p>
+        <p className="text-center text-xs text-mist">No account needed. Registration closes {deadlineLabel(event, { day: "numeric", month: "short", hour: "numeric", minute: "2-digit" })}.</p>
       </div>
     </form>
   );

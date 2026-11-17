@@ -6,7 +6,7 @@ import { InstagramIcon } from "@/components/ui/icons";
 import { Reveal } from "@/components/ui/reveal";
 import { PageHero, SectionHeading } from "@/components/ui/section-heading";
 import { getPublicEvents, getSettings, getVisible } from "@/lib/queries";
-import { brochureLabel, festivalDateLabel, formatDate, formatDateTime, isPdf } from "@/lib/utils";
+import { brochureLabel, deadlineLabel, festivalDateLabel, formatDate, isPdf } from "@/lib/utils";
 
 export const metadata: Metadata = { title: "Schedule & Festival Info", description: "ANIMAUX 2026 dates, schedule, venue, directions, deadlines and participant guidelines." };
 
@@ -118,7 +118,7 @@ export default async function SchedulePage() {
                   </span>
                 ) : (
                   <span className={`flex shrink-0 items-center gap-2 font-mono text-xs ${e.status.open ? "text-gold" : "text-mist"}`}>
-                    <Hourglass size={12} /> {e.status.open ? formatDateTime(e.deadline) : "Closed"}
+                    <Hourglass size={12} /> {e.status.open ? deadlineLabel(e) : "Closed"}
                   </span>
                 )}
               </li>
