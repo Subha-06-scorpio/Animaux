@@ -314,13 +314,21 @@ const ART = {
         <text x="300" y="-120" font-family="DejaVu Serif, serif" font-weight="700" font-size="150" fill="${C.ember}" opacity=".85">?</text></g>
       <g transform="translate(1260 650) rotate(-40)" filter="url(#shadow)"><rect x="-16" y="-300" width="32" height="300" fill="${C.gold}"/><path d="M-16 0 L0 50 L16 0Z" fill="#e8d2a8"/><path d="M-5 34 L0 50 L5 34Z" fill="${C.umber}"/><rect x="-16" y="-330" width="32" height="34" fill="${C.ember}"/></g>`),
 
-  "wild-aim": () =>
-    scene({ gx: 0.5, gy: 0.45, seed: 77 }, `
-      <g transform="translate(800 430)" filter="url(#shadow)">
-        ${[300, 240, 180, 120, 60].map((r, i) => `<circle r="${r}" fill="${i % 2 ? C.parchment : C.ember}"/>`).join("")}<circle r="22" fill="${C.umber}"/>
-        <path d="M-300 0H300M0 -300V300" stroke="${C.umber}" stroke-opacity=".25" stroke-width="3"/></g>
-      <g transform="translate(830 400) rotate(-28)" filter="url(#shadow)"><rect x="0" y="-12" width="300" height="24" rx="12" fill="${C.gold}"/><path d="M300 -12 L360 -40 L360 40 L300 12Z" fill="${C.goldSoft}"/><circle cx="-6" cy="0" r="20" fill="${C.ember}"/></g>
-      <g stroke="${C.goldSoft}" stroke-opacity=".5" stroke-width="5" stroke-linecap="round"><path d="M1230 190l90-50M1260 260l110-40M1240 330l100-10"/></g>`),
+  "spirit-animal": () =>
+    scene({ gx: 0.5, gy: 0.42, seed: 77, glow: C.goldSoft }, `
+      ${Array.from({ length: 26 }, (_, k) => { const r = rng(900 + k); return `<path d="M0 -9 L2.5 -2.5 9 0 2.5 2.5 0 9 -2.5 2.5 -9 0 -2.5 -2.5Z" transform="translate(${f(160 + r() * 1280)} ${f(60 + r() * 420)}) scale(${f(0.6 + r() * 1.4)})" fill="${C.goldSoft}" opacity="${f(0.25 + r() * 0.6)}"/>`; }).join("")}
+      <path d="M1290 150 a80 80 0 1 0 60 130 a64 64 0 1 1 -60 -130Z" fill="${C.goldSoft}" opacity=".85"/>
+      <g transform="translate(800 470) rotate(-3)" filter="url(#shadow)">
+        <rect x="-230" y="-330" width="460" height="660" rx="26" fill="${C.parchment}"/>
+        <rect x="-200" y="-300" width="400" height="600" rx="16" fill="none" stroke="${C.gold}" stroke-width="6"/>
+        <rect x="-186" y="-286" width="372" height="572" rx="12" fill="none" stroke="${C.ember}" stroke-width="2" stroke-dasharray="6 8"/>
+        <circle cy="-40" r="135" fill="${C.goldSoft}" opacity=".55"/>
+        ${paw(0, -36, 9.5, 0, C.umber)}
+        <text y="200" text-anchor="middle" font-family="DejaVu Serif, serif" font-weight="700" font-size="34" letter-spacing="4" fill="${C.umber}">WHO ARE YOU?</text>
+        ${[-150, 150].map((x) => `<path d="M${x} -250 l8 -16 8 16 -8 16Z" fill="${C.ember}"/>`).join("")}
+      </g>
+      <g transform="translate(330 560) rotate(-14)" filter="url(#shadow)" opacity=".9"><rect x="-120" y="-170" width="240" height="340" rx="16" fill="${C.bark}" stroke="${C.gold}" stroke-width="4"/>${paw(0, -10, 6, -10, C.gold)}</g>
+      <g transform="translate(1270 600) rotate(12)" filter="url(#shadow)" opacity=".9"><rect x="-120" y="-170" width="240" height="340" rx="16" fill="${C.bark}" stroke="${C.gold}" stroke-width="4"/>${paw(0, -10, 6, 12, C.gold)}</g>`),
 
   "wild-eye": () =>
     scene({ gx: 0.5, gy: 0.45, seed: 83, glow: C.goldSoft }, `
@@ -374,7 +382,8 @@ const ART = {
 // ---------- render ----------
 const outDir = path.resolve("public/events");
 mkdirSync(outDir, { recursive: true });
-const { chromium } = await import(process.env.PLAYWRIGHT_MODULE || "playwright");
+const pw = await import(process.env.PLAYWRIGHT_MODULE || "playwright");
+const chromium = pw.chromium ?? pw.default.chromium;
 const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || undefined });
 const page = await browser.newPage({ viewport: { width: W, height: H } });
 for (const [slug, make] of Object.entries(ART)) {

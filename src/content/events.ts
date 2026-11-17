@@ -247,14 +247,15 @@ export const eventsSeed: FestEvent[] = [
     rules: ["2–4 members per team."],
   }),
   ev({
-    slug: "wild-aim",
-    name: "Wild Aim: Tranq & Snap Shooting Range",
+    slug: "spirit-animal",
+    name: "Spirit Animal",
+    tagline: "Which creature of the wild are you?",
     category: "game",
     tier: "mini",
-    shortDescription: "Carnival-style ranger and wildlife-vet tasks with foam darts, soft-ball targets and phone photography.",
+    shortDescription: "Answer a few quick questions and discover the animal that matches your personality.",
     description:
-      "Identify animal calls, aim at designated targets, or photograph hidden and moving cutouts, depending on the station. The entire activity uses props rather than real animals or wildlife equipment. The dart station has 3–4 lanes.",
-    rules: ["Props only — no real animals or wildlife equipment.", "Dart station: 3–4 players at a time."],
+      "Are you a lone leopard, a loyal wolf, a curious octopus or a wise old owl? Answer a few quick, fun questions about how you think, act and react — and uncover the creature of the wild that matches your personality.\n\nWalk away with your spirit animal and a fascinating fact about your wild twin.",
+    rules: ["Walk in any time — takes just a couple of minutes."],
   }),
   ev({
     slug: "wild-eye",

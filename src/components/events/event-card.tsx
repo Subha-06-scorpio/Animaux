@@ -2,10 +2,7 @@
 
 import { motion } from "motion/react";
 import { createElement } from "react";
-import {
-  ArrowUpRight, Brain, Camera, CalendarDays, Clock, Eye, Fingerprint, Flame, Footprints, IndianRupee, Lightbulb,
-  MapPin, Palette, PencilLine, Search, Target, Trophy, Users, Waves, type LucideIcon,
-} from "lucide-react";
+import { ArrowUpRight, Brain, CalendarDays, Camera, Clock, Eye, Fingerprint, Flame, Footprints, IndianRupee, Lightbulb, MapPin, Palette, PawPrint, PencilLine, Search, Target, Trophy, Users, Waves, type LucideIcon } from "lucide-react";
 import Link from "next/link";
 import type { PublicEvent } from "@/lib/queries";
 import { CATEGORY_LABELS } from "@/lib/types";
@@ -22,7 +19,7 @@ const ICONS: Record<string, LucideIcon> = {
   "shutter-safari": Camera,
   "strokes-of-wild": Palette,
   "wildlife-pictionary": PencilLine,
-  "wild-aim": Target,
+  "spirit-animal": PawPrint,
   "wild-eye": Eye,
   "fingerprint-paintings": Fingerprint,
   "who-am-i": Search,
