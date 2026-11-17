@@ -46,7 +46,7 @@ const SECTIONS: { title: string; fields: Field[] }[] = [
       { name: "whatsapp", label: "WhatsApp number (digits with country code)", type: "text", placeholder: "9198xxxxxxxx" },
       { name: "instagram", label: "Instagram URL", type: "url" },
       { name: "whatsappCommonGroup", label: "Common WhatsApp group invite link", type: "text", span: 2, placeholder: "https://chat.whatsapp.com/…", help: "Shown after every registration, next to that event’s own group link (set per event in Admin → Events)." },
-      { name: "brochureUrl", label: "Brochure (PDF)", type: "media", accept: "application/pdf", folder: "brochure", span: 2, help: "Upload the final PDF here — every brochure button on the site then downloads it directly. A Canva link also works until then." },
+      { name: "brochureUrl", label: "Brochure (PDF or link)", type: "media", accept: "application/pdf", folder: "brochure", span: 2, help: "Upload the final PDF here — every brochure button on the site then downloads it directly. A Canva link also works until then." },
     ],
   },
   {

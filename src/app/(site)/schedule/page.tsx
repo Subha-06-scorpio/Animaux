@@ -55,7 +55,7 @@ export default async function SchedulePage() {
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2">
           <a href="/animaux26-flyer.jpg" target="_blank" className="group mx-auto block w-full max-w-md overflow-hidden rounded-2xl border border-gold/30 shadow-2xl">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/animaux26-flyer.jpg" alt="Official ANIMAUX’26 poster: Echoes of the Wild — The Survival Files, 2nd December 2026, with the 8 main events and contacts" width={902} height={1280} loading="lazy" className="h-auto w-full transition duration-700 group-hover:scale-[1.02]" />
+            <img src="/animaux26-flyer.jpg" alt="Official ANIMAUX’26 poster: Echoes of the Wild — The Survival Files, 2nd December 2026, with the 8 main events and contacts" width={1200} height={1800} loading="lazy" className="h-auto w-full transition duration-700 group-hover:scale-[1.02]" />
           </a>
           <div>
             <SectionHeading eyebrow="Official poster" title="The case at a glance" intro="Eight main events, one day, one investigation. Save it, share it, send it to your class group." />

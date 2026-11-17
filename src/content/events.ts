@@ -222,7 +222,7 @@ export const eventsSeed: FestEvent[] = [
   ev({
     slug: "strokes-of-wild",
     whatsappGroup: "https://chat.whatsapp.com/Jqf2DNL8QAZASjzNEoIgLz",
-    name: "Strokes of Wild",
+    name: "Strokes of Wild: Coaster-Making",
     tagline: "Small canvas, wild possibilities!",
     category: "creative",
     tier: "main",
