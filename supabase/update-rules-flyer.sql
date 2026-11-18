@@ -9,5 +9,5 @@ set rules = '["# Timing","Open from 11:00 AM to 3:30 PM — drop in any time in 
 where slug = 'strokes-of-wild';
 
 update public.festival_settings
-set data = jsonb_set(data, '{brochureUrl}', '"/animaux26-brochure.pdf"'::jsonb)
+set data = jsonb_set(data, '{brochureUrl}', '"https://heyzine.com/flip-book/665b121f51.html"'::jsonb)
 where id = 1;

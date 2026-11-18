@@ -58,7 +58,7 @@ export const festivalSeed: FestivalSettings = {
   whatsapp: "",
   whatsappCommonGroup: "https://chat.whatsapp.com/D7NampL9cIo2YA4wybPwpM",
   instagram: "https://www.instagram.com/animaux.mithibai/",
-  brochureUrl: "/animaux26-brochure.pdf",
+  brochureUrl: "https://heyzine.com/flip-book/665b121f51.html",
   registrationsOpen: true,
   guidelines: [
     "Carry your college ID card and your ANIMAUX registration ID on 2 December.",
