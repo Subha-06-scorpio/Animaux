@@ -15,6 +15,17 @@ export async function generateMetadata({ params }: PageProps<"/events/[slug]">):
   return ev ? { title: ev.name, description: ev.shortDescription } : { title: "Event not found" };
 }
 
+/** Rules may contain "# Heading" lines, which start a new titled section. */
+function ruleSections(rules: string[]) {
+  const out: { title: string; items: string[] }[] = [];
+  for (const r of rules) {
+    const h = r.match(/^#\s*(.+)$/);
+    if (h) out.push({ title: h[1].trim(), items: [] });
+    else (out.at(-1) ?? (out.push({ title: "", items: [] }), out[0])).items.push(r);
+  }
+  return out.filter((s) => s.items.length);
+}
+
 export default async function EventPage({ params }: PageProps<"/events/[slug]">) {
   const ev = await getPublicEvent((await params).slug);
   if (!ev) notFound();
@@ -74,14 +85,19 @@ export default async function EventPage({ params }: PageProps<"/events/[slug]">)
           {ev.rules.length > 0 && (
             <section>
               <h2 className="eyebrow">Rules</h2>
-              <ol className="mt-5 space-y-3">
-                {ev.rules.map((r, i) => (
-                  <li key={i} className="flex gap-4 rounded-xl border border-ivory/10 bg-night/40 p-4">
-                    <span className="font-mono text-sm text-gold">{String(i + 1).padStart(2, "0")}</span>
-                    <span className="text-ivory/85">{r}</span>
-                  </li>
-                ))}
-              </ol>
+              {ruleSections(ev.rules).map((sec, si) => (
+                <div key={si} className={si ? "mt-8" : ""}>
+                  {sec.title && <h3 className="mt-6 font-title text-sm font-bold uppercase tracking-[0.14em] text-gold">{sec.title}</h3>}
+                  <ol className="mt-4 space-y-3">
+                    {sec.items.map((r, i) => (
+                      <li key={i} className="flex gap-4 rounded-xl border border-ivory/10 bg-night/40 p-4">
+                        <span className="font-mono text-sm text-gold">{String(i + 1).padStart(2, "0")}</span>
+                        <span className="text-ivory/85">{r}</span>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              ))}
             </section>
           )}
           <section>

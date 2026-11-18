@@ -70,7 +70,7 @@ export const CONFIG: { [C in CollectionName]: ResourceConfig<C> } = {
       { name: "capacity", label: "Capacity (registrations)", type: "number", nullable: true, nullLabel: "Unlimited" },
       { name: "registrationOpen", label: "Registration open", type: "boolean", help: "Untick to close registration now." },
       { name: "visible", label: "Visible on website", type: "boolean" },
-      { name: "rules", label: "Rules", type: "lines", span: 2 },
+      { name: "rules", label: "Rules (one per line)", type: "lines", span: 2, help: "Start a line with # to make a section heading, e.g. “# Pitching rules”." },
       { name: "eligibility", label: "Eligibility", type: "textarea", span: 2 },
       { name: "coordinatorName", label: "Coordinator name", type: "text" },
       { name: "coordinatorPhone", label: "Coordinator phone", type: "text", placeholder: "+91 98xxxxxxxx" },

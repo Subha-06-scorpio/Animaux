@@ -108,7 +108,7 @@ export const contentSchemas = {
       teamMax: z.number().int().min(1).max(20),
       fee: z.number().int().min(0).max(100000).nullable(),
       deadline: z.string().refine((s) => !Number.isNaN(Date.parse(s)), "Invalid deadline"),
-      rules: z.array(text(400)).max(30),
+      rules: z.array(text(600)).max(100),
       eligibility: text(400),
       coordinatorName: text(100),
       coordinatorPhone: text(30),
