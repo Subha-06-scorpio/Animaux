@@ -112,7 +112,7 @@ export const eventsSeed: FestEvent[] = [
       "Pitch a business, product or technology that tackles a wildlife or environmental challenge — and survive the Sharks’ questions.",
     description:
       "The wild has problems. Your team might have the next big solution. Step into Wild Shark Tank, where conservation meets entrepreneurship and bold ideas face some sharp questions. Develop a business, product, or technology that addresses a wildlife or environmental challenge, then convince a panel of “Sharks” that your solution deserves their backing.\n\nA compelling pitch is just the beginning. Explain how your idea works, defend your business model, demonstrate its conservation impact, and navigate simulated investment negotiations. Reach the top three, and a surprise challenge will test your ability to adapt when the conditions change. Will your idea stand up to scrutiny — or get eaten alive in the tank?",
-    eligibility: "Teams of 3–5 members, all currently enrolled in college. A student can be in only one team.",
+    eligibility: "Teams of 3–5 members, students or teachers from any college. A person can be in only one team.",
     participation: "team",
     teamMin: 3,
     teamMax: 5,
@@ -120,7 +120,7 @@ export const eventsSeed: FestEvent[] = [
       "# Format",
       "Up to 7 teams. Live pitches with Q&A and simulated investment negotiations; the top three teams face a surprise challenge.",
       "# Eligibility and teams",
-      "Teams must have 3 to 5 members, all currently enrolled in college. A student can be in only one team.",
+      "Teams must have 3 to 5 members, students or teachers from any college. A person can be in only one team.",
       "At least 2 members must speak during the pitch, and all members must be present for Q&A.",
       "Mixed-department teams get a bonus (see Bonus points).",
       "# Idea and originality",

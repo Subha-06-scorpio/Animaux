@@ -12,7 +12,7 @@ export const phoneField = z
   .trim()
   .regex(phoneRe, "Enter a valid phone number (10–15 digits, + allowed)");
 
-export const YEARS = ["FY (First year)", "SY (Second year)", "TY (Third year)", "Fourth year (UG)", "MSc / MA / MCom Part 1", "MSc / MA / MCom Part 2", "PhD / Research", "Junior college (11th / 12th)", "Other"] as const;
+export const YEARS = ["FY (First year)", "SY (Second year)", "TY (Third year)", "Fourth year (UG)", "MSc / MA / MCom Part 1", "MSc / MA / MCom Part 2", "PhD / Research", "Junior college (11th / 12th)", "Teacher / Faculty", "Other"] as const;
 
 const optionalEmail = z.union([z.literal(""), z.string().trim().toLowerCase().email("Enter a valid email address").max(160)]);
 
