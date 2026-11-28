@@ -16,12 +16,12 @@ export function formatDate(iso: string, opts: Intl.DateTimeFormatOptions = { day
 export const formatDateTime = (iso: string) =>
   formatDate(iso, { day: "numeric", month: "short", year: "numeric", hour: "numeric", minute: "2-digit" });
 
-/** "10:30 AM – 3:30 PM", or "Open now – 3:00 PM" when only a closing time is set. */
+/** "10:30 AM – 3:30 PM", or "Until 3:00 PM" when only a closing time is set. */
 export function eventTimeLabel(e: { startTime: string; endTime: string; extraQuestions?: { id: string; options?: string[] }[] }, tba = "TBA") {
   const slots = e.extraQuestions?.find((q) => q.id === "slot")?.options?.map((o) => o.match(/\d{1,2}:\d{2}\s?[AP]M/i)?.[0]).filter(Boolean);
   if (slots && slots.length > 1) return slots.join(" & ");
   if (e.startTime) return `${formatTime(e.startTime)}${e.endTime ? ` – ${formatTime(e.endTime)}` : ""}`;
-  return e.endTime ? `Open now – ${formatTime(e.endTime)}` : tba;
+  return e.endTime ? `Until ${formatTime(e.endTime)}` : tba;
 }
 
 /** Registration deadline. Events with no date set show the time only ("3:00 PM"). */

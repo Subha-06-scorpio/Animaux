@@ -262,22 +262,155 @@ export const eventsSeed: FestEvent[] = [
     category: "creative",
     tier: "main",
     shortDescription:
-      "Capture the beauty, mystery and unexpected details of the natural world — and upload your photograph when you register.",
+      "Capture wildlife, nature and survival through your lens — upload up to 3 photos when you register, or bring A4 prints on the day.",
     description:
       "Every picture has a story — what will yours reveal? Capture the beauty, mystery, and unexpected details of the natural world through your lens. From a bird in motion to the tiny life hidden beneath a leaf, turn an ordinary moment into an extraordinary frame.\n\nPlay with light, perspective, and composition to create a photograph that makes people pause and look closer. Whether you focus on wildlife, plants, or nature’s fascinating patterns, let your creativity shine and show us the wild through your eyes!",
-    eventDate: "",
+    eventDate: "2026-12-02",
     startTime: "",
     endTime: "15:00",
-    deadline: "2026-12-02T15:00:00+05:30",
+    deadline: "2026-11-29T23:59:00+05:30",
     rules: [
-      "Submissions are open now and close at 3:00 PM.",
-      "No limit on participants: every registration is accepted.",
+      "# Registration",
+      "Online registration must be completed at least 3 days before the event — by 29 November 2026, 11:59 PM. Late entries won’t be accepted.",
+      "Offline participants (printed photos) must also complete registration by this deadline.",
+      "One registration per participant. Show your registration confirmation (ID) when you submit.",
+      "No limit on the number of participants.",
+      "# Theme",
+      "Photos must reflect Echoes of the Wild: The Survival Files, showing wildlife, nature, struggle, adaptation or survival.",
+      "A short caption (max 30 words) explaining how the photo fits the theme is required.",
+      "# Submission: online",
+      "Upload in JPEG/PNG format, minimum 3000 px on the longer side, under 10 MB.",
+      "File name format: Name_Title.jpg.",
+      "Maximum 3 entries per participant.",
+      "# Submission: offline",
+      "Photos must be printed on A4 size paper (21 × 29.7 cm), glossy or matte.",
+      "Write your name, contact number, photo title and location on the back, not on the front.",
+      "No frames, borders or mounts. Prints should be flat and undamaged.",
+      "Maximum 3 prints per participant, submitted at the venue desk by 3:00 PM on 2 December.",
+      "# Originality and editing",
+      "Photos must be taken by the participant and be original work.",
+      "Basic edits (crop, exposure, contrast, colour correction) are allowed.",
+      "Not allowed: AI-generated images, composites, added or removed subjects, heavy filters, or watermarks and signatures on the image.",
+      "Organisers may request the original RAW/unedited file for verification.",
+      "# Ethics",
+      "No harm, baiting or disturbance to wildlife or habitats for a shot. Photos showing cruelty will be disqualified.",
+      "Captive or staged animals must be declared; they are not eligible for the main category.",
+      "# Judging",
+      "Judging criteria: theme relevance (30%), storytelling (25%), composition (20%), technical quality (15%), originality (10%).",
+      "The judges’ decision is final and binding.",
+      "# General",
+      "Organisers may display or use submitted photos for promotion, with credit given to the photographer. Copyright remains with the participant.",
+      "Violating any rule results in disqualification."
     ],
     extraQuestions: [
-      { id: "photo", label: "Upload your photograph (JPG, PNG or WebP · up to 10 MB)", type: "file", required: true },
-      { id: "caption", label: "Title or caption for your photo", type: "text", required: false },
+      {
+        "id": "mode",
+        "label": "How will you submit your photos?",
+        "type": "select",
+        "options": [
+          "Online — upload my photos here",
+          "Offline — printed A4 photos at the venue desk"
+        ],
+        "required": true,
+        "help": "Offline: bring up to 3 A4 prints to the venue desk by 3:00 PM on 2 December."
+      },
+      {
+        "id": "photo",
+        "label": "Photo 1",
+        "type": "file",
+        "minLongSide": 3000,
+        "onlyWhen": {
+          "id": "mode",
+          "equals": "Online — upload my photos here"
+        },
+        "required": true,
+        "help": "JPEG or PNG · at least 3000 px on the longer side · under 10 MB. Name the file Name_Title.jpg."
+      },
+      {
+        "id": "title",
+        "label": "Photo 1 — title",
+        "type": "text",
+        "onlyWhen": {
+          "id": "mode",
+          "equals": "Online — upload my photos here"
+        },
+        "required": true
+      },
+      {
+        "id": "caption",
+        "label": "Photo 1 — caption: how does it fit the theme? (max 30 words)",
+        "type": "textarea",
+        "maxWords": 30,
+        "onlyWhen": {
+          "id": "mode",
+          "equals": "Online — upload my photos here"
+        },
+        "required": true
+      },
+      {
+        "id": "photo2",
+        "label": "Photo 2 (optional)",
+        "type": "file",
+        "minLongSide": 3000,
+        "onlyWhen": {
+          "id": "mode",
+          "equals": "Online — upload my photos here"
+        }
+      },
+      {
+        "id": "title2",
+        "label": "Photo 2 — title",
+        "type": "text",
+        "onlyWhen": {
+          "id": "mode",
+          "equals": "Online — upload my photos here"
+        },
+        "requiredWith": "photo2"
+      },
+      {
+        "id": "caption2",
+        "label": "Photo 2 — caption: how does it fit the theme? (max 30 words)",
+        "type": "textarea",
+        "maxWords": 30,
+        "onlyWhen": {
+          "id": "mode",
+          "equals": "Online — upload my photos here"
+        },
+        "requiredWith": "photo2"
+      },
+      {
+        "id": "photo3",
+        "label": "Photo 3 (optional)",
+        "type": "file",
+        "minLongSide": 3000,
+        "onlyWhen": {
+          "id": "mode",
+          "equals": "Online — upload my photos here"
+        }
+      },
+      {
+        "id": "title3",
+        "label": "Photo 3 — title",
+        "type": "text",
+        "onlyWhen": {
+          "id": "mode",
+          "equals": "Online — upload my photos here"
+        },
+        "requiredWith": "photo3"
+      },
+      {
+        "id": "caption3",
+        "label": "Photo 3 — caption: how does it fit the theme? (max 30 words)",
+        "type": "textarea",
+        "maxWords": 30,
+        "onlyWhen": {
+          "id": "mode",
+          "equals": "Online — upload my photos here"
+        },
+        "requiredWith": "photo3"
+      }
     ],
-    eligibility: "Details to be announced.",
+    eligibility: "Individual participants. One registration per person, with up to 3 photos (online upload or A4 prints at the venue). No limit on participants.",
   }),
   ev({
     slug: "strokes-of-wild",

@@ -12,6 +12,7 @@ import { WhatsAppIcon } from "@/components/ui/icons";
 import { compressImage } from "@/lib/image";
 import type { PublicEvent } from "@/lib/queries";
 import { registrationSchema, YEARS, type RegistrationInput } from "@/lib/schemas";
+import { questionRequired, questionVisible } from "@/lib/types";
 import { cn, deadlineLabel, eventTimeLabel, formatDate, formatFee, isPlaceholder, telLink, whatsappLink } from "@/lib/utils";
 
 const STORE_KEY = "animaux-participant";
@@ -256,13 +257,17 @@ function RegistrationForm({ event, onDone }: { event: PublicEvent; onDone: (r: E
           {event.extraQuestions.map((q) => {
             const id = `q-${q.id}`;
             const err = e.answers?.[q.id]?.message;
+            const answers = (watch("answers") ?? {}) as Record<string, string | undefined>;
+            if (!questionVisible(q, answers)) return null;
             return (
               <div key={q.id}>
-                <label className="label" htmlFor={id}>{q.label}{q.required && " *"}</label>
+                <label className="label" htmlFor={id}>{q.label}{questionRequired(q, answers) && " *"}</label>
+                {q.help && <p className="-mt-1 mb-2 text-xs text-mist">{q.help}</p>}
                 {q.type === "file" ? (
                   <PhotoUpload
                     id={id}
                     eventId={event.id}
+                    minLongSide={q.minLongSide}
                     value={watch(`answers.${q.id}`) ?? ""}
                     invalid={!!err}
                     onChange={(url) => setValue(`answers.${q.id}`, url, { shouldValidate: true })}
@@ -391,7 +396,19 @@ function Success({ result, event, onClose, onAgain }: { result: Extract<Register
 export const registerButtonClass = (open: boolean) => cn("btn w-full sm:w-auto", open ? "btn-primary" : "cursor-not-allowed border border-ivory/15 text-mist");
 
 /** Participant photo upload: resized in the browser, then sent straight to storage. */
-function PhotoUpload({ id, eventId, value, invalid, onChange }: { id: string; eventId: string; value: string; invalid: boolean; onChange: (url: string) => void }) {
+/** Longer side of an image file, in pixels (0 if it can't be read). */
+async function longSide(file: File) {
+  try {
+    const bmp = await createImageBitmap(file);
+    const n = Math.max(bmp.width, bmp.height);
+    bmp.close();
+    return n;
+  } catch {
+    return 0;
+  }
+}
+
+function PhotoUpload({ id, eventId, value, invalid, onChange, minLongSide }: { id: string; eventId: string; value: string; invalid: boolean; onChange: (url: string) => void; minLongSide?: number }) {
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
 
@@ -399,7 +416,16 @@ function PhotoUpload({ id, eventId, value, invalid, onChange }: { id: string; ev
     setBusy(true);
     setErr("");
     try {
-      const file = await compressImage(raw, 2400, 0.88);
+      let file = raw;
+      if (minLongSide) {
+        // Competition entries go up at full size: JPEG/PNG, at least minLongSide px, under 10 MB.
+        if (!/^image\/(jpeg|png)$/.test(raw.type)) throw new Error("Please choose a JPEG or PNG file.");
+        if (raw.size > 10 * 1024 * 1024) throw new Error(`This photo is ${(raw.size / 1048576).toFixed(1)} MB — please export it under 10 MB.`);
+        const side = await longSide(raw);
+        if (side && side < minLongSide) throw new Error(`This photo is ${side} px on its longer side — it needs at least ${minLongSide} px.`);
+      } else {
+        file = await compressImage(raw, 2400, 0.88);
+      }
       const ticket = await createSubmissionUploadAction(eventId, file.type, file.size);
       if (!ticket.ok) throw new Error(ticket.error);
       if (ticket.mode === "local") {
@@ -434,7 +460,7 @@ function PhotoUpload({ id, eventId, value, invalid, onChange }: { id: string; ev
             <p className="flex items-center gap-1.5 text-gold"><Check size={14} /> Photo uploaded</p>
             <label className="mt-1 inline-block cursor-pointer text-xs text-mist underline hover:text-gold">
               Replace photo
-              <input type="file" accept="image/jpeg,image/png,image/webp" className="sr-only" onChange={(e) => e.target.files?.[0] && upload(e.target.files[0])} />
+              <input type="file" accept={minLongSide ? "image/jpeg,image/png" : "image/jpeg,image/png,image/webp"} className="sr-only" onChange={(e) => e.target.files?.[0] && upload(e.target.files[0])} />
             </label>
           </div>
         </div>
@@ -442,8 +468,8 @@ function PhotoUpload({ id, eventId, value, invalid, onChange }: { id: string; ev
         <label htmlFor={id} className={cn("flex cursor-pointer flex-col items-center gap-2 py-4 text-center text-sm", busy && "pointer-events-none opacity-60")}>
           {busy ? <Loader2 className="animate-spin text-gold" /> : <ImageUp className="text-gold" />}
           <span>{busy ? "Uploading your photo…" : "Tap to choose a photo"}</span>
-          <span className="text-xs text-mist">JPG, PNG or WebP · up to 10 MB</span>
-          <input id={id} type="file" accept="image/jpeg,image/png,image/webp" className="sr-only" onChange={(e) => e.target.files?.[0] && upload(e.target.files[0])} />
+          <span className="text-xs text-mist">{minLongSide ? `JPEG or PNG · at least ${minLongSide} px on the longer side · under 10 MB` : "JPG, PNG or WebP · up to 10 MB"}</span>
+          <input id={id} type="file" accept={minLongSide ? "image/jpeg,image/png" : "image/jpeg,image/png,image/webp"} className="sr-only" onChange={(e) => e.target.files?.[0] && upload(e.target.files[0])} />
         </label>
       )}
       {err && <p className="field-error" role="alert">{err}</p>}

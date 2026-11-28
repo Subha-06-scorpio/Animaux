@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { EVENT_CATEGORIES, TEAM_GROUPS, type FestEvent } from "./types";
+import { EVENT_CATEGORIES, TEAM_GROUPS, questionRequired, wordCount, type FestEvent } from "./types";
 
 // ---------- Public forms (shared by client + server) ----------
 
@@ -51,7 +51,9 @@ export function registrationSchema(ev: RegEvent) {
     .superRefine((v, ctx) => {
       for (const q of ev.extraQuestions) {
         const a = v.answers[q.id]?.trim() ?? "";
-        if (q.required && !a) ctx.addIssue({ code: "custom", path: ["answers", q.id], message: "This answer is required" });
+        if (!a && questionRequired(q, v.answers)) ctx.addIssue({ code: "custom", path: ["answers", q.id], message: "This answer is required" });
+        if (a && q.maxWords && wordCount(a) > q.maxWords)
+          ctx.addIssue({ code: "custom", path: ["answers", q.id], message: `Keep this to ${q.maxWords} words or fewer (now ${wordCount(a)})` });
         if (a && q.type === "file" && !/^(https:\/\/[^\s]+|\/media\/submissions\/[\w.-]+)$/.test(a))
           ctx.addIssue({ code: "custom", path: ["answers", q.id], message: "Please upload the photo again" });
         if (a && q.type === "select" && q.options?.length && !q.options.includes(a))
@@ -125,6 +127,11 @@ export const contentSchemas = {
             options: z.array(text(100)).optional(),
             required: z.boolean().optional(),
             limitPerOption: z.number().int().min(1).max(100000).optional(),
+            help: text(300).optional(),
+            maxWords: z.number().int().min(1).max(1000).optional(),
+            minLongSide: z.number().int().min(1).max(20000).optional(),
+            onlyWhen: z.object({ id: z.string().max(40), equals: text(100) }).optional(),
+            requiredWith: z.string().max(40).optional(),
           }),
         )
         .max(10),

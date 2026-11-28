@@ -19,7 +19,20 @@ export type ExtraQuestion = {
   options?: string[];
   required?: boolean;
   limitPerOption?: number; // e.g. 4 teams per time slot (select questions only)
+  help?: string; // small hint under the question
+  maxWords?: number; // text answers: word limit
+  minLongSide?: number; // photo uploads: minimum pixels on the longer side (uploaded at full size, not resized)
+  onlyWhen?: { id: string; equals: string }; // shown (and required) only when another answer matches
+  requiredWith?: string; // required once the answer to this other question is filled in (e.g. a photo's caption)
 };
+
+/** Is this question shown for the current answers? */
+export const questionVisible = (q: ExtraQuestion, answers: Record<string, string | undefined>) =>
+  !q.onlyWhen || (answers[q.onlyWhen.id] ?? "") === q.onlyWhen.equals;
+/** Is an answer required for the current answers? */
+export const questionRequired = (q: ExtraQuestion, answers: Record<string, string | undefined>) =>
+  questionVisible(q, answers) && (!!q.required || (!!q.requiredWith && !!answers[q.requiredWith]?.trim()));
+export const wordCount = (s: string) => s.trim().split(/\s+/).filter(Boolean).length;
 
 export type FestEvent = {
   id: string;
